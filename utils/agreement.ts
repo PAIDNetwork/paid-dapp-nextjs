@@ -34,3 +34,7 @@ export const PARTY_ADDRESS_FIELD = 'partyAddress';
 export const PARTY_WALLET_FIELD = 'partyWallet';
 export const AGREEMENT_CREATE_DATE_FIELD = 'createDate';
 export const AGREEMENT_TITLE_FIELD = 'customTitle';
+export const COUNTER_PARTY_NAME_FIELD = 'counterPartyName';
+export const COUNTER_PARTY_EMAIL_FIELD = 'counterPartyEmail';
+export const COUNTER_PARTY_ADDRESS_FIELD = 'counterPartyAddress';
+export const COUNTER_PARTY_WALLET_FIELD = 'counterPartyWallet';
