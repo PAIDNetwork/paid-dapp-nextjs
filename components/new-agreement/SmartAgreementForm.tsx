@@ -5,6 +5,7 @@ interface SmartAgreementsFormProps {
   jsonSchemas: Array<Object>;
   uiSchema: Object;
   dataName: string;
+  title: string;
   type: string;
   onChangeFields: any;
   activePageIndex: number,
@@ -15,6 +16,7 @@ interface SmartAgreementsFormProps {
 const SmartAgreementsForm: FC<SmartAgreementsFormProps> = ({
   type,
   dataName,
+  title,
   jsonSchemas,
   uiSchema,
   onChangeFields,
@@ -27,6 +29,7 @@ const SmartAgreementsForm: FC<SmartAgreementsFormProps> = ({
       'nda',
       <PdJsonSchemaForm
         dataName={dataName}
+        title={title}
         jsonSchemas={jsonSchemas}
         uiSchema={uiSchema}
         type={type}
@@ -40,6 +43,7 @@ const SmartAgreementsForm: FC<SmartAgreementsFormProps> = ({
       'advisor',
       <PdJsonSchemaForm
         dataName={dataName}
+        title={title}
         jsonSchemas={jsonSchemas}
         uiSchema={uiSchema}
         type={type}
@@ -53,6 +57,7 @@ const SmartAgreementsForm: FC<SmartAgreementsFormProps> = ({
       'ciia',
       <PdJsonSchemaForm
         dataName={dataName}
+        title={title}
         jsonSchemas={jsonSchemas}
         type={type}
         onChange={onChangeFields}
@@ -65,6 +70,7 @@ const SmartAgreementsForm: FC<SmartAgreementsFormProps> = ({
       'consulting',
       <PdJsonSchemaForm
         dataName={dataName}
+        title={title}
         jsonSchemas={jsonSchemas}
         uiSchema={uiSchema}
         type={type}
@@ -78,6 +84,7 @@ const SmartAgreementsForm: FC<SmartAgreementsFormProps> = ({
       'referral',
       <PdJsonSchemaForm
         dataName={dataName}
+        title={title}
         jsonSchemas={jsonSchemas}
         uiSchema={uiSchema}
         type={type}
@@ -91,6 +98,7 @@ const SmartAgreementsForm: FC<SmartAgreementsFormProps> = ({
       'saft',
       <PdJsonSchemaForm
         dataName={dataName}
+        title={title}
         jsonSchemas={jsonSchemas}
         type={type}
         onChange={onChangeFields}

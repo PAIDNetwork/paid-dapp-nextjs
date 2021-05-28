@@ -1,5 +1,8 @@
 .pdForm {
   form {
+    legend {
+      display: none !important;
+    }
     div .panel-danger{
       display: none;
     }
