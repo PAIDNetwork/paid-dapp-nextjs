@@ -38,7 +38,7 @@ const Profile: FC = () => {
       did: 'didkeyz6kghijklXXJPT17VIakupmu89NSTYI8mni',
       address: '0x9e81de93dC...47e6d64b70ff1dF',
     };
-    //dispatch(doSetProfile(currentProfile));
+    dispatch(doSetProfile(currentProfile));
     setProfile(currentProfile);
   };
 
