@@ -13,6 +13,7 @@ import styles from './PdJsonSchemaForm.module.scss';
 interface pdJsonSchemaFormProps {
   type?: string;
   dataName: string;
+  title: string;
   jsonSchemas: Array<Object>;
   uiSchema?: Object;
   className?: string;
@@ -24,6 +25,7 @@ interface pdJsonSchemaFormProps {
 
 const PdJsonSchemaForm: FC<pdJsonSchemaFormProps> = ({
   dataName,
+  title,
   jsonSchemas,
   uiSchema,
   className,
@@ -77,12 +79,12 @@ const PdJsonSchemaForm: FC<pdJsonSchemaFormProps> = ({
       Review
     </Button>
   ));
-
   return (
     <div className={`${styles.pdForm} ${className}`}>
       <Wizard
         activePageIndex={activePageIndex}
         jsonSchemas={jsonSchemas}
+        title={title}
       >
         {jsonSchemas.map((jsonSchema, index) => (
           <Fragment key={index}>

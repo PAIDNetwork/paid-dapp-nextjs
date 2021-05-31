@@ -6,6 +6,7 @@ interface SmartAgreementsFormPanelProps {
   jsonSchemas: Array<Object>;
   uiSchema: Object;
   dataName: string;
+  title: string;
   type: string;
   onChangeFields: any;
   activePageIndex: number,
@@ -16,6 +17,7 @@ interface SmartAgreementsFormPanelProps {
 const SmartAgreementsFormPanel: FC<SmartAgreementsFormPanelProps> = ({
   type,
   dataName,
+  title,
   jsonSchemas,
   uiSchema,
   onChangeFields,
@@ -24,15 +26,16 @@ const SmartAgreementsFormPanel: FC<SmartAgreementsFormPanelProps> = ({
   onReview,
 }: SmartAgreementsFormPanelProps) => (
   <Card className="card-fields border-0 p-3">
-    <div className="title d-flex">
+    {/* <div className="title d-flex">
       <span className="mr-auto p-2 mb-4"> Fields</span>
       <Button className="btn-transparent" color="primary">
         <img src="/assets/icon/3dot.svg" alt="" />
       </Button>
-    </div>
+    </div> */}
     <SmartAgreementForm
       type={type}
       dataName={dataName}
+      title={title}
       jsonSchemas={jsonSchemas}
       uiSchema={uiSchema}
       onChangeFields={onChangeFields}

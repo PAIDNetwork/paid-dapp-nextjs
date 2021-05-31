@@ -1,9 +1,11 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Head from 'next/head';
 import { Card } from 'reactstrap';
+import { Wallet } from 'xdv-universal-wallet-core';
 import ProfileStateModel from '../models/profileStateModel';
 import FormProfile from '../components/profile/FormProfile';
+import PassphraseModal from '../components/profile/PassphraseModal';
 import ProfileModel from '../models/profileModel';
 import doSetProfile from '../redux/actions/profile';
 
@@ -13,16 +15,71 @@ const Profile: FC = () => {
     (state: any) => state.profileReducer,
   );
 
-  // const currentWallet = useSelector(
-  //   (state) => state.walletReducer.currentWallet,
-  // );
+  const currentWallet = useSelector(
+    (state: { walletReducer: any }) => state.walletReducer.currentWallet,
+  );
 
   const [profile, setProfile] = useState<ProfileModel>(profileState.profile);
+  const [openPassphraseModal, setOpenPassphraseModal] = useState(false);
+  const [passphrase, setPassphrase] = useState(null);
+  const [errorPassphrase, setErrorPassphrase] = useState(false);
+
+  useEffect(() => {
+    const getCurrentWallet = global.sessionStorage.getItem(currentWallet);
+    if (!profile.name && getCurrentWallet) {
+      setOpenPassphraseModal(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    const bootstrapAsync = async () => {
+      const getCurrentWallet = global.sessionStorage.getItem(currentWallet);
+      if (!profile.name && getCurrentWallet) {
+        if (passphrase) {
+          try {
+            const profileData = JSON.parse(getCurrentWallet);
+            const name = profileData.profileName;
+            const accountName = profileData.profileName.replaceAll(' ', '').toLowerCase();
+            const xdvWallet = new Wallet({ isWeb: true });
+            await xdvWallet.open(accountName, passphrase);
+            await xdvWallet.enrollAccount({
+              passphrase,
+              accountName,
+            });
+            const acct = await xdvWallet.getAccount();
+            const walletDid = await xdvWallet.createES256K({
+              rpcUrl: process.env.NEXT_PUBLIC_RPC_URL,
+              walletId: profileData.walletId,
+              registry: '',
+              accountName: profileData.accountName,
+            });
+
+            const currentProfile = {
+              name,
+              created: profileData.createdAt,
+              did: walletDid.did.did,
+              address: walletDid.address,
+            };
+            setErrorPassphrase(false);
+            setPassphrase(null);
+            setOpenPassphraseModal(false);
+            dispatch(doSetProfile(currentProfile));
+            setProfile(currentProfile);
+          } catch (e) {
+            setErrorPassphrase(true);
+          }
+        }
+      }
+    };
+
+    bootstrapAsync();
+  },
+  [passphrase]);
 
   const { name } = profile;
   const emptyProfile = !name;
 
-  const onSubmit = (values: ProfileModel) => {
+  const onSubmit = async (values: ProfileModel) => {
     const created = new Intl.DateTimeFormat('en-US', {
       year: 'numeric',
       month: 'numeric',
@@ -32,14 +89,40 @@ const Profile: FC = () => {
       second: 'numeric',
       hour12: false,
     }).format(new Date());
-    const currentProfile = {
-      ...values,
-      created,
-      did: 'didkeyz6kghijklXXJPT17VIakupmu89NSTYI8mni',
-      address: '0x9e81de93dC...47e6d64b70ff1dF',
-    };
-    dispatch(doSetProfile(currentProfile));
-    setProfile(currentProfile);
+
+    try {
+      const accountName = values.name.replaceAll(' ', '').toLowerCase();
+      const xdvWallet = new Wallet({ isWeb: true });
+      await xdvWallet.open(accountName, values.passphrase);
+      await xdvWallet.enrollAccount({
+        passphrase: values.passphrase,
+        accountName,
+      });
+      const acct = await xdvWallet.getAccount();
+      const walletId = await xdvWallet.addWallet();
+      const walletDid = await xdvWallet.createES256K({
+        passphrase: values.passphrase,
+        rpcUrl: process.env.NEXT_PUBLIC_RPC_URL,
+        walletId,
+        registry: '',
+        accountName: values.name,
+      });
+
+      const walletSessionStorage = { walletId, profileName: values.name, createdAt: created };
+      global.sessionStorage.setItem(currentWallet, JSON.stringify(walletSessionStorage));
+      const currentProfile = {
+        ...values,
+        created,
+        did: walletDid.did.did,
+        address: walletDid.address,
+      };
+
+      dispatch(doSetProfile(currentProfile));
+      setProfile(currentProfile);
+    } catch (e) {
+      console.error(e);
+    }
+
   };
 
   // const onDisconnect = () => {
@@ -74,6 +157,11 @@ const Profile: FC = () => {
           </div>
         </div>
       </div>
+      <PassphraseModal
+        open={openPassphraseModal}
+        errorPassphrase={errorPassphrase}
+        setPassphrase={setPassphrase}
+      />
     </>
   );
 };
