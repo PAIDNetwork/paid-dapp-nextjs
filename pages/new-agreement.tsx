@@ -90,6 +90,7 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
   const [jsonSchemas, setJsonSchema] = useState([]);
   const [uiSchema, setUISchema] = useState({});
   const [dataName, setDataName] = useState('');
+  const [templateTitle, setTitle] = useState('');
   const [activePageIndex, setActivePageIndex] = useState(0);
   const [agreementDocument, setAgreementDocument] = useState('');
   const [agreementData, setAgreementData] = useState(null);
@@ -105,8 +106,8 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
 
   useEffect(() => {
     const templateData = getContractTemplate(templateTypeCode);
-
     setDataName(templateData.dataName);
+    setTitle(templateData.title);
     setAgreementDocument(templateData.template);
     setJsonSchema(templateData.jsonSchemas);
     setUISchema(templateData.uiSchema);
@@ -128,7 +129,6 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
         data[AGREEMENT_CREATE_DATE_FIELD] = '';
       }
     }
-    
     setAgreementData(data);
   }, [smartAgreementsState, dataName, agreementTitle]);
 
@@ -340,6 +340,7 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
                     <SmartAgreementFormPanel
                       type={templateTypeCode}
                       dataName={dataName}
+                      title={templateTitle}
                       jsonSchemas={jsonSchemas}
                       activePageIndex={activePageIndex}
                       setActivePageIndex={setActivePageIndex}
