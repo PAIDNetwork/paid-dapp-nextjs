@@ -100,6 +100,7 @@ const SmartAgreementsForm: FC<SmartAgreementsFormProps> = ({
         dataName={dataName}
         title={title}
         jsonSchemas={jsonSchemas}
+        uiSchema={uiSchema}
         type={type}
         onChange={onChangeFields}
         activePageIndex={activePageIndex}

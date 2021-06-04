@@ -38,7 +38,7 @@ import {
   COUNTER_PARTY_ADDRESS_FIELD,
   COUNTER_PARTY_EMAIL_FIELD,
   COUNTER_PARTY_NAME_FIELD,
-  COUNTER_PARTY_WALLET_FIELD
+  COUNTER_PARTY_WALLET_FIELD,
 } from '../utils/agreement';
 
 type NewAgreementProps = {
@@ -117,16 +117,16 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
     const data = smartAgreementsState[dataName];
     if (data) {
       data[AGREEMENT_TITLE_FIELD] = agreementTitle;
-      if (data[PARTY_NAME_FIELD] === '') {
-        data[PARTY_NAME_FIELD] = `${name}` || 'Your Name';
-        data[PARTY_EMAIL_FIELD] = email  || 'Your Email';
-        data[PARTY_ADDRESS_FIELD] = address  || 'Your Address';
-        data[PARTY_WALLET_FIELD] = currentWallet;
-        data[COUNTER_PARTY_NAME_FIELD] = 'Counter Party Name';
-        data[COUNTER_PARTY_EMAIL_FIELD] = 'Counter Party Email';
-        data[COUNTER_PARTY_ADDRESS_FIELD] = 'Counter Party Address';
-        data[COUNTER_PARTY_WALLET_FIELD] = 'Counter Party Wallet';
-        data[AGREEMENT_CREATE_DATE_FIELD] = format(new Date(), 'yyyy/MM/dd');
+      if (data[PARTY_NAME_FIELD] === '' || !isEditing) {
+        data[PARTY_NAME_FIELD] = isEditing ? `${name}` : '';
+        data[PARTY_EMAIL_FIELD] = isEditing ? email : '';
+        data[PARTY_ADDRESS_FIELD] = '';
+        data[PARTY_WALLET_FIELD] = isEditing ? currentWallet : '';
+        data[COUNTER_PARTY_NAME_FIELD] = '';
+        data[COUNTER_PARTY_EMAIL_FIELD] = '';
+        data[COUNTER_PARTY_ADDRESS_FIELD] = '';
+        data[COUNTER_PARTY_WALLET_FIELD] = '';
+        data[AGREEMENT_CREATE_DATE_FIELD] = isEditing ? format(new Date(), 'yyyy/MM/dd') : '';
       }
     }
     setAgreementData(data);
