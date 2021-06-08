@@ -81,6 +81,29 @@ const getContractTemplate = (contractName: String): contractTemplate => {
       'counterPartyAddress',
       'counterPartyWallet',
     ],
+    uiSchema: {
+      partyName: {
+        'ui:placeholder': 'Your Name',
+      },
+      partyEmail: {
+        'ui:placeholder': 'Your Email',
+      },
+      partyAddress: {
+        'ui:placeholder': 'Your Address',
+      },
+      counterPartyName: {
+        'ui:placeholder': 'Counter Party Name',
+      },
+      counterPartyEmail: {
+        'ui:placeholder': 'Counter Party Email',
+      },
+      counterPartyAddress: {
+        'ui:placeholder': 'Counter Party Address',
+      },
+      counterPartyWallet: {
+        'ui:placeholder': 'Counter Party Wallet',
+      },
+    },
   };
 
   switch (contractName) {
@@ -120,6 +143,9 @@ const getContractTemplate = (contractName: String): contractTemplate => {
           required: sharedProperties.required,
         },
       ];
+      uiSchema = {
+        ...sharedProperties.uiSchema,
+      };
       break;
 
     case contractsTemplates.TemplateAdvisorAgreement:
@@ -255,6 +281,22 @@ const getContractTemplate = (contractName: String): contractTemplate => {
         acceptionOption: {
           'ui:widget': 'radio',
         },
+        percentageVest: {
+          'ui:placeholder': 'Percentage',
+        },
+        anniversaryMonth: {
+          'ui:placeholder': 'Anniversary month',
+        },
+        numberOfShares: {
+          'ui:placeholder': 'Price per share type',
+        },
+        numberOfYears: {
+          'ui:placeholder': 'Number of years',
+        },
+        state: {
+          'ui:placeholder': 'State name',
+        },
+        ...sharedProperties.uiSchema,
       };
       break;
 
@@ -333,6 +375,9 @@ const getContractTemplate = (contractName: String): contractTemplate => {
           },
         },
       ];
+      uiSchema = {
+        ...sharedProperties.uiSchema,
+      };
       break;
 
     case contractsTemplates.TemplateConsultingAgreement:
@@ -570,6 +615,7 @@ const getContractTemplate = (contractName: String): contractTemplate => {
           'ui:options': {
             rows: 9,
           },
+          'ui:placeholder': 'Description',
         },
         serviceRenderChecked: {
           'ui:widget': 'checkbox',
@@ -579,6 +625,7 @@ const getContractTemplate = (contractName: String): contractTemplate => {
         },
         servicePayable: {
           'ui:emptyValue': '',
+          'ui:placeholder': 'Payment terms',
         },
         serviceAmountLimit: {
           'ui:emptyValue': '0',
@@ -597,7 +644,24 @@ const getContractTemplate = (contractName: String): contractTemplate => {
           'ui:options': {
             rows: 9,
           },
+          'ui:placeholder': 'Description',
         },
+        consultantExecutionAmount: {
+          'ui:placeholder': 'Upon execution amount ($)',
+        },
+        consultantCompletionAmount: {
+          'ui:placeholder': 'Upon completion amount ($)*',
+        },
+        state: {
+          'ui:placeholder': 'State name',
+        },
+        sharesAmount: {
+          'ui:placeholder': 'Shares amount',
+        },
+        vestingInformation: {
+          'ui:placeholder': 'Vesting and exercise information',
+        },
+        ...sharedProperties.uiSchema,
       };
       break;
 
@@ -693,6 +757,13 @@ const getContractTemplate = (contractName: String): contractTemplate => {
         commisionterminationDate: {
           'ui:emptyValue': '',
         },
+        commision: {
+          'ui:placeholder': 'Commission percent',
+        },
+        stateOfCompany: {
+          'ui:placeholder': 'State name',
+        },
+        ...sharedProperties.uiSchema,
       };
       break;
 
@@ -841,6 +912,48 @@ const getContractTemplate = (contractName: String): contractTemplate => {
           ],
         },
       ];
+      uiSchema = {
+        typeOfCompany: {
+          'ui:placeholder': 'Company name',
+        },
+        jurisdiction: {
+          'ui:placeholder': 'Jurisdiction',
+        },
+        purchaseAmount: {
+          'ui:placeholder': 'Purchase amount (US $)',
+        },
+        tokenAmount: {
+          'ui:placeholder': 'Token amount',
+        },
+        discountRate: {
+          'ui:placeholder': 'Rate (%)',
+        },
+        website: {
+          'ui:placeholder': 'Website',
+        },
+        bankName: {
+          'ui:placeholder': 'Bank Name',
+        },
+        address: {
+          'ui:placeholder': 'address',
+        },
+        aba: {
+          'ui:placeholder': 'ABA#',
+        },
+        payeeAccount: {
+          'ui:placeholder': 'Payee Account#',
+        },
+        payeeAccountName: {
+          'ui:placeholder': 'Payee Account Name',
+        },
+        ethereum: {
+          'ui:placeholder': 'Ethereum address',
+        },
+        bitcoin: {
+          'ui:placeholder': 'Bitcoin address',
+        },
+        ...sharedProperties.uiSchema,
+      };
       break;
 
     default:
