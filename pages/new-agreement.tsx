@@ -40,6 +40,7 @@ import {
   COUNTER_PARTY_NAME_FIELD,
   COUNTER_PARTY_WALLET_FIELD,
 } from '../utils/agreement';
+import useContract from 'hooks/useContract';
 
 type NewAgreementProps = {
   templateTypeCode?: string;
@@ -103,6 +104,8 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
   const {
     register, errors, handleSubmit,
   } = useForm();
+
+  const { contract } = useContract();
 
   useEffect(() => {
     const templateData = getContractTemplate(templateTypeCode);
@@ -220,6 +223,8 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
         fileString: renderToString(agreementTemplate()),
       },
     };
+
+    contract.addDocument();
 
     dispatch(createAgreement(newAgreement));
     router.push('/agreements');
