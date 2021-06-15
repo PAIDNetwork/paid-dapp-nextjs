@@ -80,7 +80,7 @@ const Profile: FC = () => {
             const currentProfile = {
               name,
               created: profileData.createdAt,
-              did: walletDid._id,
+              did: walletDid,
               address: walletAddress
             };
             setErrorPassphrase(false);
@@ -148,7 +148,7 @@ const Profile: FC = () => {
       const currentProfile = {
         ...values,
         created,
-        did: walletDid._id,
+        did: walletDid,
         address: walletAddress,
       };
 

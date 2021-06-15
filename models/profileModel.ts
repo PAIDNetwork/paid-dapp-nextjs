@@ -1,7 +1,7 @@
 interface ProfileModel {
   name?: string;
   passphrase?: string;
-  did?: string;
+  did?: any;
   created?: string;
   confirmPassphrase?: string;
   email?: string;
