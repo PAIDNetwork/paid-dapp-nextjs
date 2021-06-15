@@ -8,6 +8,12 @@ import FormProfile from '../components/profile/FormProfile';
 import PassphraseModal from '../components/profile/PassphraseModal';
 import ProfileModel from '../models/profileModel';
 import doSetProfile from '../redux/actions/profile';
+import { Ed25519Provider } from "key-did-provider-ed25519";  
+import KeyResolver from 'key-did-resolver';
+import { DID } from 'dids'
+import { arrayify, mnemonicToSeed } from "ethers/lib/utils";
+const elliptic_1 = require("elliptic");
+const did_jwt_1 = require("did-jwt");
 
 const Profile: FC = () => {
   const dispatch = useDispatch();
@@ -31,6 +37,15 @@ const Profile: FC = () => {
     }
   }, []);
 
+  const create3ID = async (wallet) => {
+    let seed = arrayify(mnemonicToSeed(wallet.mnemonic));
+    seed = seed.slice(0, 32);
+    const provider = new Ed25519Provider(seed);
+    const did = new DID({ provider, resolver: KeyResolver.getResolver() });
+    await did.authenticate();
+    return did;
+  }
+
   useEffect(() => {
     const bootstrapAsync = async () => {
       const getCurrentWallet = global.sessionStorage.getItem(currentWallet);
@@ -38,8 +53,9 @@ const Profile: FC = () => {
         if (passphrase) {
           try {
             const profileData = JSON.parse(getCurrentWallet);
+            console.log(profileData);
             const name = profileData.profileName;
-            const accountName = profileData.profileName.replaceAll(' ', '').toLowerCase();
+            const accountName = profileData.profileName.replace(/' '/g,'').toLowerCase();
             const xdvWallet = new Wallet({ isWeb: true });
             await xdvWallet.open(accountName, passphrase);
             await xdvWallet.enrollAccount({
@@ -47,18 +63,25 @@ const Profile: FC = () => {
               accountName,
             });
             const acct = await xdvWallet.getAccount();
-            const walletDid = await xdvWallet.createES256K({
+            var keystore = acct.keystores.find((el)=> el.walletId === profileData.walletId);
+            const walletDid = await create3ID(keystore);
+
+            const kp = new elliptic_1.eddsa('ed25519');        
+            const kpInstance = kp.keyFromSecret(keystore.keypairs.ED25519);
+            const walletAddress = did_jwt_1.toEthereumAddress(kpInstance.getPublic('hex'));
+            
+            /*const walletDid = await xdvWallet.createES256K({
               rpcUrl: process.env.NEXT_PUBLIC_RPC_URL,
               walletId: profileData.walletId,
               registry: '',
               accountName: profileData.accountName,
-            });
+            });*/
 
             const currentProfile = {
               name,
               created: profileData.createdAt,
-              did: walletDid.did.did,
-              address: walletDid.address,
+              did: walletDid._id,
+              address: walletAddress
             };
             setErrorPassphrase(false);
             setPassphrase(null);
@@ -90,34 +113,48 @@ const Profile: FC = () => {
       hour12: false,
     }).format(new Date());
     try {
-      const accountName = values.name.replaceAll(' ', '').toLowerCase();
+      
+      const accountName = values.name.replace(/' '/g,'').toLowerCase();
       const xdvWallet = new Wallet({ isWeb: true });
+      
+
       await xdvWallet.open(accountName, values.passphrase);
+      
+      
       await xdvWallet.enrollAccount({
         passphrase: values.passphrase,
         accountName,
       });
+      console.log(xdvWallet);
       const acct = await xdvWallet.getAccount();
       const walletId = await xdvWallet.addWallet();
-      const walletDid = await xdvWallet.createES256K({
+      var keystore = acct.keystores.find((el)=> el.walletId === walletId);
+      
+      const walletDid = await create3ID(keystore);
+      const kp = new elliptic_1.eddsa('ed25519');        
+      const kpInstance = kp.keyFromSecret(keystore.keypairs.ED25519);
+      const walletAddress = did_jwt_1.toEthereumAddress(kpInstance.getPublic('hex'));
+      
+      /*const walletDid = await xdvWallet.createES256K({
         passphrase: values.passphrase,
         rpcUrl: process.env.NEXT_PUBLIC_RPC_URL,
         walletId,
         registry: '',
         accountName: values.name,
-      });
+      });*/
 
       const walletSessionStorage = { walletId, profileName: values.name, createdAt: created };
       global.sessionStorage.setItem(currentWallet, JSON.stringify(walletSessionStorage));
       const currentProfile = {
         ...values,
         created,
-        did: walletDid.did.did,
-        address: walletDid.address,
+        did: walletDid._id,
+        address: walletAddress,
       };
 
       dispatch(doSetProfile(currentProfile));
       setProfile(currentProfile);
+      
     } catch (e) {
       console.error(e);
     }
