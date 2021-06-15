@@ -41,6 +41,7 @@ import {
   COUNTER_PARTY_WALLET_FIELD,
 } from '../utils/agreement';
 import useContract from 'hooks/useContract';
+import { ethers } from 'ethers';
 
 type NewAgreementProps = {
   templateTypeCode?: string;
@@ -182,12 +183,13 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
     setEditTitle(false);
   };
 
-  const onSubmitForm = () => {
+  const onSubmitForm = async () => {
     let maxCid = 0;
     if (agreements.length) {
       maxCid = Math.max(...agreements.map(({ event }) => event.cid));
     }
 
+    // TODO: Move to a helper
     const createdAt = new Intl.DateTimeFormat('en-US', {
       year: 'numeric',
       month: 'numeric',
@@ -224,7 +226,32 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
       },
     };
 
-    contract.addDocument();
+    const metadata = ethers.utils.defaultAbiCoder.encode(
+      ['uint'],
+      [0],
+    );
+    const proposerDID = 'profile.did';
+    const recipientAddresses = ['input eth address aka email field'];
+    const recipientDIDs = ['input did address aka email field'];
+    const filehash = 'ipld cid';
+    const requiredQuorum = '1'
+    const templateId = '1001';
+    const validUntil = Math.floor(Date.now()/1000) + 31557600;
+    const tx = await contract.addDocument(
+      proposerDID,
+      recipientAddresses,
+      recipientDIDs,
+      filehash,
+      requiredQuorum,
+      templateId,
+      metadata,
+      validUntil,
+    );
+
+    const info = await tx.wait(1);
+
+    // TODO: 
+    // Display a dialog with tx info and a link to view recently created smart agreement
 
     dispatch(createAgreement(newAgreement));
     router.push('/agreements');

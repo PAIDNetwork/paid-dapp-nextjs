@@ -46,6 +46,7 @@ const Agreements: React.FC = () => {
   const onSignAgreement = () => {
     const agreementToUpdate = currentAgreement;
     agreementToUpdate.event.status = agreementStatus.SIGNED;
+    // TODO: Helper
     agreementToUpdate.event.signedOn = new Intl.DateTimeFormat('en-US', {
       year: 'numeric',
       month: 'numeric',
@@ -72,7 +73,34 @@ const Agreements: React.FC = () => {
     );
     setOpenDetailModal(true);
   };
-
+  // async fetchDocuments() {
+  //   this.loading = true;
+  //   if (this.localAddress.length > 0) {
+  //     const filter = this.contract.getPastEvents("DocumentAnchored", {
+  //       toBlock: "latest",
+  //       fromBlock: 0,
+  //       filter: { user: this.localAddress },
+  //     });
+  
+  //     const response = await filter;
+  //     this.ipfs = new IPFSManager();
+  //     await this.ipfs.start();
+  //     const items = response.map((item) =>
+  //       this.ipfs.getObject(item.returnValues[2])
+  //     );
+  //     const forkedItems = forkJoin(items)
+  //       .pipe(debounce((x) => x as any))
+  //       .toPromise();
+  
+  //     this.items = (await forkedItems) || [];
+  //     this.items = this.items.map((folder, i) => ({
+  //       folder: folder.value.documents,
+  //       id: i,
+  //     }));
+  //   }
+  //   this.loading = false;
+  // }
+  
   const onOpenFile = (id: number) => {
     if (id) {
       setCurrentAgreement(
