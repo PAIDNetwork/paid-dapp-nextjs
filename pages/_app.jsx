@@ -21,7 +21,6 @@ function MyApp({ Component, pageProps }) {
   const store = useStore(pageProps.initialReduxState);
 
   const ConnectOptions = () => {
-    const wallet = useWallet();
     const { account, connect, reset } = useWallet();
 
     const dispatch = useDispatch();
@@ -31,7 +30,7 @@ function MyApp({ Component, pageProps }) {
     useEffect(() => {
       if (walletReducer.provider) {
         if (walletReducer.provider === 'meta') {
-          wallet.connect();
+          connect();
         } else {
           connect(walletReducer.provider);
         }
@@ -39,7 +38,7 @@ function MyApp({ Component, pageProps }) {
     }, [walletReducer.provider]);
 
     useEffect(() => {
-      if (!walletReducer.currentWallet && account && !walletReducer.isDisconnecting  ) {
+      if (!walletReducer.currentWallet && account && !walletReducer.isDisconnecting) {
         dispatch(setCurrentWallet(account, router));
       }
     }, [account, !walletReducer.currentWallet]);
@@ -85,6 +84,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <Provider store={store}>
       <UseWalletProvider
+        chainId={parseInt(process.env.NEXT_PUBLIC_CHAIN_ID, 10)}
         connectors={{
           bsc: {
             web3ReactConnector() {

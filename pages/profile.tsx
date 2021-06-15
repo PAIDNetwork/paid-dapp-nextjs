@@ -2,12 +2,14 @@ import React, { FC, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Head from 'next/head';
 import { Card } from 'reactstrap';
+import { useWallet } from 'use-wallet';
 import { Wallet } from 'xdv-universal-wallet-core';
 import ProfileStateModel from '../models/profileStateModel';
 import FormProfile from '../components/profile/FormProfile';
 import PassphraseModal from '../components/profile/PassphraseModal';
 import ProfileModel from '../models/profileModel';
 import doSetProfile from '../redux/actions/profile';
+import useContract from '../hooks/useContract';
 
 const Profile: FC = () => {
   const dispatch = useDispatch();
@@ -18,6 +20,10 @@ const Profile: FC = () => {
   const currentWallet = useSelector(
     (state: { walletReducer: any }) => state.walletReducer.currentWallet,
   );
+  const { networkName, balance } = useWallet();
+  const contract = useContract();
+
+  console.log('contract profile ==>', contract, networkName, balance);
 
   const [profile, setProfile] = useState<ProfileModel>(profileState.profile);
   const [openPassphraseModal, setOpenPassphraseModal] = useState(false);
