@@ -46,12 +46,6 @@ function MyApp({ Component, pageProps }) {
       }
     }, [account, walletReducer.isDisconnecting]);
 
-    // useEffect(() => {
-    //   return () => {
-    //     dispatch(doDisconnect());
-    //   };
-    // }, []);
-
     return (
       <>
         {router.pathname === '/' ? (
@@ -78,7 +72,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <Provider store={store}>
-      <WalletProvider>
+      <WalletProvider chainIds={[1, 4, 56, 97]}>
         <ConnectOptions />
       </WalletProvider>
     </Provider>
