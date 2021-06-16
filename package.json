@@ -12,6 +12,7 @@
   "dependencies": {
     "@babel/runtime": "^7.14.0",
     "@binance-chain/bsc-connector": "^1.0.0",
+    "@binance-chain/bsc-use-wallet": "^0.8.1",
     "@connext/vector-modal": "^1.0.5-beta.0",
     "@hookform/error-message": "0.0.5",
     "@rjsf/core": "^2.4.2",

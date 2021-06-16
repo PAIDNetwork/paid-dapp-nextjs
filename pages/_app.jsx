@@ -2,11 +2,7 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Provider, useSelector, useDispatch } from 'react-redux';
 import { useWallet, UseWalletProvider } from 'use-wallet';
-import {
-  BscConnector,
-  UserRejectedRequestError,
-  ConnectionRejectedError,
-} from '@binance-chain/bsc-connector';
+import bsc from '@binance-chain/bsc-use-wallet';
 
 import PrivateLayout from '../components/Layout/PrivateLayout';
 import { setCurrentWallet, doDisconnected } from '../redux/actions/wallet';
@@ -29,11 +25,7 @@ function MyApp({ Component, pageProps }) {
 
     useEffect(() => {
       if (walletReducer.provider) {
-        if (walletReducer.provider === 'meta') {
-          connect();
-        } else {
-          connect(walletReducer.provider);
-        }
+        connect();
       }
     }, [walletReducer.provider]);
 
@@ -85,19 +77,7 @@ function MyApp({ Component, pageProps }) {
     <Provider store={store}>
       <UseWalletProvider
         chainId={parseInt(process.env.NEXT_PUBLIC_CHAIN_ID, 10)}
-        connectors={{
-          bsc: {
-            web3ReactConnector() {
-              return new BscConnector({ supportedChainIds: [56, 97] });
-            },
-            handleActivationError(err) {
-              if (err instanceof UserRejectedRequestError) {
-                return new ConnectionRejectedError();
-              }
-              return null;
-            },
-          },
-        }}
+        connectors={{ bsc }}
       >
         <ConnectOptions />
       </UseWalletProvider>
