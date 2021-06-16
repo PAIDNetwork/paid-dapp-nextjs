@@ -56,7 +56,7 @@ const Profile: FC = () => {
             const profileData = JSON.parse(getCurrentWallet);
             console.log(profileData);
             const name = profileData.profileName;
-            const accountName = profileData.profileName.replace(/' '/g, '').toLowerCase();
+            const accountName = profileData.profileName.replace(' ', '').toLowerCase();
             const xdvWallet = new Wallet({ isWeb: true });
             await xdvWallet.open(accountName, passphrase);
             await xdvWallet.enrollAccount({
@@ -114,7 +114,7 @@ const Profile: FC = () => {
       hour12: false,
     }).format(new Date());
     try {
-      const accountName = values.name.replace(/' '/g, '').toLowerCase();
+      const accountName = values.name.replace(' ', '').toLowerCase();
       const xdvWallet = new Wallet({ isWeb: true });
 
       await xdvWallet.open(accountName, values.passphrase);
