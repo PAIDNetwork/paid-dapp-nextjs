@@ -30,6 +30,7 @@
     "next": "^10.2.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
+    "react-binance-wallet": "^1.0.5",
     "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^17.0.1",
     "react-hook-form": "^6.15.4",

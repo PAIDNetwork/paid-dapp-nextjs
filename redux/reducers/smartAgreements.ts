@@ -9,7 +9,7 @@ import SaftAgreementData from '@/models/saftAgreementData';
 import SmartAgreementsTypes from '../actionTypes/smartAgreements';
 
 interface SmartAgreementsState {
-  ndaAgreementData: NdaAgreementData;
+  ndaAgreementData: any;
   advisorAgreementData: AdvisorAgreementData;
   ciiaAgreementData: CiiaAgreementData;
   consultingAgreementData: ConsultingAgreementData;

@@ -20,7 +20,7 @@ import AgreementModel from '@/models/agreementModel';
 import templateAgreements from 'data/templateAgreements';
 import { createAgreement } from 'redux/actions/agreement';
 import useContract from 'hooks/useContract';
-import { useWallet } from 'use-wallet';
+import { useWallet } from 'react-binance-wallet';
 import { IPLDManager } from 'xdv-universal-wallet-core';
 import { ethers } from 'ethers';
 import PdScrollbar from '../components/reusable/pdScrollbar/PdScrollbar';
@@ -108,8 +108,13 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
     register, errors, handleSubmit,
   } = useForm();
 
-  const { contract, contractSigner } = useContract();
-  const { ethereum } = useWallet();
+  const {account} = useWallet();
+  const {
+    contract,
+    contractSigner,
+    tokenContract,
+    tokenSignerContract,
+  } = useContract();
 
   useEffect(() => {
     const templateData = getContractTemplate(templateTypeCode);
@@ -124,7 +129,7 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
     const data = smartAgreementsState[dataName];
     if (data) {
       data[AGREEMENT_TITLE_FIELD] = agreementTitle;
-      if (data[PARTY_NAME_FIELD] === '' || !isEditing) {
+      if (data[PARTY_NAME_FIELD] === '') {
         data[PARTY_NAME_FIELD] = isEditing ? `${name}` : '';
         data[PARTY_EMAIL_FIELD] = isEditing ? email : '';
         data[PARTY_ADDRESS_FIELD] = '';
@@ -187,8 +192,6 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
   };
 
   const onSubmitForm = async () => {
-    const isCounterparty = await contract.isCounterparty('1', '0xA7441BB2002dA9E363506ff916a02A88Af95606d');
-    console.log(isCounterparty);
     const ipfsManager = new IPLDManager(did);
     await ipfsManager.start(process.env.NEXT_PUBLIC_IPFS_URL);
     const fil = Buffer.from(renderToString(agreementTemplate()));
@@ -203,27 +206,30 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
     const values = [];
     Object.keys(agreementData).map((currentKey) => {
       const value = agreementData[currentKey];
-      if (value.type === 'number') {
-        types.push('uint');
-        values.push(value.value);
-      }
-      if (value.type === 'string') {
-        types.push('string');
-        values.push(value.value);
-      }
       if (ethers.utils.isAddress(value)) {
         types.push('address');
-        values.push(value.value);
+        values.push(value);
+      }
+      if (typeof value === 'number') {
+        types.push('uint');
+        values.push(value);
+      }
+      if (typeof value === 'string') {
+        types.push('string');
+        values.push(value);
       }
     });
     const metadata = ethers.utils.defaultAbiCoder.encode(
       types,
       values,
     );
-    await ethereum.request({ method: 'eth_requestAccounts' });
-    const proposerDID = did.did;
-    const recipientAddresses = [agreementData.counterPartyAddress];
-    const recipientDIDs = [agreementData.counterPartyEmail];
+
+    const fee = await contract.fee();
+    const escrowAddress = await contract.escrow();
+    await tokenSignerContract.increaseAllowance(escrowAddress, fee.toString());
+    const proposerDID = did.id;
+    const recipientAddresses = [agreementData.counterPartyWallet];
+    const recipientDIDs = [agreementData.counterPartyDid];
     const filehash = cid.toString();
     const requiredQuorum = '1';
     const templateId = '1001';
@@ -238,14 +244,13 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
       metadata,
       validUntil,
     );
-
-    const info = await tx.wait(1);
-    console.log(info);
+    const info = await tx.wait();
+    console.log('info', info);
 
     // TODO:
     // Display a dialog with tx info and a link to view recently created smart agreement
 
-    dispatch(createAgreement(newAgreement));
+    // dispatch(createAgreement(newAgreement));
     router.push('/agreements');
   };
 

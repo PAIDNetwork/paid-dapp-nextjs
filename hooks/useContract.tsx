@@ -1,7 +1,9 @@
 import { ethers } from 'ethers';
 import { useEffect, useState } from 'react';
-import { useWallet } from 'use-wallet';
+import { useWallet } from 'react-binance-wallet';
 import SmartAgreementAnchoring from '../contracts/SmartAgreementAnchoring.json';
+import TokenEscrow from '../contracts/TokenEscrow.json';
+import PaidTokenContract from '../contracts/PaidTokenContract.json';
 
 declare global {
   interface Window {
@@ -10,13 +12,22 @@ declare global {
 }
 
 function useContract() {
+  const { account, connector, chainId } = useWallet();
   const [contract, setContract] = useState(null);
   const [contractSigner, setContractSigner] = useState(null);
-  const { ethereum } = useWallet();
-  console.log('eth', ethereum);
+  const [scrowContract, setScrowContract] = useState(null);
+  const [tokenContract, setTokenContract] = useState(null);
+  const [tokenSignerContract, setTokenSignerContract] = useState(null);
+  const metamask = (window as any).ethereum;
+  const binanceWallet = (window as any).BinanceChain;
+  let provider;
+  if (connector !== 'bsc') {
+    provider = new ethers.providers.Web3Provider(metamask, 'any');
+  } else {
+    provider = new ethers.providers.Web3Provider(binanceWallet);
+  }
   useEffect(() => {
     const handleContract = () => {
-      const provider = new ethers.providers.Web3Provider(ethereum, 'any');
       const Contract = new ethers.Contract(
         process.env.NEXT_PUBLIC_CONTRACT_ANCHORINNG_ADDRESS, SmartAgreementAnchoring.abi, provider,
       );
@@ -24,9 +35,7 @@ function useContract() {
     };
 
     const handleContractSigner = async () => {
-      await ethereum.send('eth_requestAccounts');
-      const provider = new ethers.providers.Web3Provider(ethereum, 'any');
-      const signer = provider.getSigner();
+      const signer = provider.getSigner(account);
       const ContractSigner = new ethers.Contract(
         process.env.NEXT_PUBLIC_CONTRACT_ANCHORINNG_ADDRESS,
         SmartAgreementAnchoring.abi,
@@ -35,13 +44,41 @@ function useContract() {
       setContractSigner(ContractSigner);
     };
 
+    const handleScrowContract = () => {
+      const currentContract = new ethers.Contract(
+        process.env.NEXT_PUBLIC_CONTRACT_ESCROW_ADDRESS, TokenEscrow.abi, provider,
+      );
+      setScrowContract(currentContract);
+    };
+
+    const handleTokenContract = () => {
+      const currentContract = new ethers.Contract(
+        process.env.NEXT_PUBLIC_CONTRACT_PAID_TOKEN_ADDRESS, PaidTokenContract.abi, provider,
+      );
+      setTokenContract(currentContract);
+    };
+
+    const handleTokenSignerContract = () => {
+      const signer = provider.getSigner(account);
+      const currentContract = new ethers.Contract(
+        process.env.NEXT_PUBLIC_CONTRACT_PAID_TOKEN_ADDRESS, PaidTokenContract.abi, signer,
+      );
+      setTokenSignerContract(currentContract);
+    };
+
     handleContract();
     handleContractSigner();
+    handleScrowContract();
+    handleTokenContract();
+    handleTokenSignerContract();
   }, []); // Empty array ensures that effect is only run on mount
 
   return {
     contract,
     contractSigner,
+    scrowContract,
+    tokenContract,
+    tokenSignerContract,
   };
 }
 

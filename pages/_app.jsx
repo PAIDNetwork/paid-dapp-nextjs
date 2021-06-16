@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Provider, useSelector, useDispatch } from 'react-redux';
-import { useWallet, UseWalletProvider } from 'use-wallet';
-import bsc from '@binance-chain/bsc-use-wallet';
+import { WalletProvider, useWallet } from 'react-binance-wallet';
 
 import PrivateLayout from '../components/Layout/PrivateLayout';
 import { setCurrentWallet, doDisconnected } from '../redux/actions/wallet';
@@ -25,7 +24,11 @@ function MyApp({ Component, pageProps }) {
 
     useEffect(() => {
       if (walletReducer.provider) {
-        connect();
+        if (walletReducer.provider === 'meta') {
+          connect('injected');
+        } else {
+          connect(walletReducer.provider);
+        }
       }
     }, [walletReducer.provider]);
 
@@ -75,12 +78,9 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <Provider store={store}>
-      <UseWalletProvider
-        chainId={parseInt(process.env.NEXT_PUBLIC_CHAIN_ID, 10)}
-        connectors={{ bsc }}
-      >
+      <WalletProvider>
         <ConnectOptions />
-      </UseWalletProvider>
+      </WalletProvider>
     </Provider>
   );
 }

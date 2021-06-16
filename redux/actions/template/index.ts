@@ -64,6 +64,10 @@ const getContractTemplate = (contractName: String): contractTemplate => {
         type: 'string',
         pattern: '[^@\\s]+@[^@\\s]+\\.[^@\\s]+',
       },
+      counterPartyDid: {
+        title: 'DID:',
+        type: 'string',
+      },
       counterPartyWallet: {
         title: 'Wallet address:',
         type: 'string',
