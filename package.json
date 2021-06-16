@@ -23,6 +23,7 @@
     "eslint": "^6.8.0",
     "ethers": "^5.3.1",
     "font-awesome": "^4.7.0",
+    "ganache": "^6.4.4",
     "key-did-provider-ed25519": "^1.1.0",
     "key-did-resolver": "^1.2.1",
     "next": "^10.2.0",

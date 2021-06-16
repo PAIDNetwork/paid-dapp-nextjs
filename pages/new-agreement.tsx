@@ -19,6 +19,10 @@ import { setAgreementReviewed, setIsEditing } from 'redux/actions';
 import AgreementModel from '@/models/agreementModel';
 import templateAgreements from 'data/templateAgreements';
 import { createAgreement } from 'redux/actions/agreement';
+import useContract from 'hooks/useContract';
+import { useWallet } from 'use-wallet';
+import { IPLDManager } from 'xdv-universal-wallet-core';
+import { ethers } from 'ethers';
 import PdScrollbar from '../components/reusable/pdScrollbar/PdScrollbar';
 import SmartAgreementFormPanel from '../components/new-agreement/SmartAgreementFormPanel';
 
@@ -40,8 +44,6 @@ import {
   COUNTER_PARTY_NAME_FIELD,
   COUNTER_PARTY_WALLET_FIELD,
 } from '../utils/agreement';
-import useContract from 'hooks/useContract';
-import { ethers } from 'ethers';
 
 type NewAgreementProps = {
   templateTypeCode?: string;
@@ -71,7 +73,7 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
   );
 
   const {
-    name, email, address,
+    name, email, did,
   } = useSelector(
     (state: { profileReducer: ProfileStateModel }) => state.profileReducer.profile,
   );
@@ -106,7 +108,8 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
     register, errors, handleSubmit,
   } = useForm();
 
-  const { contract } = useContract();
+  const { contract, contractSigner } = useContract();
+  const { ethereum } = useWallet();
 
   useEffect(() => {
     const templateData = getContractTemplate(templateTypeCode);
@@ -184,60 +187,48 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
   };
 
   const onSubmitForm = async () => {
-    let maxCid = 0;
-    if (agreements.length) {
-      maxCid = Math.max(...agreements.map(({ event }) => event.cid));
-    }
+    const isCounterparty = await contract.isCounterparty('1', '0xA7441BB2002dA9E363506ff916a02A88Af95606d');
+    console.log(isCounterparty);
+    const ipfsManager = new IPLDManager(did);
+    await ipfsManager.start(process.env.NEXT_PUBLIC_IPFS_URL);
+    const fil = Buffer.from(renderToString(agreementTemplate()));
+    const cid = await ipfsManager.addSignedObject(fil,
+      {
+        name: agreementTitle,
+        contentType: '',
+        lastModified: new Date(),
+      });
 
-    // TODO: Move to a helper
-    const createdAt = new Intl.DateTimeFormat('en-US', {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-      hour12: false,
-    }).format(new Date());
-
-    const newAgreement: AgreementModel = {
-      transactionHash:
-        '0x2446f1fd773fbb9f080e674b60c6a033c7ed7427b8b9413cf28a2a4a6da9b56c',
-      event: {
-        id: 1,
-        from: 1,
-        to: 2,
-        agreementFormTemplateId: 1,
-        cid: maxCid + 1,
-        status: agreementStatus.PENDING,
-        createdAt,
-        updatedAt: createdAt,
-      },
-      data: {
-        documentName: document().name,
-        counterpartyName: currentFormData.counterPartyName,
-        agreementForm: null,
-        agreementFormTemplateId: templateTypeCode,
-        escrowed: null,
-        validUntil: '12/21/2023',
-        toSigner: null,
-        fromSigner: null,
-        fileString: renderToString(agreementTemplate()),
-      },
-    };
-
+    const types = [];
+    const values = [];
+    Object.keys(agreementData).map((currentKey) => {
+      const value = agreementData[currentKey];
+      if (value.type === 'number') {
+        types.push('uint');
+        values.push(value.value);
+      }
+      if (value.type === 'string') {
+        types.push('string');
+        values.push(value.value);
+      }
+      if (ethers.utils.isAddress(value)) {
+        types.push('address');
+        values.push(value.value);
+      }
+    });
     const metadata = ethers.utils.defaultAbiCoder.encode(
-      ['uint'],
-      [0],
+      types,
+      values,
     );
-    const proposerDID = 'profile.did';
-    const recipientAddresses = ['input eth address aka email field'];
-    const recipientDIDs = ['input did address aka email field'];
-    const filehash = 'ipld cid';
-    const requiredQuorum = '1'
+    await ethereum.request({ method: 'eth_requestAccounts' });
+    const proposerDID = did.did;
+    const recipientAddresses = [agreementData.counterPartyAddress];
+    const recipientDIDs = [agreementData.counterPartyEmail];
+    const filehash = cid.toString();
+    const requiredQuorum = '1';
     const templateId = '1001';
-    const validUntil = Math.floor(Date.now()/1000) + 31557600;
-    const tx = await contract.addDocument(
+    const validUntil = Math.floor(Date.now() / 1000) + 31557600;
+    const tx = await contractSigner.addDocument(
       proposerDID,
       recipientAddresses,
       recipientDIDs,
@@ -249,8 +240,9 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
     );
 
     const info = await tx.wait(1);
+    console.log(info);
 
-    // TODO: 
+    // TODO:
     // Display a dialog with tx info and a link to view recently created smart agreement
 
     dispatch(createAgreement(newAgreement));
