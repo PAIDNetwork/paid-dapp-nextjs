@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Card, Button } from 'reactstrap';
@@ -15,6 +16,7 @@ import { agreementStatus, columnsAgreement } from '../utils/agreement';
 import AgreementModel from '../models/agreementModel';
 
 const Agreements: React.FC = () => {
+  const router = useRouter();
   const columns = React.useMemo(() => columnsAgreement, []);
   const dispatch = useDispatch();
   const agreements = useSelector(
@@ -45,7 +47,7 @@ const Agreements: React.FC = () => {
 
   const onSignAgreement = () => {
     const agreementToUpdate = currentAgreement;
-    agreementToUpdate.event.status = agreementStatus.SIGNED;
+    /*agreementToUpdate.event.status = agreementStatus.SIGNED;
     agreementToUpdate.event.signedOn = new Intl.DateTimeFormat('en-US', {
       year: 'numeric',
       month: 'numeric',
@@ -56,7 +58,9 @@ const Agreements: React.FC = () => {
       hour12: false,
     }).format(new Date());
     dispatch(updateAgreement(currentAgreement?.event.cid, agreementToUpdate));
+    */
     setOpenDetailModal(false);
+    router.push('/agreement-details');
   };
 
   const onRejectAgreement = () => {

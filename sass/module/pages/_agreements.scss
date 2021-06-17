@@ -103,3 +103,59 @@
     }
   }
 }
+
+
+.confirm-sign-agreement-modal {
+  .modal-content {
+    @include modal-content;
+    height: 270px;
+    width: 416px;
+    top: 15vh;
+  }
+  .modal-header {
+    @include modal-header;
+    .info {
+      font-size: 14px;
+      line-height: 18px;
+      font-weight: normal;
+      color: $blue-600;
+      opacity: 0.5;
+    }
+  }
+
+  .modal-body {
+    .status {
+      .title {
+        font-weight: 500;
+        font-size: 14px;
+        color: $primary;
+      }
+    }
+    .details {
+      .info {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 20px;
+        color: $primary;
+      }
+      .title {
+        color: $blue-600;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 18px;
+      }
+      .value {
+        font-weight: 500;
+        font-size: 14px;
+        color: $primary;
+        word-wrap: break-word;
+      }
+    }
+    .buttons {
+      button {
+        width: 172px;
+      }
+    }
+  }
+}
