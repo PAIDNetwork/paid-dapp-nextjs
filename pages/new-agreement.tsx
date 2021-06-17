@@ -23,6 +23,7 @@ import useContract from 'hooks/useContract';
 import { useWallet } from 'react-binance-wallet';
 import { IPLDManager } from 'xdv-universal-wallet-core';
 import { ethers } from 'ethers';
+import ConfirmAgreementModal from '@/components/new-agreement/ConfirmAgreementModal';
 import PdScrollbar from '../components/reusable/pdScrollbar/PdScrollbar';
 import SmartAgreementFormPanel from '../components/new-agreement/SmartAgreementFormPanel';
 
@@ -103,12 +104,13 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
   const [tooltipEditTitle, setTooltipEditTitle] = useState(false);
   const [tooltipIconEdit, setTooltipIconEdit] = useState(false);
   const [agreementTitle, setAgreementTitle] = useState('Untitled Agreement');
+  const [openConfirmAgreementModal, setOpenConfirmAgreementModal] = useState(false);
 
   const {
     register, errors, handleSubmit,
   } = useForm();
 
-  const {account} = useWallet();
+  const { account } = useWallet();
   const {
     contract,
     contractSigner,
@@ -192,65 +194,69 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
   };
 
   const onSubmitForm = async () => {
-    const ipfsManager = new IPLDManager(did);
-    await ipfsManager.start(process.env.NEXT_PUBLIC_IPFS_URL);
-    const fil = Buffer.from(renderToString(agreementTemplate()));
-    const cid = await ipfsManager.addSignedObject(fil,
-      {
-        name: agreementTitle,
-        contentType: '',
-        lastModified: new Date(),
+    try {
+      const ipfsManager = new IPLDManager(did);
+      await ipfsManager.start(process.env.NEXT_PUBLIC_IPFS_URL);
+      const fil = Buffer.from(renderToString(agreementTemplate()));
+      const cid = await ipfsManager.addSignedObject(fil,
+        {
+          name: agreementTitle,
+          contentType: '',
+          lastModified: new Date(),
+        });
+
+      const types = [];
+      const values = [];
+      Object.keys(agreementData).map((currentKey) => {
+        const value = agreementData[currentKey];
+        if (ethers.utils.isAddress(value)) {
+          types.push('address');
+          values.push(value);
+        }
+        if (typeof value === 'number') {
+          types.push('uint');
+          values.push(value);
+        }
+        if (typeof value === 'string') {
+          types.push('string');
+          values.push(value);
+        }
       });
+      const metadata = ethers.utils.defaultAbiCoder.encode(
+        types,
+        values,
+      );
 
-    const types = [];
-    const values = [];
-    Object.keys(agreementData).map((currentKey) => {
-      const value = agreementData[currentKey];
-      if (ethers.utils.isAddress(value)) {
-        types.push('address');
-        values.push(value);
-      }
-      if (typeof value === 'number') {
-        types.push('uint');
-        values.push(value);
-      }
-      if (typeof value === 'string') {
-        types.push('string');
-        values.push(value);
-      }
-    });
-    const metadata = ethers.utils.defaultAbiCoder.encode(
-      types,
-      values,
-    );
-
-    const fee = await contract.fee();
-    const escrowAddress = await contract.escrow();
-    await tokenSignerContract.increaseAllowance(escrowAddress, fee.toString());
-    const proposerDID = did.id;
-    const recipientAddresses = [agreementData.counterPartyWallet];
-    const recipientDIDs = [agreementData.counterPartyDid];
-    const filehash = cid.toString();
-    const requiredQuorum = '1';
-    const templateId = '1001';
-    const validUntil = Math.floor(Date.now() / 1000) + 31557600;
-    const tx = await contractSigner.addDocument(
-      proposerDID,
-      recipientAddresses,
-      recipientDIDs,
-      filehash,
-      requiredQuorum,
-      templateId,
-      metadata,
-      validUntil,
-    );
-    const info = await tx.wait();
-    console.log('info', info);
-
-    // TODO:
-    // Display a dialog with tx info and a link to view recently created smart agreement
-
+      const fee = await contract.fee();
+      const escrowAddress = await contract.escrow();
+      await tokenSignerContract.increaseAllowance(escrowAddress, fee.toString());
+      const proposerDID = did.id;
+      const recipientAddresses = [agreementData.counterPartyWallet];
+      const recipientDIDs = [agreementData.counterPartyDid];
+      const filehash = cid.toString();
+      const requiredQuorum = '1';
+      const templateId = '1001';
+      const validUntil = Math.floor(Date.now() / 1000) + 31557600;
+      const tx = await contractSigner.addDocument(
+        proposerDID,
+        recipientAddresses,
+        recipientDIDs,
+        filehash,
+        requiredQuorum,
+        templateId,
+        metadata,
+        validUntil,
+      );
+      setOpenConfirmAgreementModal(true);
+      const info = await tx.wait();
+      console.log('info', info);
+    } catch (error) {
+      console.log('There was an issue with gas estimation. please try again', error);
+    }
     // dispatch(createAgreement(newAgreement));
+  };
+
+  const confirmDocument = () => {
     router.push('/agreements');
   };
 
@@ -380,6 +386,12 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
                   </PdScrollbar>
                 </div>
               )}
+              <ConfirmAgreementModal
+                open={openConfirmAgreementModal}
+                agreementDocument={agreementDocument}
+                name={name}
+                onclick={confirmDocument}
+              />
             </div>
           </div>
         </div>
