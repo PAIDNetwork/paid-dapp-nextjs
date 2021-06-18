@@ -8,18 +8,21 @@ import useContract from 'hooks/useContract';
 import AgreementPreviewModal from '@/components/agreements/AgreementPreviewModal';
 import { ethers } from 'ethers';
 import { forkJoin } from 'rxjs';
+import { debounce } from 'rxjs/operators';
 import ProfileStateModel from '@/models/profileStateModel';
-import { array } from 'prop-types';
+import getContractTemplate from '../redux/actions/template';
 import Table from '../components/agreements/Table';
 
 import TemplateAgreementSelectorModal from '../components/agreements/TemplateAgreementSelectorModal';
 import AgreementDetailModal from '../components/agreements/AgreementDetailModal';
 
 import loadAgreements, { updateAgreement } from '../redux/actions/agreement';
-import { agreementStatus, columnsAgreement } from '../utils/agreement';
+import { agreementStatus, columnsAgreement, COUNTER_PARTY_NAME_FIELD } from '../utils/agreement';
+import helper from '../utils/helper';
 import AgreementModel from '../models/agreementModel';
 import dataAgreementModel from '@/models/dataAgreementModel';
 import EventAgreementModel from '@/models/eventAgreementModel';
+import { any } from 'prop-types';
 
 const Agreements: React.FC = () => {
   const columns = React.useMemo(() => columnsAgreement, []);
@@ -51,39 +54,57 @@ const Agreements: React.FC = () => {
         const myEvents = [...events, ...eventsRec];
         console.log('fetchDocuments ==>', myEvents);
         const newAgreements = [];
-        myEvents.map((myEvent) => {
-          const newAgreement = {} as AgreementModel;
-          newAgreement.data = {} as dataAgreementModel;
-          newAgreement.event = {} as EventAgreementModel;
-          newAgreement.data.counterpartyName = myEvent.args.proposer;
-          newAgreement.data.documentName = myEvent.args.proposerDID;
-          newAgreement.event.updatedAt = myEvent.args.recipient;
-          newAgreement.event.createdAt = myEvent.args.recipientDID;
-          newAgreement.event.status = 1;
-          newAgreements.push(newAgreement);
+        const documents = myEvents.map((myEvent) => contract.anchors(myEvent.args.documentId));
+        const forkedDocuments = forkJoin(documents).pipe(debounce((x) => x as any)).toPromise();
+        const myDocuments = (await forkedDocuments) || [];
+        const ipfsItems = myDocuments.map((myDocument: any) => ipfs.getObject(myDocument.fileHash));
+        const forkedIpfsItems = forkJoin(ipfsItems).pipe(debounce((x) => x as any)).toPromise();
+        const myIpfsItems = (await forkedIpfsItems) || [];
+        let index = 0;
+        myDocuments.map((myDocument: any) => {
+          const { templateId, metadata } = myDocument;
+          const templateIdStr = helper.padLeadingZeros(templateId.toString(), 3);
+          const templateData = getContractTemplate(templateIdStr);
+          const { jsonSchemas } = templateData;
+          try {
+            const types = [];
+            let propsIndex = 0;
+            let counterPartyNameIndex = 0;
+            jsonSchemas.forEach((jsonSchema) => {
+              const { properties } = jsonSchema;
+              Object.keys(properties).forEach((objKey) => {
+                if (properties[objKey].custom === 'address') {
+                  types.push('address');
+                } else {
+                  types.push(properties[objKey].type);
+                }
+                if (objKey === COUNTER_PARTY_NAME_FIELD) {
+                  counterPartyNameIndex = propsIndex;
+                }
+                propsIndex += 1;
+              });
+            });
+            const values = ethers.utils.defaultAbiCoder.decode(types, metadata);
+            const newAgreement = {} as AgreementModel;
+            newAgreement.data = {} as dataAgreementModel;
+            newAgreement.event = {} as EventAgreementModel;
+            newAgreement.transactionHash = myEvents[index].transactionHash;
+            newAgreement.data.counterpartyName = values[counterPartyNameIndex];
+            newAgreement.data.documentName = myIpfsItems[index]?.value.name;
+            newAgreement.data.toSigner = myEvents[index].args.recipient;
+            newAgreement.data.fileString = atob(myIpfsItems[index]?.value.content);
+            newAgreement.event.updatedAt = helper.formatDate(new Date());
+            newAgreement.event.createdAt = helper.formatDate(new Date());
+            newAgreement.event.cid = myDocument.fileHash;
+            newAgreement.event.status = myDocument.status;
+            newAgreements.push(newAgreement);
+            console.log('agreement', newAgreement);
+          } catch (e) {
+            console.log(e);
+          }
+          index += 1;
         });
         dispatch(loadAgreements(newAgreements));
-        // myEvents.map(async (myEvent) => {
-        //   const counterPArty = await contract.counterparties(myEvent.args.documentId.hash, myEvent.args.recipient);
-        //   console.log('counter', counterPArty);
-        //   const myDocument = await contract.anchors(myEvent.args.documentId.hash);
-        //   console.log(myDocument);
-        // });
-        // if (myDocument.fileHash) {
-        //   const item = await ipfs.getObject(myDocument.fileHash);
-        //   console.log('templateId', ethers.utils.parseBytes32String(myDocument.templateId));
-        //   console.log('item', item);
-        // }
-        // const items = currentEvents?.map((currentEevent) => ipfs.getObject(currentEevent.args.documentId));
-        // const forkedItems = forkJoin(items)
-        //   .pipe(debounce((x) => x as any))
-        //   .toPromise();
-
-        // this.items = (await forkedItems) || [];
-        // this.items = this.items.map((folder, i) => ({
-        //   folder: folder.value.documents,
-        //   id: i,
-        // }));
       }
     };
     fetchDocuments();

@@ -18,17 +18,7 @@ interface SmartAgreementsState {
 }
 
 const initialState: SmartAgreementsState = {
-  ndaAgreementData: {
-    customTitle: '',
-    partyName: '',
-    partyEmail: '',
-    partyAddress: '',
-    partyWallet: '',
-    counterPartyName: '',
-    counterPartyEmail: '',
-    counterPartyAddress: '',
-    counterPartyWallet: '',
-  },
+  ndaAgreementData: {} as any,
   advisorAgreementData: {
     customTitle: '',
     partyName: '',

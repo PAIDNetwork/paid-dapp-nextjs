@@ -1,22 +1,18 @@
 export const columnsAgreement = [
   {
-    // Header: 'Counterparty',
-    Header: 'Party A',
+    Header: 'Counterparty',
     accessor: 'data.counterpartyName',
   },
   {
-    Header: 'Party A DID',
-    // Header: 'Title',
+    Header: 'Title',
     accessor: 'data.documentName',
   },
   {
-    Header: 'Party B',
-    // Header: 'Last Modified',
+    Header: 'Last Modified',
     accessor: 'event.updatedAt',
   },
   {
-    Header: 'Party B DID',
-    // Header: 'Created',
+    Header: 'Created',
     accessor: 'event.createdAt',
   },
   {
@@ -27,9 +23,9 @@ export const columnsAgreement = [
 
 // no-unused-vars
 export enum agreementStatus {
-  PENDING = 1,
-  DECLINED = 2,
-  SIGNED = 3,
+  PENDING_SIGNATURE,
+  ACCEPTED,
+  DECLINED,
 }
 
 export const PARTY_NAME_FIELD = 'partyName';

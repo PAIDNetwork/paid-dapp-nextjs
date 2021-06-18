@@ -130,8 +130,7 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
   useEffect(() => {
     const data = smartAgreementsState[dataName];
     if (data) {
-      data[AGREEMENT_TITLE_FIELD] = agreementTitle;
-      if (data[PARTY_NAME_FIELD] === '') {
+      if (data[PARTY_NAME_FIELD] === undefined || data[PARTY_NAME_FIELD] === null || data[PARTY_NAME_FIELD] === '') {
         data[PARTY_NAME_FIELD] = isEditing ? `${name}` : '';
         data[PARTY_EMAIL_FIELD] = isEditing ? email : '';
         data[PARTY_ADDRESS_FIELD] = '';
@@ -140,7 +139,7 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
         data[COUNTER_PARTY_EMAIL_FIELD] = '';
         data[COUNTER_PARTY_ADDRESS_FIELD] = '';
         data[COUNTER_PARTY_WALLET_FIELD] = '';
-        data[AGREEMENT_CREATE_DATE_FIELD] = isEditing ? format(new Date(), 'yyyy/MM/dd') : '';
+        data[COUNTER_PARTY_WALLET_FIELD] = '';
       }
     }
     setAgreementData(data);
@@ -207,20 +206,26 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
 
       const types = [];
       const values = [];
-      Object.keys(agreementData).map((currentKey) => {
-        const value = agreementData[currentKey];
-        if (ethers.utils.isAddress(value)) {
-          types.push('address');
-          values.push(value);
-        }
-        if (typeof value === 'number') {
-          types.push('uint');
-          values.push(value);
-        }
-        if (typeof value === 'string') {
-          types.push('string');
-          values.push(value);
-        }
+      jsonSchemas.forEach((jsonSchema) => {
+        const { properties } = jsonSchema;
+        Object.keys(properties).forEach((objKey) => {
+          // if (ethers.utils.isAddress(currentFormData[objKey])) {
+          //   types.push('address');
+          //   values.push(currentFormData[objKey]);
+          // }
+          if (properties[objKey].custom === 'address') {
+            types.push('address');
+            values.push(currentFormData[objKey]);
+          }
+          if (properties[objKey].type === 'number') {
+            types.push('uint');
+            values.push(currentFormData[objKey]);
+          }
+          if (properties[objKey].type === 'string') {
+            types.push('string');
+            values.push(currentFormData[objKey]);
+          }
+        });
       });
       const metadata = ethers.utils.defaultAbiCoder.encode(
         types,
@@ -235,7 +240,7 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
       const recipientDIDs = [agreementData.counterPartyDid];
       const filehash = cid.toString();
       const requiredQuorum = '1';
-      const templateId = '1001';
+      const templateId = templateTypeCode;
       const validUntil = Math.floor(Date.now() / 1000) + 31557600;
       const tx = await contractSigner.addDocument(
         proposerDID,
