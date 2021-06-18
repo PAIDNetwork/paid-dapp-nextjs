@@ -23,7 +23,8 @@
       "@/components/*": ["components/*"],
       "@/pdComponents": ["components/reusable/"],
       "@/pages/*" : ["sass/module/pages/*"],
-      "@/models/*" : ["models/*"]
+      "@/models/*" : ["models/*"],
+      "@/redux/*": ["redux/*"]
     }
   },
   "include": [
