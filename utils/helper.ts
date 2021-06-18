@@ -11,4 +11,8 @@ const padLeadingZeros: (num: string, size: number) => string = (num, size) => {
   return str;
 };
 
-export default { formatDate, padLeadingZeros };
+const newFormatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
+  year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit',
+}).format(date);
+
+export default { formatDate, padLeadingZeros, newFormatDate };

@@ -55,23 +55,11 @@ const Table: FC<TableProps> = ({
                   {column.render('Header')}
                   {/* Add a sort direction indicator */}
                   <span>
-                    {column.isSorted ? (
-                      column.isSortedDesc ? (
-                        <img
-                          className="arrow"
-                          src="/assets/icon/arrowDown.svg"
-                          alt=""
-                        />
-                      ) : (
-                        <img
-                          className="arrow"
-                          src="/assets/icon/arrowUp.svg"
-                          alt=""
-                        />
-                      )
-                    ) : (
-                      ''
-                    )}
+                    <img
+                      className="arrow"
+                      src="/assets/icon/sorting.svg"
+                      alt=""
+                    />
                   </span>
                 </th>
               ))}

@@ -1,0 +1,21 @@
+@import "theme/variable";
+@import "base/variable";
+
+.pdAlert {
+  background: #f4f5f7;
+  border: none;
+  border-radius: 5px;
+  color: #1A1E3C;
+}
+
+.pdAlertDanger {
+  border-left: 4px solid #da1e5e;
+  font-family: Circular Std;
+  font-style: normal;
+  font-weight: 450;
+  font-size: 12px;
+}
+
+.pdBadgeWarning {
+  background: #dac41e;
+}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { IPLDManager } from 'xdv-universal-wallet-core';
 import { Card, Button } from 'reactstrap';
@@ -10,6 +11,10 @@ import { ethers } from 'ethers';
 import { forkJoin } from 'rxjs';
 import { debounce } from 'rxjs/operators';
 import ProfileStateModel from '@/models/profileStateModel';
+import dataAgreementModel from '@/models/dataAgreementModel';
+import EventAgreementModel from '@/models/eventAgreementModel';
+import { any } from 'prop-types';
+import classNames from 'classnames';
 import getContractTemplate from '../redux/actions/template';
 import Table from '../components/agreements/Table';
 
@@ -20,11 +25,9 @@ import loadAgreements, { updateAgreement } from '../redux/actions/agreement';
 import { agreementStatus, columnsAgreement, COUNTER_PARTY_NAME_FIELD } from '../utils/agreement';
 import helper from '../utils/helper';
 import AgreementModel from '../models/agreementModel';
-import dataAgreementModel from '@/models/dataAgreementModel';
-import EventAgreementModel from '@/models/eventAgreementModel';
-import { any } from 'prop-types';
 
 const Agreements: React.FC = () => {
+  const router = useRouter();
   const columns = React.useMemo(() => columnsAgreement, []);
   const dispatch = useDispatch();
   const agreements = useSelector(
@@ -36,6 +39,8 @@ const Agreements: React.FC = () => {
   const { account } = useWallet();
   const { contract } = useContract();
   const [openTemplateSelector, setOpenTemplateSelector] = useState(false);
+  const [statusFilter, setStatusFilter] = useState(undefined);
+  const [filterSeacth, setFilterSeacth] = useState('');
   const [openPreviewModal, setOpenPreviewModal] = useState(false);
   const [openDetailModal, setOpenDetailModal] = useState(false);
   const [currentAgreement, setCurrentAgreement] = useState<AgreementModel>(
@@ -93,8 +98,8 @@ const Agreements: React.FC = () => {
             newAgreement.data.documentName = myIpfsItems[index]?.value.name;
             newAgreement.data.toSigner = myEvents[index].args.recipient;
             newAgreement.data.fileString = atob(myIpfsItems[index]?.value.content);
-            newAgreement.event.updatedAt = helper.formatDate(new Date());
-            newAgreement.event.createdAt = helper.formatDate(new Date());
+            newAgreement.event.updatedAt = helper.newFormatDate(new Date());
+            newAgreement.event.createdAt = helper.newFormatDate(new Date());
             newAgreement.event.cid = myDocument.fileHash;
             newAgreement.event.status = myDocument.status;
             newAgreements.push(newAgreement);
@@ -124,19 +129,11 @@ const Agreements: React.FC = () => {
 
   const onSignAgreement = () => {
     const agreementToUpdate = currentAgreement;
-    agreementToUpdate.event.status = agreementStatus.SIGNED;
-    // TODO: Helper
-    agreementToUpdate.event.signedOn = new Intl.DateTimeFormat('en-US', {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-      hour12: false,
-    }).format(new Date());
+    agreementToUpdate.event.status = agreementStatus.ACCEPTED;
+    helper.newFormatDate(new Date());
     dispatch(updateAgreement(currentAgreement?.event.cid, agreementToUpdate));
     setOpenDetailModal(false);
+    router.push('/agreement-details');
   };
 
   const onRejectAgreement = () => {
@@ -150,7 +147,8 @@ const Agreements: React.FC = () => {
     setCurrentAgreement(
       agreements.find(({ event }) => event.cid === currentId),
     );
-    setOpenDetailModal(true);
+    // setOpenDetailModal(true);
+    router.push('/agreement-details');
   };
 
   const onOpenFile = (id: number) => {
@@ -161,6 +159,19 @@ const Agreements: React.FC = () => {
     }
     setOpenDetailModal(false);
     setOpenPreviewModal(true);
+  };
+
+  const filterStatus = (status) => {
+    setStatusFilter(status);
+    const filterByStatus = agreements.filter(
+      (agreement) => agreement.event.status === status,
+    );
+    if (filterByStatus.length > 0) {
+      dispatch(loadAgreements(filterByStatus));
+    }
+  };
+  const SearchAgreements = (e) => {
+    setFilterSeacth(e.target.value);
   };
 
   const onNewAgreementClick = () => {
@@ -178,38 +189,98 @@ const Agreements: React.FC = () => {
         <div className="row m-0 p-0 h-100">
           {agreements.length > 0
             && (
-            <div className="col-12 py-4 d-flex">
-              <h3 className="d-flex mr-auto">Smart Agreements</h3>
-              <div className="d-flex">
-                <Button className="btn-white mr-2" color="primary">
-                  Send
-                </Button>
-                <Button className="btn-white mr-2" color="primary">
-                  Received
-                </Button>
-                <Button className="btn-white mr-2" color="primary">
-                  <img src="/assets/icon/filter.svg" alt="" />
-                </Button>
-                <div className="form-group has-search">
-                  <img
-                    className="search-icon"
-                    src="/assets/icon/search.svg"
-                    alt=""
-                  />
-                  <input
-                    type="text"
-                    className="form-control input-white"
-                    placeholder="Search"
-                  />
+              <>
+                <div className="col-12 py-4 d-flex">
+                  <h3 className="d-flex mr-auto">Smart Agreements</h3>
+                  <div className="d-flex">
+                    <div className="form-group has-search">
+                      <img
+                        className="search-icon"
+                        src="/assets/icon/search.svg"
+                        alt=""
+                      />
+                      <input
+                        type="text"
+                        className="form-control input-white search-input"
+                        placeholder="Search"
+                        onChange={SearchAgreements}
+                      />
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+                <div className="col-12 mb-5 ml-4 d-flex">
+                  <button
+                    type="button"
+                    className={classNames(['d-flex mr-1 contract-status-no-filter'], {
+                      'contract-status-filter': agreementStatus.DECLINED === statusFilter,
+                    })}
+                    onClick={() => filterStatus(agreementStatus.DECLINED)}
+                  >
+                    <div className="circle-contract-status-declined circle-contract-status mr-3" />
+                    <span>Declined</span>
+                    <span className="ml-3 contract-status-value">
+                      {
+                        (agreements.filter(
+                          (agreement) => agreement.event.status
+                          === agreementStatus.DECLINED,
+                        )
+                        ).length
+                      }
+                    </span>
+                  </button>
+                  <button
+                    type="button"
+                    className={classNames(['d-flex mr-1 contract-status-no-filter'], {
+                      'contract-status-filter': agreementStatus.PENDING_SIGNATURE === statusFilter,
+                    })}
+                    onClick={() => filterStatus(agreementStatus.PENDING_SIGNATURE)}
+                  >
+                    <div className="circle-contract-status-peding circle-contract-status mr-3" />
+                    <span>Pending</span>
+                    <span className="ml-3 contract-status-value">
+                      {
+                        (agreements.filter(
+                          (agreement) => agreement.event.status
+                          === agreementStatus.PENDING_SIGNATURE,
+                        )
+                        ).length
+                      }
+                    </span>
+                  </button>
+                  <button
+                    type="button"
+                    className={classNames(['d-flex mr-1 contract-status-no-filter'], {
+                      'contract-status-filter': agreementStatus.ACCEPTED === statusFilter,
+                    })}
+                    onClick={() => filterStatus(agreementStatus.ACCEPTED)}
+                  >
+                    <div className="circle-contract-status-signed circle-contract-status mr-3" />
+                    <span>Signed</span>
+                    <span className="ml-3 contract-status-value">
+                      {
+                        (agreements.filter(
+                          (agreement) => agreement.event.status
+                          === agreementStatus.ACCEPTED,
+                        )
+                        ).length
+                      }
+                    </span>
+                  </button>
+                </div>
+              </>
             )}
           <div className="col-12">
             <Card className="border-0 content">
               <Table
                 columns={columns}
-                data={agreements.map((agreement) => ({ ...agreement }))}
+                data={agreements.filter(
+                  (agreement) => filterSeacth === '' || agreement.data.counterpartyName.includes(filterSeacth)
+                       || agreement.data.documentName.includes(filterSeacth)
+                       || agreement.data.counterpartyName.toLowerCase().includes(filterSeacth)
+                       || agreement.data.documentName.toLowerCase().includes(filterSeacth)
+                       || agreement.data.counterpartyName.toUpperCase().includes(filterSeacth)
+                       || agreement.data.documentName.toUpperCase().includes(filterSeacth),
+                ).map((agreement) => ({ ...agreement }))}
                 onDetailClick={onDetailClick}
                 onNewAgreementClick={onNewAgreementClick}
                 onOpenFile={onOpenFile}
