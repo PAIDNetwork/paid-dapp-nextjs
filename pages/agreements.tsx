@@ -39,8 +39,8 @@ const Agreements: React.FC = () => {
   const { account } = useWallet();
   const { contract } = useContract();
   const [openTemplateSelector, setOpenTemplateSelector] = useState(false);
-  const [statusFilter, setStatusFilter] = useState(undefined);
-  const [filterSeacth, setFilterSeacth] = useState('');
+  const [statusFilter, setStatusFilter] = useState(null);
+  const [filterSearch, setFilterSearch] = useState('');
   const [openPreviewModal, setOpenPreviewModal] = useState(false);
   const [openDetailModal, setOpenDetailModal] = useState(false);
   const [currentAgreement, setCurrentAgreement] = useState<AgreementModel>(
@@ -133,7 +133,6 @@ const Agreements: React.FC = () => {
     helper.newFormatDate(new Date());
     dispatch(updateAgreement(currentAgreement?.event.cid, agreementToUpdate));
     setOpenDetailModal(false);
-    router.push('/agreement-details');
   };
 
   const onRejectAgreement = () => {
@@ -147,8 +146,12 @@ const Agreements: React.FC = () => {
     setCurrentAgreement(
       agreements.find(({ event }) => event.cid === currentId),
     );
-    // setOpenDetailModal(true);
-    router.push('/agreement-details');
+    router.push({
+      pathname: '/agreement-details',
+      query: {
+        data: JSON.stringify(agreements.find(({ event }) => event.cid === currentId)),
+      },
+    });
   };
 
   const onOpenFile = (id: number) => {
@@ -163,15 +166,9 @@ const Agreements: React.FC = () => {
 
   const filterStatus = (status) => {
     setStatusFilter(status);
-    const filterByStatus = agreements.filter(
-      (agreement) => agreement.event.status === status,
-    );
-    if (filterByStatus.length > 0) {
-      dispatch(loadAgreements(filterByStatus));
-    }
   };
   const SearchAgreements = (e) => {
-    setFilterSeacth(e.target.value);
+    setFilterSearch(e.target.value);
   };
 
   const onNewAgreementClick = () => {
@@ -274,12 +271,13 @@ const Agreements: React.FC = () => {
               <Table
                 columns={columns}
                 data={agreements.filter(
-                  (agreement) => filterSeacth === '' || agreement.data.counterpartyName.includes(filterSeacth)
-                       || agreement.data.documentName.includes(filterSeacth)
-                       || agreement.data.counterpartyName.toLowerCase().includes(filterSeacth)
-                       || agreement.data.documentName.toLowerCase().includes(filterSeacth)
-                       || agreement.data.counterpartyName.toUpperCase().includes(filterSeacth)
-                       || agreement.data.documentName.toUpperCase().includes(filterSeacth),
+                  (agreement) => (statusFilter === null || agreement.event.status === statusFilter)
+                        && (filterSearch === '' || agreement.data.counterpartyName.includes(filterSearch)
+                       || agreement.data.documentName.includes(filterSearch)
+                       || agreement.data.counterpartyName.toLowerCase().includes(filterSearch)
+                       || agreement.data.documentName.toLowerCase().includes(filterSearch)
+                       || agreement.data.counterpartyName.toUpperCase().includes(filterSearch)
+                       || agreement.data.documentName.toUpperCase().includes(filterSearch)),
                 ).map((agreement) => ({ ...agreement }))}
                 onDetailClick={onDetailClick}
                 onNewAgreementClick={onNewAgreementClick}

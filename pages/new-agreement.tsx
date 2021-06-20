@@ -24,6 +24,7 @@ import { useWallet } from 'react-binance-wallet';
 import { IPLDManager } from 'xdv-universal-wallet-core';
 import { ethers } from 'ethers';
 import ConfirmAgreementModal from '@/components/new-agreement/ConfirmAgreementModal';
+import ModalAlert from '@/components/reusable/modalAlert/ModalAlert';
 import PdScrollbar from '../components/reusable/pdScrollbar/PdScrollbar';
 import SmartAgreementFormPanel from '../components/new-agreement/SmartAgreementFormPanel';
 
@@ -105,6 +106,7 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
   const [tooltipIconEdit, setTooltipIconEdit] = useState(false);
   const [agreementTitle, setAgreementTitle] = useState('Untitled Agreement');
   const [openConfirmAgreementModal, setOpenConfirmAgreementModal] = useState(false);
+  const [openAlertModal, setOpenAlertModal] = useState(false);
 
   const {
     register, errors, handleSubmit,
@@ -256,7 +258,7 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
       const info = await tx.wait();
       console.log('info', info);
     } catch (error) {
-      console.log('There was an issue with gas estimation. please try again', error);
+      setOpenAlertModal(true);
     }
     // dispatch(createAgreement(newAgreement));
   };
@@ -396,6 +398,11 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
                 agreementDocument={agreementDocument}
                 name={name}
                 onclick={confirmDocument}
+              />
+              <ModalAlert
+                open={openAlertModal}
+                onClose={() => setOpenAlertModal(false)}
+                message="There was an issue with gas estimation. please try again"
               />
             </div>
           </div>
