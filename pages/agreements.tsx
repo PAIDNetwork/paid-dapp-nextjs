@@ -77,10 +77,13 @@ const Agreements: React.FC = () => {
             jsonSchemas.forEach((jsonSchema) => {
               const { properties } = jsonSchema;
               Object.keys(properties).forEach((objKey) => {
-                if (properties[objKey].custom === 'address') {
-                  types.push('address');
+                // if (properties[objKey].custom === 'address') {
+                //   types.push('address');
+                // }
+                if (properties[objKey].type === 'number') {
+                  types.push('uint');
                 } else {
-                  types.push(properties[objKey].type);
+                  types.push('string');
                 }
                 if (objKey === COUNTER_PARTY_NAME_FIELD) {
                   counterPartyNameIndex = propsIndex;

@@ -219,11 +219,14 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
           //   types.push('address');
           //   values.push(currentFormData[objKey]);
           // }
-          // if (properties[objKey].type === 'number') {
-          //   types.push('uint');
-          //   values.push(currentFormData[objKey]);
-          // }
+          if (properties[objKey].type === 'number') {
+            types.push('uint');
+            values.push(currentFormData[objKey]);
+          }
           if (properties[objKey].type === 'string') {
+            types.push('string');
+            values.push(currentFormData[objKey]);
+          } else {
             types.push('string');
             values.push(currentFormData[objKey]);
           }
