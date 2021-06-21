@@ -595,6 +595,7 @@ const getContractTemplate = (contractName: String): contractTemplate => {
           'counterPartyName',
           'counterPartyAddress',
           'counterPartyEmail',
+          'counterPartyDid',
           'counterPartyWallet',
           'sendWallet',
           'ReceiveWallet',
