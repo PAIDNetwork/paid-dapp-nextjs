@@ -57,7 +57,6 @@ const Agreements: React.FC = () => {
         const filterRec = contract.filters.SignatureRequested(null, null, account);
         const eventsRec = await contract.queryFilter(filterRec);
         const myEvents = [...events, ...eventsRec];
-        console.log('fetchDocuments ==>', myEvents);
         const newAgreements = [];
         const documents = myEvents.map((myEvent) => contract.anchors(myEvent.args.documentId));
         const forkedDocuments = forkJoin(documents).pipe(debounce((x) => x as any)).toPromise();
@@ -90,6 +89,7 @@ const Agreements: React.FC = () => {
               });
             });
             const values = ethers.utils.defaultAbiCoder.decode(types, metadata);
+            console.log('meta ==>', values);
             const newAgreement = {} as AgreementModel;
             newAgreement.data = {} as dataAgreementModel;
             newAgreement.event = {} as EventAgreementModel;
@@ -103,7 +103,6 @@ const Agreements: React.FC = () => {
             newAgreement.event.cid = myDocument.fileHash;
             newAgreement.event.status = myDocument.status;
             newAgreements.push(newAgreement);
-            console.log('agreement', newAgreement);
           } catch (e) {
             console.log(e);
           }
