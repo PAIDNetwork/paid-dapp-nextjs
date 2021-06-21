@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-// import { useDispatch, useSelector } from 'react-redux';
 import { useWallet } from 'react-binance-wallet';
 import { Card, Button } from 'reactstrap';
 import classNames from 'classnames';
 import AgreementPreviewModal from '@/components/agreements/AgreementPreviewModal';
 import AgreementConfirmSignModal from '@/components/agreements/AgreementConfirmSignModal';
-import AgreementSignSuccessModal from '@/components/agreements/AgreementSignSuccessModal';
+import AgreementAcceptedSuccessModal from '@/components/agreements/AgreementAcceptedSuccessModal';
 import useContract from '../hooks/useContract';
 import AgreementModel from '../models/agreementModel';
 import { agreementStatus } from '../utils/agreement';
@@ -20,7 +19,7 @@ const AgreementDetails: React.FC = () => {
   const { data } = router.query;
   const { account } = useWallet();
   const [openConfirmSignModal, setOpenConfirmSignModal] = useState(false);
-  const [openConfirmDeclinedModal, setOpenConfirmDeclinedModal] = useState(false);
+  const [openConfirmDeclineModal, setOpenConfirmDeclineModal] = useState(false);
   const [openSignSuccessModal, setOpenSignSuccessModal] = useState(false);
   const [openDeclinedSuccessModal, setOpenDeclinedSuccessModal] = useState(false);
   const [openPreviewModal, setOpenPreviewModal] = useState(false);
@@ -37,7 +36,10 @@ const AgreementDetails: React.FC = () => {
 
   const onCloseConfirmSignModal = () => {
     setOpenConfirmSignModal(false);
-    setOpenConfirmDeclinedModal(false);
+  };
+
+  const onCloseConfirmDeclineModal = () => {
+    setOpenConfirmDeclineModal(false);
   };
 
   const onSign = async () => {
@@ -50,10 +52,10 @@ const AgreementDetails: React.FC = () => {
     }
   };
 
-  const onDeclined = async () => {
+  const onDecline = async () => {
     try {
       await contractSigner.signAgreement(currentAgreement?.event.cid, false);
-      setOpenConfirmDeclinedModal(false);
+      setOpenConfirmDeclineModal(false);
       setOpenDeclinedSuccessModal(true);
     } catch (error) {
       console.log(error);
@@ -62,6 +64,10 @@ const AgreementDetails: React.FC = () => {
 
   const onCloseSignSuccessModal = () => {
     setOpenSignSuccessModal(false);
+    router.push('/agreements');
+  };
+
+  const onCloseDeclinedSuccessModal = () => {
     setOpenDeclinedSuccessModal(false);
     router.push('/agreements');
   };
@@ -154,7 +160,7 @@ const AgreementDetails: React.FC = () => {
                   && currentAgreement?.event.status === agreementStatus.PENDING_SIGNATURE) && (
                     <>
                       <Button
-                        onClick={() => setOpenConfirmDeclinedModal(true)}
+                        onClick={() => setOpenConfirmDeclineModal(true)}
                         className="mr-1"
                         color="danger"
                       >
@@ -189,21 +195,21 @@ const AgreementDetails: React.FC = () => {
       />
 
       <AgreementConfirmSignModal
-        open={openConfirmDeclinedModal}
-        onClose={onCloseConfirmSignModal}
-        onClick={onDeclined}
-        message="You’re about to declined the agreement. Do you want to proceed?"
+        open={openConfirmDeclineModal}
+        onClose={onCloseConfirmDeclineModal}
+        onClick={onDecline}
+        message="You’re about to decline the agreement. Do you want to proceed?"
       />
 
-      <AgreementSignSuccessModal
+      <AgreementAcceptedSuccessModal
         open={openSignSuccessModal}
         onClose={onCloseSignSuccessModal}
-        message="You have successfully sign the agreement."
+        message="You have successfully approved the agreement."
       />
 
-      <AgreementSignSuccessModal
+      <AgreementAcceptedSuccessModal
         open={openDeclinedSuccessModal}
-        onClose={onCloseSignSuccessModal}
+        onClose={onCloseDeclinedSuccessModal}
         message="You have successfully declined the agreement."
       />
     </>

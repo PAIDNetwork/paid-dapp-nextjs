@@ -395,6 +395,7 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
               )}
               <ConfirmAgreementModal
                 open={openConfirmAgreementModal}
+                agreementData={agreementData}
                 agreementDocument={agreementDocument}
                 name={name}
                 onclick={confirmDocument}

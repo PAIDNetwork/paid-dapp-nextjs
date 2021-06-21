@@ -34,10 +34,6 @@ const AgreementDetailModal: FC<DetailAgreementModalProps> = ({
 
   const titleStatus = { 1: 'Pending', 2: 'Declined', 3: 'Signed' };
 
-  useEffect(() => {
-    console.log(currentAgreement);
-  }, []);
-
   return (
     <Modal
       isOpen={open}

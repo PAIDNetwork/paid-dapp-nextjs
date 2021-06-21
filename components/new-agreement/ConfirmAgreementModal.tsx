@@ -7,11 +7,12 @@ interface ConfirmAgreementModalProps {
   open: boolean;
   name: string;
   agreementDocument: any;
+  agreementData: any;
   onclick: any;
 }
 
 const ConfirmAgreementModal: FC<ConfirmAgreementModalProps> = ({
-  open, name, agreementDocument, onclick,
+  open, name, agreementDocument, onclick, agreementData,
 }: ConfirmAgreementModalProps) => {
   const [openReviewAgreementModal, setOpenReviewAgreementModal] = useState(false);
   const { formatDate } = helper;
@@ -38,7 +39,7 @@ const ConfirmAgreementModal: FC<ConfirmAgreementModalProps> = ({
             {' '}
             wallet address:
           </p>
-          <p className="modal-agreement-text"><span>0x3873faa35694B18b6517fd73f05A1CafDaE4cBdD</span></p>
+          <p className="modal-agreement-text"><span>{agreementData?.counterPartyWallet}</span></p>
           <p className="modal-agreement-text mb-5">
             The aggrement is pending for approval for nine days from the date of the offer and will
             not be valid if there is any change in the conditions of the confidentiality agreement.

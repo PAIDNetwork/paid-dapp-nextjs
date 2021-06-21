@@ -15,7 +15,7 @@ function useContract() {
   const { account, connector, chainId } = useWallet();
   const [contract, setContract] = useState(null);
   const [contractSigner, setContractSigner] = useState(null);
-  const [scrowContract, setScrowContract] = useState(null);
+  const [escrowContract, setEscrowContract] = useState(null);
   const [tokenContract, setTokenContract] = useState(null);
   const [tokenSignerContract, setTokenSignerContract] = useState(null);
   const metamask = (window as any).ethereum;
@@ -44,11 +44,11 @@ function useContract() {
       setContractSigner(ContractSigner);
     };
 
-    const handleScrowContract = () => {
+    const handleEscrowContract = () => {
       const currentContract = new ethers.Contract(
         process.env.NEXT_PUBLIC_CONTRACT_ESCROW_ADDRESS, TokenEscrow.abi, provider,
       );
-      setScrowContract(currentContract);
+      setEscrowContract(currentContract);
     };
 
     const handleTokenContract = () => {
@@ -68,7 +68,7 @@ function useContract() {
 
     handleContract();
     handleContractSigner();
-    handleScrowContract();
+    handleEscrowContract();
     handleTokenContract();
     handleTokenSignerContract();
   }, []); // Empty array ensures that effect is only run on mount
@@ -76,7 +76,7 @@ function useContract() {
   return {
     contract,
     contractSigner,
-    scrowContract,
+    escrowContract,
     tokenContract,
     tokenSignerContract,
   };

@@ -3,17 +3,17 @@ import {
   Modal, Button, ModalBody,
 } from 'reactstrap';
 
-interface AgreementSignSuccessModalProps {
+interface AgreementAcceptedSuccessModalProps {
   open: boolean;
   onClose: any;
   message: string;
 }
 
-const AgreementSignSuccessModal: FC<AgreementSignSuccessModalProps> = ({
+const AgreementAcceptedSuccessModal: FC<AgreementAcceptedSuccessModalProps> = ({
   open,
   onClose,
   message,
-}: AgreementSignSuccessModalProps) => (
+}: AgreementAcceptedSuccessModalProps) => (
   <>
     <Modal
       isOpen={open}
@@ -49,4 +49,4 @@ const AgreementSignSuccessModal: FC<AgreementSignSuccessModalProps> = ({
   </>
 );
 
-export default AgreementSignSuccessModal;
+export default AgreementAcceptedSuccessModal;

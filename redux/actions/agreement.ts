@@ -1,5 +1,4 @@
 import AgreementModel from '@/models/agreementModel';
-// import agreementsData from '../../data/agreements';
 import AgreementActionTypes from '../actionTypes/agreement';
 
 const getAgreementInfoByIpfs = (ipfsContent: string) => {

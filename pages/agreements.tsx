@@ -89,7 +89,6 @@ const Agreements: React.FC = () => {
               });
             });
             const values = ethers.utils.defaultAbiCoder.decode(types, metadata);
-            console.log('meta ==>', values);
             const newAgreement = {} as AgreementModel;
             newAgreement.data = {} as dataAgreementModel;
             newAgreement.event = {} as EventAgreementModel;
