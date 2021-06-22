@@ -35,3 +35,6 @@ env-config.js
 
 # vercel
 .vercel
+
+# Typechain
+types/typechain
