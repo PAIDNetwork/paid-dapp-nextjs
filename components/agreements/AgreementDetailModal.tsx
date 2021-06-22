@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import {
   Modal, ModalHeader, Button, ModalBody,
 } from 'reactstrap';
@@ -7,7 +7,6 @@ import AgreementModel from '../../models/agreementModel';
 import ButtonCloseModal from '../reusable/ButtonCloseModal';
 
 import { agreementStatus } from '../../utils/agreement';
-
 
 interface DetailAgreementModalProps {
   currentAgreement: AgreementModel;
@@ -28,8 +27,8 @@ const AgreementDetailModal: FC<DetailAgreementModalProps> = ({
 }: DetailAgreementModalProps) => {
   const statusButtonClass = classNames('btn-status mr-3', {
     'btn-danger': currentAgreement?.event.status === agreementStatus.DECLINED,
-    'btn-success': currentAgreement?.event.status === agreementStatus.SIGNED,
-    'btn-info': currentAgreement?.event.status === agreementStatus.PENDING,
+    'btn-success': currentAgreement?.event.status === agreementStatus.ACCEPTED,
+    'btn-info': currentAgreement?.event.status === agreementStatus.PENDING_SIGNATURE,
   });
 
   const titleStatus = { 1: 'Pending', 2: 'Declined', 3: 'Signed' };
@@ -95,7 +94,7 @@ const AgreementDetailModal: FC<DetailAgreementModalProps> = ({
             </div>
           </div>
           <div className="col-12 text-center mt-4 mx-auto buttons px-1">
-            {currentAgreement?.event.status === agreementStatus.PENDING ? (
+            {currentAgreement?.event.status === agreementStatus.PENDING_SIGNATURE ? (
               <>
                 <Button onClick={() => onOpenPDF()} className="btn btn-action mr-1">Open PDF</Button>
                 <Button
