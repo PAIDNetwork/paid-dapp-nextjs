@@ -4,6 +4,7 @@ import { useWallet } from 'react-binance-wallet';
 import { JsonFragment } from "@ethersproject/abi";
 import { getTokenEscrowAbi, getSmartAgreementAnchoringAbi } from '@master-ventures/paid-dapp-contracts';
 import PaidTokenContract from '../contracts/PaidTokenContract.json';
+import { SmartAgreementAnchoring, TokenEscrow } from 'types/typechain';
 
 declare global {
   interface Window {
@@ -13,9 +14,9 @@ declare global {
 
 function useContract() {
   const { account, connector, chainId } = useWallet();
-  const [contract, setContract] = useState(null);
-  const [contractSigner, setContractSigner] = useState(null);
-  const [escrowContract, setEscrowContract] = useState(null);
+  const [contract, setContract] = useState<SmartAgreementAnchoring>(null);
+  const [contractSigner, setContractSigner] = useState<SmartAgreementAnchoring>(null);
+  const [escrowContract, setEscrowContract] = useState<TokenEscrow>(null);
   const [tokenContract, setTokenContract] = useState(null);
   const [tokenSignerContract, setTokenSignerContract] = useState(null);
   const metamask = (window as any).ethereum;
@@ -31,7 +32,7 @@ function useContract() {
       const abi = getSmartAgreementAnchoringAbi<JsonFragment>();
       const Contract = new ethers.Contract(
         process.env.NEXT_PUBLIC_CONTRACT_ANCHORINNG_ADDRESS, abi, provider,
-      );
+      ) as SmartAgreementAnchoring;
       setContract(Contract);
     };
 
@@ -42,7 +43,7 @@ function useContract() {
         process.env.NEXT_PUBLIC_CONTRACT_ANCHORINNG_ADDRESS,
         abi,
         signer,
-      );
+      ) as SmartAgreementAnchoring;
       setContractSigner(ContractSigner);
     };
 
@@ -50,7 +51,7 @@ function useContract() {
       const abi = getTokenEscrowAbi<JsonFragment>()
       const currentContract = new ethers.Contract(
         process.env.NEXT_PUBLIC_CONTRACT_ESCROW_ADDRESS, abi, provider,
-      );
+      ) as TokenEscrow;
       setEscrowContract(currentContract);
     };
 
