@@ -15,7 +15,7 @@ const agreementsData: AgreementModel[] = [
       to: 2,
       agreementFormTemplateId: 1,
       cid: 1,
-      status: agreementStatus.PENDING,
+      status: agreementStatus.PENDING_SIGNATURE,
       createdAt: '12/21/2020 18:16:53',
       updatedAt: '12/21/2020 18:16:53',
     },

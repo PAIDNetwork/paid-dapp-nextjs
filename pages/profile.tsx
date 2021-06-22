@@ -62,7 +62,7 @@ const Profile: FC = () => {
               passphrase,
               accountName,
             });
-            const acct = await xdvWallet.getAccount();
+            const acct = await xdvWallet.getAccount() as any;
             const keystore = acct.keystores.find((el) => el.walletId === profileData.walletId);
             const walletDid = await create3ID(keystore);
 
@@ -116,7 +116,7 @@ const Profile: FC = () => {
         accountName,
       });
 
-      const acct = await xdvWallet.getAccount();
+      const acct = await xdvWallet.getAccount() as any;
       const walletId = await xdvWallet.addWallet();
       const keystore = acct.keystores.find((el) => el.walletId === walletId);
 
