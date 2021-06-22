@@ -202,7 +202,7 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
       const cid = await ipfsManager.addSignedObject(fil,
         {
           name: agreementTitle,
-          contentType: '',
+          contentType: 'text/html',
           lastModified: new Date(),
         });
 
@@ -211,14 +211,6 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
       jsonSchemas.forEach((jsonSchema) => {
         const { properties } = jsonSchema;
         Object.keys(properties).forEach((objKey) => {
-          // if (ethers.utils.isAddress(currentFormData[objKey])) {
-          //   types.push('address');
-          //   values.push(currentFormData[objKey]);
-          // }
-          // if (properties[objKey].custom === 'address') {
-          //   types.push('address');
-          //   values.push(currentFormData[objKey]);
-          // }
           if (properties[objKey].type === 'number') {
             types.push('uint');
             values.push(currentFormData[objKey]);

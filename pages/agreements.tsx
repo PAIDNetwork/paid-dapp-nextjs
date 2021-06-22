@@ -77,9 +77,6 @@ const Agreements: React.FC = () => {
             jsonSchemas.forEach((jsonSchema) => {
               const { properties } = jsonSchema;
               Object.keys(properties).forEach((objKey) => {
-                // if (properties[objKey].custom === 'address') {
-                //   types.push('address');
-                // }
                 if (properties[objKey].type === 'number') {
                   types.push('uint');
                 } else {
