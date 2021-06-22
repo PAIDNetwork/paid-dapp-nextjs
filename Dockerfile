@@ -9,15 +9,7 @@ COPY package.json .
 # Execute npm to actually install dependencies
 RUN npm install
 # Copy specific files and folders from source to the dest path in the image's filesystem.
-COPY components components
-COPY data data
-COPY hooks hooks
-COPY models models
-COPY pages pages
-COPY public public
-COPY redux redux
-COPY sass sass
-COPY utils utils
+COPY . .
 COPY *.js *.json *.ts *.lock ./
 
 # Use the base stage to produce a build
