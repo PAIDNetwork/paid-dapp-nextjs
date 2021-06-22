@@ -1,5 +1,4 @@
 import AgreementModel from '@/models/agreementModel';
-import agreementsData from '../../data/agreements';
 import AgreementActionTypes from '../actionTypes/agreement';
 
 const getAgreementInfoByIpfs = (ipfsContent: string) => {
@@ -11,7 +10,7 @@ const getAgreementInfoByIpfs = (ipfsContent: string) => {
   return { documentName, partyAName, partyBName };
 };
 
-const loadAgreements = () => (dispatch: any) => {
+const loadAgreements = (agreementsData: Array<any>) => (dispatch: any) => {
   dispatch({
     type: AgreementActionTypes.LOAD_AGREEMENTS,
     payload: { agreements: agreementsData },

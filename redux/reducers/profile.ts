@@ -6,7 +6,7 @@ const initialState: ProfileStateModel = {
   profile: {
     name: '',
     address: '',
-    did: '',
+    did: undefined,
   },
   loading: false,
   error: '',

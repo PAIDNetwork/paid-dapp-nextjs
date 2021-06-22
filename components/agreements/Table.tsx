@@ -55,23 +55,11 @@ const Table: FC<TableProps> = ({
                   {column.render('Header')}
                   {/* Add a sort direction indicator */}
                   <span>
-                    {column.isSorted ? (
-                      column.isSortedDesc ? (
-                        <img
-                          className="arrow"
-                          src="/assets/icon/arrowDown.svg"
-                          alt=""
-                        />
-                      ) : (
-                        <img
-                          className="arrow"
-                          src="/assets/icon/arrowUp.svg"
-                          alt=""
-                        />
-                      )
-                    ) : (
-                      ''
-                    )}
+                    <img
+                      className="arrow"
+                      src="/assets/icon/sorting.svg"
+                      alt=""
+                    />
                   </span>
                 </th>
               ))}
@@ -86,11 +74,11 @@ const Table: FC<TableProps> = ({
             });
             const statusButtonClass = classNames('btn-status mr-3', {
               'btn-danger': row.original.event.status === agreementStatus.DECLINED,
-              'btn-success': row.original.event.status === agreementStatus.SIGNED,
-              'btn-info': row.original.event.status === agreementStatus.PENDING,
+              'btn-success': row.original.event.status === agreementStatus.ACCEPTED,
+              'btn-info': row.original.event.status === agreementStatus.PENDING_SIGNATURE,
             });
 
-            const titleStatus = { 1: 'Pending', 2: 'Declined', 3: 'Signed' };
+            const titleStatus = { [agreementStatus.PENDING_SIGNATURE]: 'Pending', [agreementStatus.DECLINED]: 'Declined', [agreementStatus.ACCEPTED]: 'Signed' };
             return (
               <tr
                 key={`${rowIndex}-row`}

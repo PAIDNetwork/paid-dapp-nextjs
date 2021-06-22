@@ -23,9 +23,9 @@ export const columnsAgreement = [
 
 // no-unused-vars
 export enum agreementStatus {
-  PENDING = 1,
-  DECLINED = 2,
-  SIGNED = 3,
+  PENDING_SIGNATURE,
+  ACCEPTED,
+  DECLINED,
 }
 
 export const PARTY_NAME_FIELD = 'partyName';

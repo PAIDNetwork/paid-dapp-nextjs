@@ -1,12 +1,7 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Provider, useSelector, useDispatch } from 'react-redux';
-import { useWallet, UseWalletProvider } from 'use-wallet';
-import {
-  BscConnector,
-  UserRejectedRequestError,
-  ConnectionRejectedError,
-} from '@binance-chain/bsc-connector';
+import { WalletProvider, useWallet } from 'react-binance-wallet';
 
 import PrivateLayout from '../components/Layout/PrivateLayout';
 import { setCurrentWallet, doDisconnected } from '../redux/actions/wallet';
@@ -21,7 +16,6 @@ function MyApp({ Component, pageProps }) {
   const store = useStore(pageProps.initialReduxState);
 
   const ConnectOptions = () => {
-    const wallet = useWallet();
     const { account, connect, reset } = useWallet();
 
     const dispatch = useDispatch();
@@ -31,7 +25,7 @@ function MyApp({ Component, pageProps }) {
     useEffect(() => {
       if (walletReducer.provider) {
         if (walletReducer.provider === 'meta') {
-          wallet.connect();
+          connect('injected');
         } else {
           connect(walletReducer.provider);
         }
@@ -39,7 +33,7 @@ function MyApp({ Component, pageProps }) {
     }, [walletReducer.provider]);
 
     useEffect(() => {
-      if (!walletReducer.currentWallet && account && !walletReducer.isDisconnecting  ) {
+      if (!walletReducer.currentWallet && account && !walletReducer.isDisconnecting) {
         dispatch(setCurrentWallet(account, router));
       }
     }, [account, !walletReducer.currentWallet]);
@@ -51,12 +45,6 @@ function MyApp({ Component, pageProps }) {
         router.push('/');
       }
     }, [account, walletReducer.isDisconnecting]);
-
-    // useEffect(() => {
-    //   return () => {
-    //     dispatch(doDisconnect());
-    //   };
-    // }, []);
 
     return (
       <>
@@ -84,23 +72,9 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <Provider store={store}>
-      <UseWalletProvider
-        connectors={{
-          bsc: {
-            web3ReactConnector() {
-              return new BscConnector({ supportedChainIds: [56, 97] });
-            },
-            handleActivationError(err) {
-              if (err instanceof UserRejectedRequestError) {
-                return new ConnectionRejectedError();
-              }
-              return null;
-            },
-          },
-        }}
-      >
+      <WalletProvider chainIds={[1, 4, 56, 97]}>
         <ConnectOptions />
-      </UseWalletProvider>
+      </WalletProvider>
     </Provider>
   );
 }

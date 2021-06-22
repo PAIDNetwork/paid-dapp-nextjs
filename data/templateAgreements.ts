@@ -2,23 +2,23 @@ import TemplateAgreementModel from '../models/templateAgreementModel';
 
 const templateAgreements: TemplateAgreementModel[] = [
   {
-    code: 'nda',
+    code: '001',
     name: 'Mutual NDA',
   },
   {
-    code: 'advisor',
+    code: '002',
     name: 'CIIA',
   },
   {
-    code: 'consulting',
+    code: '003',
     name: 'Consulting',
   },
   {
-    code: 'referral',
+    code: '004',
     name: 'Referral',
   },
   {
-    code: 'saft',
+    code: '005',
     name: 'SAFT',
   },
 ];

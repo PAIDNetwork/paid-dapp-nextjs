@@ -111,7 +111,19 @@ const SmartAgreementsForm: FC<SmartAgreementsFormProps> = ({
   ]);
   return (
     <>
-      {mapTypeToComponent.get(type) ?? (
+      {dataName && jsonSchemas ? (
+        <PdJsonSchemaForm
+          dataName={dataName}
+          title={title}
+          jsonSchemas={jsonSchemas}
+          uiSchema={uiSchema}
+          type={type}
+          onChange={onChangeFields}
+          activePageIndex={activePageIndex}
+          setActivePageIndex={setActivePageIndex}
+          onSubmit={onReview}
+        />
+      ) : (
         <span>Not found Smart Agreement form</span>
       )}
     </>

@@ -6,12 +6,12 @@ import ReferalAgreement from './referral-agreement.html';
 import Saft from './saft.html';
 
 enum contractsTemplates {
-  TemplateNda = 'nda',
-  TemplateAdvisorAgreement = 'advisor',
-  TemplateCiia = 'ciia',
-  TemplateConsultingAgreement = 'consulting',
-  TemplateReferalAgreement = 'referral',
-  TemplateSaft = 'saft',
+  TemplateNda = '001',
+  TemplateCiia = '002',
+  TemplateConsultingAgreement = '003',
+  TemplateReferalAgreement = '004',
+  TemplateSaft = '005',
+  TemplateAdvisorAgreement = '006',
 }
 
 interface contractTemplate {
@@ -47,6 +47,7 @@ const getContractTemplate = (contractName: String): contractTemplate => {
       partyWallet: {
         title: 'Wallet address:',
         type: 'string',
+        custom: 'address',
         readOnly: true,
       },
     },
@@ -64,9 +65,14 @@ const getContractTemplate = (contractName: String): contractTemplate => {
         type: 'string',
         pattern: '[^@\\s]+@[^@\\s]+\\.[^@\\s]+',
       },
+      counterPartyDid: {
+        title: 'DID:',
+        type: 'string',
+      },
       counterPartyWallet: {
         title: 'Wallet address:',
         type: 'string',
+        custom: 'address',
       },
     },
     wallet: {
@@ -589,6 +595,7 @@ const getContractTemplate = (contractName: String): contractTemplate => {
           'counterPartyName',
           'counterPartyAddress',
           'counterPartyEmail',
+          'counterPartyDid',
           'counterPartyWallet',
           'sendWallet',
           'ReceiveWallet',

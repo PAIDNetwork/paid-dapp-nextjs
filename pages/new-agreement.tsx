@@ -19,6 +19,12 @@ import { setAgreementReviewed, setIsEditing } from 'redux/actions';
 import AgreementModel from '@/models/agreementModel';
 import templateAgreements from 'data/templateAgreements';
 import { createAgreement } from 'redux/actions/agreement';
+import useContract from 'hooks/useContract';
+import { useWallet } from 'react-binance-wallet';
+import { IPLDManager } from 'xdv-universal-wallet-core';
+import { ethers } from 'ethers';
+import ConfirmAgreementModal from '@/components/new-agreement/ConfirmAgreementModal';
+import ModalAlert from '@/components/reusable/modalAlert/ModalAlert';
 import PdScrollbar from '../components/reusable/pdScrollbar/PdScrollbar';
 import SmartAgreementFormPanel from '../components/new-agreement/SmartAgreementFormPanel';
 
@@ -69,7 +75,7 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
   );
 
   const {
-    name, email, address,
+    name, email, did,
   } = useSelector(
     (state: { profileReducer: ProfileStateModel }) => state.profileReducer.profile,
   );
@@ -99,10 +105,20 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
   const [tooltipEditTitle, setTooltipEditTitle] = useState(false);
   const [tooltipIconEdit, setTooltipIconEdit] = useState(false);
   const [agreementTitle, setAgreementTitle] = useState('Untitled Agreement');
+  const [openConfirmAgreementModal, setOpenConfirmAgreementModal] = useState(false);
+  const [openAlertModal, setOpenAlertModal] = useState(false);
 
   const {
     register, errors, handleSubmit,
   } = useForm();
+
+  const { account } = useWallet();
+  const {
+    contract,
+    contractSigner,
+    tokenContract,
+    tokenSignerContract,
+  } = useContract();
 
   useEffect(() => {
     const templateData = getContractTemplate(templateTypeCode);
@@ -116,8 +132,7 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
   useEffect(() => {
     const data = smartAgreementsState[dataName];
     if (data) {
-      data[AGREEMENT_TITLE_FIELD] = agreementTitle;
-      if (data[PARTY_NAME_FIELD] === '' || !isEditing) {
+      if (data[PARTY_NAME_FIELD] === undefined || data[PARTY_NAME_FIELD] === null || data[PARTY_NAME_FIELD] === '') {
         data[PARTY_NAME_FIELD] = isEditing ? `${name}` : '';
         data[PARTY_EMAIL_FIELD] = isEditing ? email : '';
         data[PARTY_ADDRESS_FIELD] = '';
@@ -126,7 +141,7 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
         data[COUNTER_PARTY_EMAIL_FIELD] = '';
         data[COUNTER_PARTY_ADDRESS_FIELD] = '';
         data[COUNTER_PARTY_WALLET_FIELD] = '';
-        data[AGREEMENT_CREATE_DATE_FIELD] = isEditing ? format(new Date(), 'yyyy/MM/dd') : '';
+        data[COUNTER_PARTY_WALLET_FIELD] = '';
       }
     }
     setAgreementData(data);
@@ -179,49 +194,71 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
     setEditTitle(false);
   };
 
-  const onSubmitForm = () => {
-    let maxCid = 0;
-    if (agreements.length) {
-      maxCid = Math.max(...agreements.map(({ event }) => event.cid));
+  const onSubmitForm = async () => {
+    try {
+      const ipfsManager = new IPLDManager(did);
+      await ipfsManager.start(process.env.NEXT_PUBLIC_IPFS_URL);
+      const fil = Buffer.from(renderToString(agreementTemplate()));
+      const cid = await ipfsManager.addSignedObject(fil,
+        {
+          name: agreementTitle,
+          contentType: 'text/html',
+          lastModified: new Date(),
+        });
+
+      const types = [];
+      const values = [];
+      jsonSchemas.forEach((jsonSchema) => {
+        const { properties } = jsonSchema;
+        Object.keys(properties).forEach((objKey) => {
+          if (properties[objKey].type === 'number') {
+            types.push('uint');
+            values.push(currentFormData[objKey]);
+          }
+          if (properties[objKey].type === 'string') {
+            types.push('string');
+            values.push(currentFormData[objKey]);
+          } else {
+            types.push('string');
+            values.push(currentFormData[objKey]);
+          }
+        });
+      });
+      const metadata = ethers.utils.defaultAbiCoder.encode(
+        types,
+        values,
+      );
+
+      const fee = await contract.fee();
+      const escrowAddress = await contract.escrow();
+      await tokenSignerContract.increaseAllowance(escrowAddress, fee.toString());
+      const proposerDID = did.id;
+      const recipientAddresses = [agreementData.counterPartyWallet];
+      const recipientDIDs = [agreementData.counterPartyDid];
+      const filehash = cid.toString();
+      const requiredQuorum = '1';
+      const templateId = templateTypeCode;
+      const validUntil = Math.floor(Date.now() / 1000) + 31557600;
+      const tx = await contractSigner.addDocument(
+        proposerDID,
+        recipientAddresses,
+        recipientDIDs,
+        filehash,
+        requiredQuorum,
+        templateId,
+        metadata,
+        validUntil,
+      );
+      setOpenConfirmAgreementModal(true);
+      const info = await tx.wait();
+      console.log('info', info);
+    } catch (error) {
+      setOpenAlertModal(true);
     }
+    // dispatch(createAgreement(newAgreement));
+  };
 
-    const createdAt = new Intl.DateTimeFormat('en-US', {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-      hour12: false,
-    }).format(new Date());
-
-    const newAgreement: AgreementModel = {
-      transactionHash:
-        '0x2446f1fd773fbb9f080e674b60c6a033c7ed7427b8b9413cf28a2a4a6da9b56c',
-      event: {
-        id: 1,
-        from: 1,
-        to: 2,
-        agreementFormTemplateId: 1,
-        cid: maxCid + 1,
-        status: agreementStatus.PENDING,
-        createdAt,
-        updatedAt: createdAt,
-      },
-      data: {
-        documentName: document().name,
-        counterpartyName: currentFormData.counterPartyName,
-        agreementForm: null,
-        agreementFormTemplateId: templateTypeCode,
-        escrowed: null,
-        validUntil: '12/21/2023',
-        toSigner: null,
-        fromSigner: null,
-        fileString: renderToString(agreementTemplate()),
-      },
-    };
-
-    dispatch(createAgreement(newAgreement));
+  const confirmDocument = () => {
     router.push('/agreements');
   };
 
@@ -351,6 +388,18 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
                   </PdScrollbar>
                 </div>
               )}
+              <ConfirmAgreementModal
+                open={openConfirmAgreementModal}
+                agreementData={agreementData}
+                agreementDocument={agreementDocument}
+                name={name}
+                onclick={confirmDocument}
+              />
+              <ModalAlert
+                open={openAlertModal}
+                onClose={() => setOpenAlertModal(false)}
+                message="There was an issue with gas estimation. please try again"
+              />
             </div>
           </div>
         </div>

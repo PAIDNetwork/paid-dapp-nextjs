@@ -9,7 +9,7 @@ import SaftAgreementData from '@/models/saftAgreementData';
 import SmartAgreementsTypes from '../actionTypes/smartAgreements';
 
 interface SmartAgreementsState {
-  ndaAgreementData: NdaAgreementData;
+  ndaAgreementData: any;
   advisorAgreementData: AdvisorAgreementData;
   ciiaAgreementData: CiiaAgreementData;
   consultingAgreementData: ConsultingAgreementData;
@@ -18,17 +18,7 @@ interface SmartAgreementsState {
 }
 
 const initialState: SmartAgreementsState = {
-  ndaAgreementData: {
-    customTitle: '',
-    partyName: '',
-    partyEmail: '',
-    partyAddress: '',
-    partyWallet: '',
-    counterPartyName: '',
-    counterPartyEmail: '',
-    counterPartyAddress: '',
-    counterPartyWallet: '',
-  },
+  ndaAgreementData: {} as any,
   advisorAgreementData: {
     customTitle: '',
     partyName: '',
