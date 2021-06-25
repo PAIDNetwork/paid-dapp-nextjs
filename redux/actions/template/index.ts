@@ -313,7 +313,7 @@ const getContractTemplate = (contractName: String): contractTemplate => {
       jsonSchemas = [
         {
           type: 'object',
-          title: 'Ciia',
+          title: 'Advisor Agreement',
           properties: {
             ...sharedProperties.party,
           },
