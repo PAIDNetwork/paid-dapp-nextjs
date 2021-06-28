@@ -7,7 +7,7 @@ const templateAgreements: TemplateAgreementModel[] = [
   },
   {
     code: '002',
-    name: 'CIIA',
+    name: 'Advisor Agreement',
   },
   {
     code: '003',

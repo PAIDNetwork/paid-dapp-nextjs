@@ -7,11 +7,11 @@ import Saft from './saft.html';
 
 enum contractsTemplates {
   TemplateNda = '001',
-  TemplateCiia = '002',
+  TemplateAdvisorAgreement = '002',
   TemplateConsultingAgreement = '003',
   TemplateReferalAgreement = '004',
   TemplateSaft = '005',
-  TemplateAdvisorAgreement = '006',
+  TemplateCiia = '006',
 }
 
 interface contractTemplate {
@@ -313,7 +313,7 @@ const getContractTemplate = (contractName: String): contractTemplate => {
       jsonSchemas = [
         {
           type: 'object',
-          title: 'Ciia',
+          title: 'Advisor Agreement',
           properties: {
             ...sharedProperties.party,
           },
