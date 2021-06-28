@@ -7,11 +7,11 @@ import Saft from './saft.html';
 
 enum contractsTemplates {
   TemplateNda = '001',
-  TemplateAdvisorAgreement = '002',
+  TemplateCiia = '002',
   TemplateConsultingAgreement = '003',
   TemplateReferalAgreement = '004',
   TemplateSaft = '005',
-  TemplateCiia = '006',
+  TemplateAdvisorAgreement = '006',
 }
 
 interface contractTemplate {
@@ -163,6 +163,21 @@ const getContractTemplate = (contractName: String): contractTemplate => {
           type: 'object',
           title: 'My information (the "Company")',
           properties: {
+            date: {
+              title: 'Date',
+              type: 'string',
+              format: 'date',
+            },
+            companyName: {
+              title: 'Company Name:',
+              type: 'string',
+              default: '[COMPANY NAME]',
+            },
+            typeCompany: {
+              title: 'Type of company:',
+              type: 'string',
+              default: '[TYPE OF COMPANY]',
+            },
             ...sharedProperties.party,
           },
           required: sharedProperties.required,
@@ -204,25 +219,25 @@ const getContractTemplate = (contractName: String): contractTemplate => {
               title: 'Accepting option',
               enum: ['An Option', 'A Right'],
             },
-            // purchaseOption: {
-            //   type: 'string',
-            //   title: 'Purchase Option',
-            //   enum: ['A Nonstatutory Option', 'A Right'],
-            // },
-            // termsConditions: {
-            //   type: 'string',
-            //   title: 'Terms and Conditions',
-            //   enum: ['Options', 'Restricted stock purchase awards'],
-            // },
-            // stockPlanName: {
-            //   title: 'Stock Plan name',
-            //   type: 'string',
-            // },
-            // stockPlanNameValue: {
-            //   type: 'string',
-            //   title: 'Stock Plan Name Value',
-            //   enum: ['Stock option', 'Restricted stock purchase'],
-            // },
+            purchaseOption: {
+              type: 'string',
+              title: 'Purchase Option',
+              enum: ['A Nonstatutory Option', 'A Right'],
+            },
+            termsConditions: {
+              type: 'string',
+              title: 'Terms and Conditions',
+              enum: ['Options', 'Restricted stock purchase awards'],
+            },
+            stockPlanName: {
+              title: 'Stock Plan name',
+              type: 'string',
+            },
+            stockPlanNameValue: {
+              type: 'string',
+              title: 'Stock Plan Name Value',
+              enum: ['Stock option', 'Restricted stock purchase'],
+            },
           },
           required: [
             'percentageVest',
@@ -258,13 +273,16 @@ const getContractTemplate = (contractName: String): contractTemplate => {
             //   title: 'Terms and Conditions',
             //   enum: ['Exersice', 'Purchase'],
             // },
-            state: {
+            stateOfAdvisor: {
               title: 'State name ',
               type: 'string',
+              default: '[STATE]',
             },
           },
           required: [
-            'state',
+            'stateOfAdvisor',
+            'companyName',
+            'typeCompany',
           ],
         },
       ];
@@ -287,6 +305,12 @@ const getContractTemplate = (contractName: String): contractTemplate => {
         acceptionOption: {
           'ui:widget': 'radio',
         },
+        companyName: {
+          'ui:placeholder': 'Company name',
+        },
+        typeCompany: {
+          'ui:placeholder': 'Type of company',
+        },
         percentageVest: {
           'ui:placeholder': 'Percentage',
         },
@@ -299,7 +323,7 @@ const getContractTemplate = (contractName: String): contractTemplate => {
         numberOfYears: {
           'ui:placeholder': 'Number of years',
         },
-        state: {
+        stateOfAdvisor: {
           'ui:placeholder': 'State name',
         },
         ...sharedProperties.uiSchema,

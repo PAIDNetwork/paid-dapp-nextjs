@@ -1,8 +1,9 @@
 /* eslint-disable no-tabs */
-const AdvisorAgreemt = `<div class="contract" style="width: 100%; padding:10px; background-color:white; color: black;"><span id="customTitle" style="display: none">{{customTitle}}</span><h1 id="title" style="text-align: center;">ADVISOR AGREEMENT</h1><h1 class="western" style="text-align: center;"><span style="font-size: medium;"><span lang="en-US"><strong>&nbsp;<div style="display: inline-block; background-color:#f79632"><span id="partyName" style="display: none">{{partyName}}</span></div></strong></span></span>
+const AdvisorAgreemt = `
+<div class="contract" style="width: 100%; padding:10px; background-color:white; color: black;"><span id="customTitle" style="display: none">{{customTitle}}</span><h1 id="title" style="text-align: center;">{{companyName}}</h1><h1 id="title" style="text-align: center;">ADVISOR AGREEMENT</h1><h1 class="western" style="text-align: center;"><span style="font-size: medium;"><span lang="en-US"><strong>&nbsp;<div style="display: inline-block; background-color:#f79632"><span id="partyName" style="display: none">{{partyName}}</span></div></strong></span></span>
 </h1>
 <p align="center" style="color: black;"><u><strong>Advisor Agreement</strong></u></p>
-<p style="color: black;">This Advisor Agreement (this &ldquo;<u>Agreement</u>&rdquo;) is entered into as of <div style="display: inline-block; background-color:#f79632"><span id="createDate">{{date}}</span></div>, by and between <div style="display: inline-block; background-color:#f79632">{{partyName}}</div> (the &ldquo;<u>Company</u>&rdquo;), and <div style="display: inline-block; background-color:#f79632"><span id="counterPartyName">{{counterPartyName}}</span></div> (&ldquo;<u>Advisor</u>&rdquo;).</p>
+<p style="color: black;">This Advisor Agreement (this &ldquo;<u>Agreement</u>&rdquo;) is entered into as of <div style="display: inline-block; background-color:#f79632"><span id="createDate">{{date}}</span></div>, by and between <div style="display: inline-block; background-color:#f79632">{{companyName}}</div>, a <div style="display: inline-block; background-color:#f79632">{{stateOfAdvisor}}</div> <div style="display: inline-block; background-color:#f79632">{{typeCompany}}</div> (the “Company”), and  <div style="display: inline-block; background-color:#f79632"><span id="counterPartyName">{{counterPartyName}}</span></div> (&ldquo;<u>Advisor</u>&rdquo;).</p>
 <p style="color: black;" align="justify">The parties agree as follows:</p>
 <ol>
     <li>
@@ -95,13 +96,13 @@ const AdvisorAgreemt = `<div class="contract" style="width: 100%; padding:10px; 
             all oral negotiations and prior writings with respect to the subject matter hereof. Any notice required or permitted by this Agreement shall be in writing and shall be deemed sufficient upon delivery, when delivered personally or by overnight
             courier or sent by e-mail or fax (with customary confirmation of receipt), or 48 hours after being deposited in the U.S. mail as certified or registered mail (airmail if sent internationally) with postage prepaid, addressed to the party to
             be notified at such party&rsquo;s address or fax number as set forth on the signature page herein, or as subsequently modified by written notice. The validity, interpretation, construction and performance of this Agreement shall be governed
-            by the laws of the state of <div style="display: inline-block; background-color:#f79632">{{state}}</div>, without giving effect to the principles of conflict of laws. This Agreement may be executed in counterparts, each of which shall be deemed an original, but all of which together will constitute one and
+            by the laws of the state of <div style="display: inline-block; background-color:#f79632">{{stateOfAdvisor}}</div>, without giving effect to the principles of conflict of laws. This Agreement may be executed in counterparts, each of which shall be deemed an original, but all of which together will constitute one and
             the same instrument.</p>
     </li>
 </ol>
 <p style="color: black;" align="center"><em>[Signature Page Follows]</em></p>
 <p style="color: black;">The parties have executed this Agreement as of the date first written above.</p>
-<p style="color: black;"><strong>THE COMPANY:</strong></p>
+<p style="color: black;"><strong>THE COMPANY: <span><div style="display: inline-block; background-color:#f79632">{{companyName}}</div></span></strong></p>
 <p style="color: black;">(Signature)</p>
 <p style="color: black;">________________________________________ </p>
 <p style="color: black;">Name: <span id="partyName"><div style="display: inline-block; background-color:#f79632">{{partyName}}</div></span></p>
