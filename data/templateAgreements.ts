@@ -6,10 +6,6 @@ const templateAgreements: TemplateAgreementModel[] = [
     name: 'Mutual NDA',
   },
   {
-    code: '002',
-    name: 'Advisor Agreement',
-  },
-  {
     code: '003',
     name: 'Consulting',
   },
@@ -20,6 +16,10 @@ const templateAgreements: TemplateAgreementModel[] = [
   {
     code: '005',
     name: 'SAFT',
+  },
+  {
+    code: '006',
+    name: 'Advisor Agreement',
   },
 ];
 
