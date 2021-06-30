@@ -39,7 +39,7 @@ const Index: React.FC = () => {
           <div className="col-12 text-center">
             <img
               className="logo d-block mx-auto pb-4"
-              src="/assets/images/logo.png"
+              src="/assets/images/logo.svg"
               alt=""
             />
             <Button color="danger" onClick={() => onOpenConnectSelector()}>
