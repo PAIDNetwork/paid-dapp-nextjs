@@ -15,4 +15,16 @@ const newFormatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
   year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit',
 }).format(date);
 
-export default { formatDate, padLeadingZeros, newFormatDate };
+const formatDateProfile = (date: Date) => new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'numeric',
+  day: 'numeric',
+  hour: 'numeric',
+  minute: 'numeric',
+  second: 'numeric',
+  hour12: false,
+}).format(date);
+
+export default {
+  formatDate, padLeadingZeros, newFormatDate, formatDateProfile,
+};

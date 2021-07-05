@@ -1,28 +1,29 @@
 import React, { FC } from 'react';
 import PropTypes from 'prop-types';
 
-import ProfileModel from '../../models/profileModel';
 import { useSelector } from 'react-redux';
+import ProfileModel from '../../models/profileModel';
+
 type ProfileCardProps = {
   /** profile information */
   profile: ProfileModel;
 };
 
-
 const ProfileCard: FC<ProfileCardProps> = ({ profile }) => {
+  const isOpen = useSelector((state: any) => state.menuReducer.isOpen);
 
-  const isOpen = useSelector((state: any) => state.menuReducer.isOpen); 
-
-  return(<div className={isOpen ? "profile-component mt-4 mx-auto" : "collapse-profile-component mt-4 mx-auto"}>
-    <img src="/assets/images/marty.jpg" alt="" />
-    <div className="info d-inline-block ml-1">
-      <span className="name d-block">
-        {' '}
-        {profile ? `${profile?.name} ` : 'No data yet' }
-      </span>
-      <p className="network">PAID Network</p>
+  return (
+    <div className={isOpen ? 'profile-component mt-4 mx-auto' : 'collapse-profile-component mt-4 mx-auto'}>
+      <img src="/assets/images/marty.jpg" alt="" />
+      <div className="info d-inline-block ml-1">
+        <span className="name d-block">
+          {' '}
+          {profile ? `${profile?.name} ${profile?.lastName}` : 'No data yet' }
+        </span>
+        <p className="network">PAID Network</p>
+      </div>
     </div>
-  </div>)
+  );
 };
 
 ProfileCard.propTypes = {
