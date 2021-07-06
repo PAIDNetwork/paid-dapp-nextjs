@@ -335,6 +335,7 @@ const getContractTemplate = (contractName: String): contractTemplate => {
       contractTemplate = Ciia;
       dataName = 'ciiaAgreementData';
       jsonSchemas = [
+        
         {
           type: 'object',
           title: 'Advisor Agreement',
@@ -415,6 +416,20 @@ const getContractTemplate = (contractName: String): contractTemplate => {
       contractTemplate = ConsultingAgreement;
       dataName = 'consultingAgreementData';
       jsonSchemas = [
+        {
+          type: 'object',
+          title: 'Date when Agreement will become effective',
+          properties: {
+            date: {
+              title: 'Date',
+              type: 'string',
+              format: 'date',
+            },
+          },
+          required: [
+            'date',
+          ],
+        },
         {
           type: 'object',
           title: 'My information (the “Company”)',
@@ -612,6 +627,7 @@ const getContractTemplate = (contractName: String): contractTemplate => {
       uiSchema = {
         'ui:widget': 'checkbox',
         'ui:order': [
+          'date',
           'partyName',
           'partyAddress',
           'partyEmail',

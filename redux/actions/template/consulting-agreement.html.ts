@@ -1,7 +1,7 @@
 /* eslint-disable no-tabs */
 const ConsultingAgreement = `<div class="contract" style="width: 100%; background-color:white; color: black;"><span id="customTitle" style="display: none">{{customTitle}}</span><h1 id="title" style="text-align: center;">CONSULTING AGREEMENT</h1><p align="center"><strong><span id="partyName" style="display: none">{{partyName}}</span></strong></p>
 <p align="center"><u><strong>CONSULTING AGREEMENT</strong></u></p>
-<p>This Consulting Agreement (this &ldquo;<u>Agreement</u>&rdquo;) is made as of {{date}}, by and between {{partyName}}, (the &ldquo;<u>Company</u>&rdquo;), and {{counterPartyName}}(&ldquo;<u>Consultant</u>&rdquo;).</p>
+<p>This Consulting Agreement (this &ldquo;<u>Agreement</u>&rdquo;) is made as of <span style="background-color:#f79632" id="createDate">{{date}}</span>, by and between <span style="background-color:#f79632">{{partyName}}</span>, (the &ldquo;<u>Company</u>&rdquo;), and <span style="background-color:#f79632">{{counterPartyName}}</span>(&ldquo;<u>Consultant</u>&rdquo;).</p>
 <ol>
 <li> 
 <p><u><strong>Consulting Relationship</strong></u><strong>.</strong> During the term of this Agreement, Consultant will provide consulting services to the Company as described on <u>Exhibit&nbsp;A</u> hereto (the &ldquo;<u>Services</u>&rdquo;). Consultant represents that Consultant is duly licensed (as applicable) and has the qualifications, the experience and the ability to properly perform the Services. Consultant shall use Consultant&rsquo;s best efforts to perform the Services such that the results are satisfactory to the Company.</p>
@@ -86,18 +86,18 @@ const ConsultingAgreement = `<div class="contract" style="width: 100%; backgroun
 <p><strong>THE COMPANY:</strong></p>
 <p>(Signature)</p>
 <p>_______________________________________</p>
-<p>Name: <span id="partyName">{{partyName}}</span></p>
-<p>Email: <span id="partyEmail">{{partyEmail}}</span></p>
-<p>Address: <span id="partyAddress">{{partyAddress}}</span><br /> <br /> </p>
-<p>Wallet: <span id="partyWallet">{{partyWallet}}</span></p>
+<p>Name: <span id="partyName" style="background-color:#f79632">{{partyName}}</span></p>
+<p>Email: <span id="partyEmail" style="background-color:#f79632">{{partyEmail}}</span></p>
+<p>Address: <span id="partyAddress" style="background-color:#f79632">{{partyAddress}}</span><br /> <br /> </p>
+<p>Wallet: <span id="partyWallet" style="background-color:#f79632">{{partyWallet}}</span></p>
 <p><u> <br /> </u><br /> </p>
 <p><strong>CONSULTANT:</strong></p>
 <p>(Signature)</p>
 <p>_______________________________________</p>
-<p>Name:<span id="counterPartyName">{{counterPartyName}}</span></p>
-<p>Email: <span id="counterPartyEmail">{{counterPartyEmail}}</span></p>
-<p>Address: <span id="counterPartyAddress">{{counterPartyAddress}}</span><br /> <br /> </p>
-<p>Wallet: <span id="counterPartyWallet">{{counterPartyWallet}}</span>
+<p>Name:<span id="counterPartyName" style="background-color:#f79632">{{counterPartyName}}</span></p>
+<p>Email: <span id="counterPartyEmail" style="background-color:#f79632">{{counterPartyEmail}}</span></p>
+<p>Address: <span id="counterPartyAddress" style="background-color:#f79632">{{counterPartyAddress}}</span><br /> <br /> </p>
+<p>Wallet: <span id="counterPartyWallet" style="background-color:#f79632">{{counterPartyWallet}}</span>
 <p><u> <br /> </u><br /> </p>
 <p class="western">&nbsp;</p>
 <p align="center"><u><strong>EXHIBIT A</strong></u></p>
