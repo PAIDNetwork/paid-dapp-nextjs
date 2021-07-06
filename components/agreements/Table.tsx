@@ -105,17 +105,21 @@ const Table: FC<TableProps> = ({
                     <UncontrolledPopover
                       trigger="legacy"
                       placement="bottom"
+                      className="un-controlled-popover-custom"
                       target={`detail-button-${row.original.event.cid}`}
                     >
-                      <PopoverBody>
-                        <Button onClick={() => onOpenFile(row.original.event.cid)} className="btn-transparent">
+                      <PopoverBody className="popover-body-custom">
+                        <Button onClick={() => onOpenFile(row.original.event.cid)} className="btn-transparent popover-btn-custom">
                           <img src="/assets/icon/openPdf.svg" alt="" />
+                          <span className="popover-text-custom">Download PDF</span>
                         </Button>
+                        <div className="popover-div" />
                         <Button
                           onClick={() => onDetailClick(row.original.event.cid)}
-                          className="btn-transparent"
+                          className="btn-transparent popover-btn-custom"
                         >
                           <img src="/assets/icon/agreementDetails.svg" alt="" />
+                          <span className="popover-text-custom">Sing</span>
                         </Button>
                       </PopoverBody>
                     </UncontrolledPopover>

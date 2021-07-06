@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Head from 'next/head';
 import { Card } from 'reactstrap';
@@ -11,7 +11,6 @@ import elliptic_1 from 'elliptic';
 import { toEthereumAddress } from 'did-jwt';
 import ProfileStateModel from '../models/profileStateModel';
 import FormProfile from '../components/profile/FormProfile';
-import PassphraseModal from '../components/profile/PassphraseModal';
 import ProfileModel from '../models/profileModel';
 import doSetProfile from '../redux/actions/profile';
 
@@ -26,16 +25,6 @@ const Profile: FC = () => {
   );
 
   const [profile, setProfile] = useState<ProfileModel>(profileState.profile);
-  const [openPassphraseModal, setOpenPassphraseModal] = useState(false);
-  const [passphrase, setPassphrase] = useState(null);
-  const [errorPassphrase, setErrorPassphrase] = useState(false);
-
-  useEffect(() => {
-    const getCurrentWallet = global.sessionStorage.getItem(currentWallet);
-    if (!profile.name && getCurrentWallet) {
-      setOpenPassphraseModal(true);
-    }
-  }, []);
 
   const create3ID = async (wallet) => {
     let seed = arrayify(mnemonicToSeed(wallet.mnemonic));
@@ -46,67 +35,15 @@ const Profile: FC = () => {
     return did;
   };
 
-  useEffect(() => {
-    const bootstrapAsync = async () => {
-      const getCurrentWallet = global.sessionStorage.getItem(currentWallet);
-      if (!profile.name && getCurrentWallet) {
-        if (passphrase) {
-          try {
-            const profileData = JSON.parse(getCurrentWallet);
-            console.log(profileData);
-            const name = profileData.profileName;
-            const accountName = profileData.profileName.replace(' ', '').toLowerCase();
-            const xdvWallet = new Wallet({ isWeb: true });
-            await xdvWallet.open(accountName, passphrase);
-            await xdvWallet.enrollAccount({
-              passphrase,
-              accountName,
-            });
-            const acct = await xdvWallet.getAccount() as any;
-            const keystore = acct.keystores.find((el) => el.walletId === profileData.walletId);
-            const walletDid = await create3ID(keystore);
-
-            const kp = new elliptic_1.eddsa('ed25519');
-            const kpInstance = kp.keyFromSecret(keystore.keypairs.ED25519);
-            const walletAddress = toEthereumAddress(kpInstance.getPublic('hex'));
-
-            const currentProfile = {
-              name,
-              created: profileData.createdAt,
-              did: walletDid,
-              address: walletAddress,
-            };
-            setErrorPassphrase(false);
-            setPassphrase(null);
-            setOpenPassphraseModal(false);
-            dispatch(doSetProfile(currentProfile));
-            setProfile(currentProfile);
-          } catch (e) {
-            setErrorPassphrase(true);
-          }
-        }
-      }
-    };
-
-    bootstrapAsync();
-  },
-  [passphrase]);
-
   const { name } = profile;
   const emptyProfile = !name;
 
   const onSubmit = async (values: ProfileModel) => {
-    const created = new Intl.DateTimeFormat('en-US', {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-      hour12: false,
-    }).format(new Date());
     try {
-      const accountName = values.name.replace(' ', '').toLowerCase();
+      const getCurrentWallet = global.localStorage.getItem(currentWallet);
+      const profileData = JSON.parse(getCurrentWallet);
+      const accountName = `${values.name.toLocaleLowerCase()}${values.lastName.toLocaleLowerCase()}`;
+
       const xdvWallet = new Wallet({ isWeb: true });
 
       await xdvWallet.open(accountName, values.passphrase);
@@ -125,15 +62,21 @@ const Profile: FC = () => {
       const kpInstance = kp.keyFromSecret(keystore.keypairs.ED25519);
       const walletAddress = toEthereumAddress(kpInstance.getPublic('hex'));
 
-      const walletSessionStorage = { walletId, profileName: values.name, createdAt: created };
-      global.sessionStorage.setItem(currentWallet, JSON.stringify(walletSessionStorage));
-      const currentProfile = {
+      const walletStorage = {
+        ...profile,
         ...values,
-        created,
-        did: walletDid,
-        address: walletAddress,
+        walletId,
+        profileName: accountName,
+        created: profileData.createdAt,
       };
-
+      global.localStorage.setItem(currentWallet, JSON.stringify(walletStorage));
+      const currentProfile = {
+        ...profile,
+        ...values,
+        did: walletDid,
+        walletAddress,
+        created: profileData.createdAt,
+      };
       dispatch(doSetProfile(currentProfile));
       setProfile(currentProfile);
     } catch (e) {
@@ -169,11 +112,6 @@ const Profile: FC = () => {
           </div>
         </div>
       </div>
-      <PassphraseModal
-        open={openPassphraseModal}
-        errorPassphrase={errorPassphrase}
-        setPassphrase={setPassphrase}
-      />
     </>
   );
 };
