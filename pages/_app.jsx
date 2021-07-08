@@ -71,7 +71,7 @@ function MyApp({ Component, pageProps }) {
 
               const currentProfile = {
                 ...profileData,
-                created: profileData.createdAt,
+                created: profileData.created,
                 did: walletDid,
                 walletAddress,
               };

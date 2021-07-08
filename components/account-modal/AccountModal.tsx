@@ -72,12 +72,9 @@ const AccountModal: FC<AccountModalProps> = ({
           profileName: accountName,
           name: profile.name,
           lastName: profile.lastName,
-          createdAt: created,
+          created,
           email: profile.email,
           address: profile.address,
-          phone: profile.phone,
-          dateBirth: profile.dateBirth,
-          created: profile.created,
           passphrase: profile.passphrase,
         };
         global.localStorage.setItem(account, JSON.stringify(walletStorage));

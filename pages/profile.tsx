@@ -67,7 +67,7 @@ const Profile: FC = () => {
         ...values,
         walletId,
         profileName: accountName,
-        created: profileData.createdAt,
+        created: profileData.created,
       };
       global.localStorage.setItem(currentWallet, JSON.stringify(walletStorage));
       const currentProfile = {
@@ -75,7 +75,7 @@ const Profile: FC = () => {
         ...values,
         did: walletDid,
         walletAddress,
-        created: profileData.createdAt,
+        created: profileData.created,
       };
       dispatch(doSetProfile(currentProfile));
       setProfile(currentProfile);
