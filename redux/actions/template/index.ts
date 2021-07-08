@@ -82,8 +82,11 @@ const getContractTemplate = (contractName: String): contractTemplate => {
       'partyAddress',
       'partyEmail',
       'partyWallet',
+    ],
+    requiredCounterParty: [
       'counterPartyName',
       'counterPartyEmail',
+      'counterPartyDid',
       'counterPartyAddress',
       'counterPartyWallet',
     ],
@@ -146,7 +149,7 @@ const getContractTemplate = (contractName: String): contractTemplate => {
           properties: {
             ...sharedProperties.couterparty,
           },
-          required: sharedProperties.required,
+          required: sharedProperties.requiredCounterParty,
         },
       ];
       uiSchema = {
@@ -188,7 +191,7 @@ const getContractTemplate = (contractName: String): contractTemplate => {
           properties: {
             ...sharedProperties.couterparty,
           },
-          required: sharedProperties.required,
+          required: sharedProperties.requiredCounterParty,
         },
         {
           type: 'object',
@@ -348,7 +351,7 @@ const getContractTemplate = (contractName: String): contractTemplate => {
           properties: {
             ...sharedProperties.couterparty,
           },
-          required: sharedProperties.required,
+          required: sharedProperties.requiredCounterParty,
         },
         {
           type: 'object',
@@ -429,7 +432,7 @@ const getContractTemplate = (contractName: String): contractTemplate => {
           properties: {
             ...sharedProperties.couterparty,
           },
-          required: sharedProperties.required,
+          required: sharedProperties.requiredCounterParty,
         },
         {
           type: 'object',
@@ -705,18 +708,18 @@ const getContractTemplate = (contractName: String): contractTemplate => {
           type: 'object',
           title: 'Date when Agreement will become effective',
           properties: {
-            /*commisionDate: {
+            /* commisionDate: {
               title: 'Date',
               type: 'string',
               format: 'date',
-            },*/
+            }, */
             date: {
               title: 'Date',
               type: 'string',
               format: 'date',
             },
           },
-          //required: ['commisionDate'],
+          // required: ['commisionDate'],
           required: ['date'],
         },
         {
@@ -727,17 +730,17 @@ const getContractTemplate = (contractName: String): contractTemplate => {
               title: 'Company name',
               type: 'string',
             },
-            stateOfCompany:{
+            stateOfCompany: {
               title: 'State',
               type: 'string',
             },
-            typeOfCompany:{
+            typeOfCompany: {
               title: 'Type of company',
               type: 'string',
             },
             ...sharedProperties.party,
           },
-          required: ['companyName','stateOfCompany','typeOfCompany', ...sharedProperties.required],
+          required: ['companyName', 'stateOfCompany', 'typeOfCompany', ...sharedProperties.required],
         },
         {
           type: 'object',
@@ -747,11 +750,11 @@ const getContractTemplate = (contractName: String): contractTemplate => {
               title: 'Provider name',
               type: 'string',
             },
-            stateOfProvider:{
+            stateOfProvider: {
               title: 'State',
               type: 'string',
             },
-            typeOfProvider:{
+            typeOfProvider: {
               title: 'Type of company',
               type: 'string',
             },
@@ -761,7 +764,7 @@ const getContractTemplate = (contractName: String): contractTemplate => {
             //   type: 'string',
             // },
           },
-          required: ['providerName','stateOfProvider','typeOfProvider', ...sharedProperties.required],
+          required: ['providerName', 'stateOfProvider', 'typeOfProvider', ...sharedProperties.requiredCounterParty],
         },
         {
           type: 'object',
@@ -796,7 +799,7 @@ const getContractTemplate = (contractName: String): contractTemplate => {
             },
           },
         },
-        /*{
+        /* {
           type: 'object',
           title: 'Governing Law',
           properties: {
@@ -806,7 +809,7 @@ const getContractTemplate = (contractName: String): contractTemplate => {
             },
           },
           required: ['stateOfCompany'],
-        },*/
+        }, */
       ];
       uiSchema = {
         terminationDate: {
@@ -855,7 +858,7 @@ const getContractTemplate = (contractName: String): contractTemplate => {
           properties: {
             ...sharedProperties.couterparty,
           },
-          required: sharedProperties.required,
+          required: sharedProperties.requiredCounterParty,
         },
         {
           type: 'object',
