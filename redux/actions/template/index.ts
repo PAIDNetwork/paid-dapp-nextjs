@@ -705,33 +705,63 @@ const getContractTemplate = (contractName: String): contractTemplate => {
           type: 'object',
           title: 'Date when Agreement will become effective',
           properties: {
-            commisionDate: {
+            /*commisionDate: {
+              title: 'Date',
+              type: 'string',
+              format: 'date',
+            },*/
+            date: {
               title: 'Date',
               type: 'string',
               format: 'date',
             },
           },
-          required: ['commisionDate'],
+          //required: ['commisionDate'],
+          required: ['date'],
         },
         {
           type: 'object',
           title: 'My information (the “Company)',
           properties: {
+            companyName: {
+              title: 'Company name',
+              type: 'string',
+            },
+            stateOfCompany:{
+              title: 'State',
+              type: 'string',
+            },
+            typeOfCompany:{
+              title: 'Type of company',
+              type: 'string',
+            },
             ...sharedProperties.party,
           },
-          required: sharedProperties.required,
+          required: ['companyName','stateOfCompany','typeOfCompany', ...sharedProperties.required],
         },
         {
           type: 'object',
           title: 'Advisor information (“Provider”)',
           properties: {
+            providerName: {
+              title: 'Provider name',
+              type: 'string',
+            },
+            stateOfProvider:{
+              title: 'State',
+              type: 'string',
+            },
+            typeOfProvider:{
+              title: 'Type of company',
+              type: 'string',
+            },
             ...sharedProperties.couterparty,
             // typeOfCompany: {
             //   title: 'Type of company',
             //   type: 'string',
             // },
           },
-          required: sharedProperties.required,
+          required: ['providerName','stateOfProvider','typeOfProvider', ...sharedProperties.required],
         },
         {
           type: 'object',
@@ -766,7 +796,7 @@ const getContractTemplate = (contractName: String): contractTemplate => {
             },
           },
         },
-        {
+        /*{
           type: 'object',
           title: 'Governing Law',
           properties: {
@@ -776,7 +806,7 @@ const getContractTemplate = (contractName: String): contractTemplate => {
             },
           },
           required: ['stateOfCompany'],
-        },
+        },*/
       ];
       uiSchema = {
         terminationDate: {
