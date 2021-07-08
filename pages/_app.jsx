@@ -33,6 +33,8 @@ function MyApp({ Component, pageProps }) {
     const [errorPassphrase, setErrorPassphrase] = useState(false);
     const dispatch = useDispatch();
     const router = useRouter();
+    const { query } = useRouter();
+
     const walletReducer = useSelector((state) => state.walletReducer);
 
     const create3ID = async (wallet) => {
@@ -69,7 +71,7 @@ function MyApp({ Component, pageProps }) {
 
               const currentProfile = {
                 ...profileData,
-                created: profileData.createdAt,
+                created: profileData.created,
                 did: walletDid,
                 walletAddress,
               };
@@ -77,7 +79,7 @@ function MyApp({ Component, pageProps }) {
               setPassphrase(null);
               setOpenPassphraseModal(false);
               dispatch(doSetProfile(currentProfile));
-              dispatch(setCurrentWallet(account, router));
+              dispatch(setCurrentWallet(account, router, query));
             } catch (e) {
               setErrorPassphrase(true);
             }

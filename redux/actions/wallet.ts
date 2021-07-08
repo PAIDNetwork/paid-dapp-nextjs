@@ -30,14 +30,17 @@ const doConnectToWallet = (provider: string) => (dispatch: any) => {
   // }
 };
 
-export const setCurrentWallet = (currentWallet: string, router: NextRouter) => (
+export const setCurrentWallet = (currentWallet: string, router: NextRouter, query: any) => (
   dispatch: any,
 ) => {
   dispatch({
     type: WalletActionTypes.SET_CURRENT_WALLET,
     payload: { currentWallet },
   });
-
+  if (query && query.agreement) {
+    router.push('/agreements');
+    return;
+  }
   router.push('/profile');
 };
 

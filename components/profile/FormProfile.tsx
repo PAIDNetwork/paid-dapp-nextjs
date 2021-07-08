@@ -44,7 +44,6 @@ const FormProfile: FC<FormProfileProps> = ({
       email: profile.email,
       lastName: profile.lastName,
       address: profile.address,
-      phone: profile.phone,
       walletAddress: profile.walletAddress,
       passphrase: profile.passphrase,
       confirmPassphrase: profile.passphrase,
@@ -121,24 +120,6 @@ const FormProfile: FC<FormProfileProps> = ({
             <ErrorMessage
               className="error-message"
               name="address"
-              as="div"
-              errors={errors}
-            />
-        )}
-        />
-        <StackedInput
-          label="Phone Number:"
-          name="phone"
-          type="text"
-          placeholder="Enter your phone number"
-          inputClassNames={classNames({ 'is-invalid': errors.phone })}
-          innerRef={register({
-            required: 'Phone number is required',
-          })}
-          errorComponent={(
-            <ErrorMessage
-              className="error-message"
-              name="phone"
               as="div"
               errors={errors}
             />

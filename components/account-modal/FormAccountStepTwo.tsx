@@ -29,60 +29,6 @@ const FormAccountStepTwo: FC<FormAccountStepTwoProps> = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <StackedInput
-        label="Address:"
-        name="address"
-        type="text"
-        placeholder="Enter your address"
-        inputClassNames={classNames({ 'is-invalid': errors.address })}
-        innerRef={register({
-          required: 'Address is required',
-        })}
-        errorComponent={(
-          <ErrorMessage
-            className="error-message"
-            name="address"
-            as="div"
-            errors={errors}
-          />
-        )}
-      />
-      <StackedInput
-        label="Phone Number:"
-        name="phone"
-        type="text"
-        placeholder="Enter your phone number"
-        inputClassNames={classNames({ 'is-invalid': errors.phone })}
-        innerRef={register({
-          required: 'Phone number is required',
-        })}
-        errorComponent={(
-          <ErrorMessage
-            className="error-message"
-            name="phone"
-            as="div"
-            errors={errors}
-          />
-        )}
-      />
-      <StackedInput
-        label="Date of Birth:"
-        name="dateBirth"
-        type="date"
-        placeholder="Enter your date of birth"
-        inputClassNames={classNames({ 'is-invalid': errors.dateBirth })}
-        innerRef={register({
-          required: 'Date of birth is required',
-        })}
-        errorComponent={(
-          <ErrorMessage
-            className="error-message"
-            name="dateBirth"
-            as="div"
-            errors={errors}
-          />
-                )}
-      />
-      <StackedInput
         label="Passphrase:"
         name="passphrase"
         type="password"
