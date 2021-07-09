@@ -175,7 +175,7 @@ const FormProfile: FC<FormProfileProps> = ({
               readOnly
               name="did"
               type="text"
-              value={profile.did._id}
+              value={profile.did.id}
             />
             <StackedInput
               readOnly
