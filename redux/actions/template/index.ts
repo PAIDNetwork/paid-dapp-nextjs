@@ -420,11 +420,35 @@ const getContractTemplate = (contractName: String): contractTemplate => {
       jsonSchemas = [
         {
           type: 'object',
+          title: 'Date when Agreement will become effective',
+          properties: {
+            date: {
+              title: 'Date',
+              type: 'string',
+              format: 'date',
+            },
+          },
+          required: ['date'],
+        },
+        {
+          type: 'object',
           title: 'My information (the “Company”)',
           properties: {
+            companyName:{
+              title:'Company name',
+              type:'string'
+            },
+            stateOfCompany:{
+              title:'State',
+              type:'string'
+            },
+            typeOfCompany:{
+              title:'Type of company',
+              type:'string'
+            },
             ...sharedProperties.party,
           },
-          required: sharedProperties.required,
+          required: ['companyName', 'stateOfCompany','typeOfCompany', ...sharedProperties.required],
         },
         {
           type: 'object',
@@ -434,7 +458,7 @@ const getContractTemplate = (contractName: String): contractTemplate => {
           },
           required: sharedProperties.requiredCounterParty,
         },
-        {
+        /*{
           type: 'object',
           title: 'Governing Law',
           properties: {
@@ -450,7 +474,7 @@ const getContractTemplate = (contractName: String): contractTemplate => {
           required: [
             'state',
           ],
-        },
+        },*/
         {
           type: 'object',
           Title: 'Consulting services',
@@ -566,7 +590,7 @@ const getContractTemplate = (contractName: String): contractTemplate => {
         // },
         {
           type: 'object',
-          title: 'Fixed wage compensation',
+          title: 'Fixed compensation',
           properties: {
             consultantExecutionAmount: {
               type: 'number',
@@ -594,11 +618,7 @@ const getContractTemplate = (contractName: String): contractTemplate => {
               title: 'Vesting and exercise information',
               type: 'string',
             },
-          },
-          required: [
-            'sharesAmount',
-            'vestingInformation',
-          ],
+          }
         },
         {
           type: 'object',
@@ -611,10 +631,24 @@ const getContractTemplate = (contractName: String): contractTemplate => {
           },
           required: ['other'],
         },
+        {
+          type: 'object',
+          title: 'Consulting or Other Services for Competitors',
+          properties: {
+            listCompanies: {
+              title: 'List of Companies',
+              type: 'string',
+            }
+          }
+        },
       ];
       uiSchema = {
         'ui:widget': 'checkbox',
         'ui:order': [
+          'date',
+          'companyName',
+          'stateOfCompany',
+          'typeOfCompany',
           'partyName',
           'partyAddress',
           'partyEmail',
@@ -627,7 +661,6 @@ const getContractTemplate = (contractName: String): contractTemplate => {
           'sendWallet',
           'ReceiveWallet',
           'state',
-          'typeOfCompany',
           'descriptionConsulting',
           'serviceRenderChecked',
           'serviceRate',
@@ -643,6 +676,7 @@ const getContractTemplate = (contractName: String): contractTemplate => {
           'vestingInformation',
           'otherChecked',
           'other',
+          'listCompanies'
         ],
         descriptionConsulting: {
           'ui:widget': 'textarea',
@@ -694,6 +728,12 @@ const getContractTemplate = (contractName: String): contractTemplate => {
         },
         vestingInformation: {
           'ui:placeholder': 'Vesting and exercise information',
+        },
+        listCompanies:{
+          'ui:widget': 'textarea',
+          'ui:options': {
+            rows: 9,
+          },
         },
         ...sharedProperties.uiSchema,
       };
