@@ -34,6 +34,7 @@ const AccountModal: FC<AccountModalProps> = ({
   const [profile, setProfile] = useState<ProfileModel>(profileState.profile);
   const [step, setStpe] = useState(0);
   const router = useRouter();
+  const { query } = useRouter();
   const { formatDateProfile } = helper;
 
   const create3ID = async (wallet) => {
@@ -85,7 +86,7 @@ const AccountModal: FC<AccountModalProps> = ({
           walletAddress,
         };
         dispatch(doSetProfile(currentProfile));
-        dispatch(setCurrentWallet(account, router));
+        dispatch(setCurrentWallet(account, router, query));
       }
     };
     bootstrapAsync();
