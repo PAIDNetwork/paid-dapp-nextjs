@@ -44,7 +44,6 @@ const FormProfile: FC<FormProfileProps> = ({
       email: profile.email,
       lastName: profile.lastName,
       address: profile.address,
-      walletAddress: profile.walletAddress,
       passphrase: profile.passphrase,
       confirmPassphrase: profile.passphrase,
     });
