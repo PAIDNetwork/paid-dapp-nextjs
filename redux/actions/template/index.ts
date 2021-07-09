@@ -838,10 +838,26 @@ const getContractTemplate = (contractName: String): contractTemplate => {
       jsonSchemas = [
         {
           type: 'object',
+          title: 'Date when Agreement will become effective',
+          properties: {
+            date: {
+              title: 'Date',
+              type: 'string',
+              format: 'date',
+            },
+          },
+          required: ['date'],
+        },
+        {
+          type: 'object',
           title: 'My information ("the Company")',
           properties: {
-            typeOfCompany: {
+            companyName: {
               title: 'Company name',
+              type: 'string',
+            },
+            typeOfCompany:{
+              title: 'Type of company',
               type: 'string',
             },
             jurisdiction: {
