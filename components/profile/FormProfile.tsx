@@ -179,13 +179,6 @@ const FormProfile: FC<FormProfileProps> = ({
             />
             <StackedInput
               readOnly
-              label="Wallet Address: "
-              name="walletAddress"
-              type="text"
-              value={profile.walletAddress}
-            />
-            <StackedInput
-              readOnly
               label="Created: "
               name="created"
               type="text"

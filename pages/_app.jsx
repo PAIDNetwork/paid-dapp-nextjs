@@ -43,19 +43,19 @@ function MyApp({ Component, pageProps }) {
               await xdvWallet.open(accountName, passphrase);
 
               const walletId = await xdvWallet.addWallet();
-              const walletDid = await xdvWallet.createEd25519({
+              const provider = await xdvWallet.createEd25519({
                 passphrase: profileData.passphrase,
                 rpcUrl: process.env.NEXT_PUBLIC_RPC_URL,
                 walletId,
                 registry: '',
                 accountName: profileData.name,
               });
+              await provider.did.authenticate();
               xdvWallet.close();
               const currentProfile = {
                 ...profileData,
                 created: profileData.created,
-                did: walletDid,
-                walletAddress: walletDid.address,
+                did: provider.did,
               };
               setErrorPassphrase(false);
               setPassphrase(null);

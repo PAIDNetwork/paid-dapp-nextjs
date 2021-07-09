@@ -4,7 +4,6 @@ import { PdModal, PdModalBody } from '@/pdComponents';
 import { useDispatch, useSelector } from 'react-redux';
 import { useWallet } from 'react-binance-wallet';
 import { Wallet } from 'xdv-universal-wallet-core';
-import { toEthereumAddress } from 'did-jwt';
 
 import ProfileModel from '@/models/profileModel';
 import ProfileStateModel from '@/models/profileStateModel';
@@ -41,21 +40,18 @@ const AccountModal: FC<AccountModalProps> = ({
 
         await xdvWallet.open(accountName, profile.passphrase);
 
-        // const acct = await xdvWallet.getAccount() as any
         const walletId = await xdvWallet.addWallet();
-        const walletDid = await xdvWallet.createEd25519({
+        const provider = await xdvWallet.createEd25519({
           passphrase: profile.passphrase,
           rpcUrl: process.env.NEXT_PUBLIC_RPC_URL,
           walletId,
           registry: '',
           accountName: profile.name,
         });
-        // const walletAddress = toEthereumAddress(walletDid.publicKey('hex'));
 
-        await walletDid.did.authenticate();
-
-        debugger;
+        await provider.did.authenticate();
         xdvWallet.close();
+
         const walletStorage = {
           walletId,
           profileName: accountName,
@@ -70,8 +66,7 @@ const AccountModal: FC<AccountModalProps> = ({
         const currentProfile = {
           ...profile,
           created,
-          did: walletDid.did.id,
-          walletAddress,
+          did: provider.did,
         };
         dispatch(doSetProfile(currentProfile));
         dispatch(setCurrentWallet(account, router, query));
