@@ -3,12 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import Head from 'next/head';
 import { Card } from 'reactstrap';
 import { Wallet } from 'xdv-universal-wallet-core';
-import { Ed25519Provider } from 'key-did-provider-ed25519';
-import KeyResolver from 'key-did-resolver';
-import { DID } from 'dids';
-import { arrayify, mnemonicToSeed } from 'ethers/lib/utils';
-import elliptic_1 from 'elliptic';
-import { toEthereumAddress } from 'did-jwt';
 import ProfileStateModel from '../models/profileStateModel';
 import FormProfile from '../components/profile/FormProfile';
 import ProfileModel from '../models/profileModel';
@@ -26,15 +20,6 @@ const Profile: FC = () => {
 
   const [profile, setProfile] = useState<ProfileModel>(profileState.profile);
 
-  const create3ID = async (wallet) => {
-    let seed = arrayify(mnemonicToSeed(wallet.mnemonic));
-    seed = seed.slice(0, 32);
-    const provider = new Ed25519Provider(seed);
-    const did = new DID({ provider, resolver: KeyResolver.getResolver() });
-    await did.authenticate();
-    return did;
-  };
-
   const { name } = profile;
   const emptyProfile = !name;
 
@@ -48,20 +33,17 @@ const Profile: FC = () => {
 
       await xdvWallet.open(accountName, values.passphrase);
 
-      await xdvWallet.enrollAccount({
-        passphrase: values.passphrase,
-        accountName,
-      });
-
-      const acct = await xdvWallet.getAccount() as any;
       const walletId = await xdvWallet.addWallet();
-      const keystore = acct.keystores.find((el) => el.walletId === walletId);
 
-      const walletDid = await create3ID(keystore);
-      const kp = new elliptic_1.eddsa('ed25519');
-      const kpInstance = kp.keyFromSecret(keystore.keypairs.ED25519);
-      const walletAddress = toEthereumAddress(kpInstance.getPublic('hex'));
-
+      const provider = await xdvWallet.createEd25519({
+        passphrase: profileData.passphrase,
+        rpcUrl: process.env.NEXT_PUBLIC_RPC_URL,
+        walletId,
+        registry: '',
+        accountName: profileData.name,
+      });
+      await provider.did.authenticate();
+      xdvWallet.close();
       const walletStorage = {
         ...profile,
         ...values,
@@ -73,8 +55,7 @@ const Profile: FC = () => {
       const currentProfile = {
         ...profile,
         ...values,
-        did: walletDid,
-        walletAddress,
+        did: provider.did,
         created: profileData.created,
       };
       dispatch(doSetProfile(currentProfile));

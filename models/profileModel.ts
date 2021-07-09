@@ -7,7 +7,6 @@ interface ProfileModel {
   confirmPassphrase?: string;
   email?: string;
   address?: string;
-  walletAddress?: string;
 }
 
 export default ProfileModel;

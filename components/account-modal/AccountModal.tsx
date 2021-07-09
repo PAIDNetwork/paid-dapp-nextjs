@@ -4,12 +4,6 @@ import { PdModal, PdModalBody } from '@/pdComponents';
 import { useDispatch, useSelector } from 'react-redux';
 import { useWallet } from 'react-binance-wallet';
 import { Wallet } from 'xdv-universal-wallet-core';
-import { arrayify, mnemonicToSeed } from 'ethers/lib/utils';
-import { Ed25519Provider } from 'key-did-provider-ed25519';
-import { DID } from 'dids';
-import KeyResolver from 'key-did-resolver';
-import elliptic_1 from 'elliptic';
-import { toEthereumAddress } from 'did-jwt';
 
 import ProfileModel from '@/models/profileModel';
 import ProfileStateModel from '@/models/profileStateModel';
@@ -37,15 +31,6 @@ const AccountModal: FC<AccountModalProps> = ({
   const { query } = useRouter();
   const { formatDateProfile } = helper;
 
-  const create3ID = async (wallet) => {
-    let seed = arrayify(mnemonicToSeed(wallet.mnemonic));
-    seed = seed.slice(0, 32);
-    const provider = new Ed25519Provider(seed);
-    const did = new DID({ provider, resolver: KeyResolver.getResolver() });
-    await did.authenticate();
-    return did;
-  };
-
   useEffect(() => {
     const bootstrapAsync = async () => {
       if (profile.passphrase && step === 2) {
@@ -55,19 +40,18 @@ const AccountModal: FC<AccountModalProps> = ({
 
         await xdvWallet.open(accountName, profile.passphrase);
 
-        await xdvWallet.enrollAccount({
+        const walletId = await xdvWallet.addWallet();
+        const provider = await xdvWallet.createEd25519({
           passphrase: profile.passphrase,
-          accountName,
+          rpcUrl: process.env.NEXT_PUBLIC_RPC_URL,
+          walletId,
+          registry: '',
+          accountName: profile.name,
         });
 
-        const acct = await xdvWallet.getAccount() as any;
-        const walletId = await xdvWallet.addWallet();
-        const keystore = acct.keystores.find((el) => el.walletId === walletId);
+        await provider.did.authenticate();
+        xdvWallet.close();
 
-        const walletDid = await create3ID(keystore);
-        const kp = new elliptic_1.eddsa('ed25519');
-        const kpInstance = kp.keyFromSecret(keystore.keypairs.ED25519);
-        const walletAddress = toEthereumAddress(kpInstance.getPublic('hex'));
         const walletStorage = {
           walletId,
           profileName: accountName,
@@ -82,8 +66,7 @@ const AccountModal: FC<AccountModalProps> = ({
         const currentProfile = {
           ...profile,
           created,
-          did: walletDid,
-          walletAddress,
+          did: provider.did,
         };
         dispatch(doSetProfile(currentProfile));
         dispatch(setCurrentWallet(account, router, query));
