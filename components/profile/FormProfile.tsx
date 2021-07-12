@@ -44,7 +44,6 @@ const FormProfile: FC<FormProfileProps> = ({
       email: profile.email,
       lastName: profile.lastName,
       address: profile.address,
-      walletAddress: profile.walletAddress,
       passphrase: profile.passphrase,
       confirmPassphrase: profile.passphrase,
     });
@@ -175,14 +174,7 @@ const FormProfile: FC<FormProfileProps> = ({
               readOnly
               name="did"
               type="text"
-              value={profile.did._id}
-            />
-            <StackedInput
-              readOnly
-              label="Wallet Address: "
-              name="walletAddress"
-              type="text"
-              value={profile.walletAddress}
+              value={profile.did.id}
             />
             <StackedInput
               readOnly

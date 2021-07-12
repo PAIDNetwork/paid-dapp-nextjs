@@ -3,12 +3,6 @@ import { useRouter } from 'next/router';
 import { Provider, useSelector, useDispatch } from 'react-redux';
 import { WalletProvider, useWallet } from 'react-binance-wallet';
 import { Wallet } from 'xdv-universal-wallet-core';
-import { Ed25519Provider } from 'key-did-provider-ed25519';
-import { DID } from 'dids';
-import { arrayify, mnemonicToSeed } from 'ethers/lib/utils';
-import KeyResolver from 'key-did-resolver';
-import elliptic_1 from 'elliptic';
-import { toEthereumAddress } from 'did-jwt';
 
 import PassphraseModal from '@/components/profile/PassphraseModal';
 import AccountModal from '@/components/account-modal/AccountModal';
@@ -37,15 +31,6 @@ function MyApp({ Component, pageProps }) {
 
     const walletReducer = useSelector((state) => state.walletReducer);
 
-    const create3ID = async (wallet) => {
-      let seed = arrayify(mnemonicToSeed(wallet.mnemonic));
-      seed = seed.slice(0, 32);
-      const provider = new Ed25519Provider(seed);
-      const did = new DID({ provider, resolver: KeyResolver.getResolver() });
-      await did.authenticate();
-      return did;
-    };
-
     useEffect(() => {
       const bootstrapAsync = async () => {
         const getCurrentWallet = global.localStorage.getItem(account);
@@ -56,24 +41,21 @@ function MyApp({ Component, pageProps }) {
               const accountName = profileData.profileName;
               const xdvWallet = new Wallet({ isWeb: true });
               await xdvWallet.open(accountName, passphrase);
-              await xdvWallet.enrollAccount({
-                passphrase,
-                accountName,
+
+              const walletId = await xdvWallet.addWallet();
+              const provider = await xdvWallet.createEd25519({
+                passphrase: profileData.passphrase,
+                rpcUrl: process.env.NEXT_PUBLIC_RPC_URL,
+                walletId,
+                registry: '',
+                accountName: profileData.name,
               });
-              const acct = await xdvWallet.getAccount();
-              const keystore = acct.keystores.find((el) => el.walletId === profileData.walletId);
-
-              const walletDid = await create3ID(keystore);
-
-              const kp = new elliptic_1.eddsa('ed25519');
-              const kpInstance = kp.keyFromSecret(keystore.keypairs.ED25519);
-              const walletAddress = toEthereumAddress(kpInstance.getPublic('hex'));
-
+              await provider.did.authenticate();
+              xdvWallet.close();
               const currentProfile = {
                 ...profileData,
                 created: profileData.created,
-                did: walletDid,
-                walletAddress,
+                did: provider.did,
               };
               setErrorPassphrase(false);
               setPassphrase(null);
