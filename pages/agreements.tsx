@@ -180,7 +180,7 @@ const Agreements: React.FC = () => {
         <link rel="icon" href="/assets/icon/.ico" />
       </Head>
 
-      <div className="agreements p-0 px-4 container-fluid" style={{height:'100%'}}>
+      <div className="agreements p-0 px-4 container-fluid" style={agreements.length === 0 ? {height:'100%'} : {}}>
         <div className="row p-0 h-100">
           {agreements.length > 0
             && (
@@ -265,7 +265,7 @@ const Agreements: React.FC = () => {
               </>
             )}
           <div className="col-12">
-            <Card className="border-0 content" style={{marginTop:10}}>
+            <Card className="border-0 content" style={agreements.length > 0 ? {marginTop:10} : {marginTop:10,height:'100%'}}>
               <Table
                 columns={columns}
                 data={agreements.filter(
