@@ -180,7 +180,7 @@ const Agreements: React.FC = () => {
         <link rel="icon" href="/assets/icon/.ico" />
       </Head>
 
-      <div className="agreements p-0 px-4 container-fluid" style={agreements.length === 0 ? {height:'100%'} : {}}>
+      <div className="agreements p-0 px-4 container-fluid" style={agreements.length === 0 ? {height:'97%'} : {}}>
         <div className="row p-0 h-100">
           {agreements.length > 0
             && (

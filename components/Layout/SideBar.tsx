@@ -89,7 +89,7 @@ const SideBar: FC<SideBarProps> = ({ routerName }) => {
         </a>
       </Link>
       <div className="menu mt-5">
-        <ul className="pl-3">
+        <ul className="pl-3" style={isOpen ? {} : {paddingLeft: "1.5rem"}}>
           <Link href="/agreements">
             <li className={routerName === '/agreements' ? 'mb-4 active' : 'mb-4'}>
               <a>
