@@ -132,7 +132,7 @@ const Table: FC<TableProps> = ({
       </table>
       )}
       <br />
-      {data.length === 0 && (
+      {data.length < 1 && (
         <div className="empty-result row justify-content-center align-items-center" style={{height:'100%'}}>
           <p className="text-center">
             You don&apos;t have any agreements yet. Click bellow to create your first SMART agreement!
