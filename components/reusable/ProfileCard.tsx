@@ -12,9 +12,16 @@ type ProfileCardProps = {
 const ProfileCard: FC<ProfileCardProps> = ({ profile }) => {
   const isOpen = useSelector((state: any) => state.menuReducer.isOpen);
 
+  const getProfileInitials = () =>{
+    let initials = "";
+    initials += profile !== null && profile.name ? profile.name.charAt(0) : "";
+    initials += profile !== null && profile.lastName ? profile.lastName.charAt(0) : "";
+    return initials;
+  }
+
   return (
-    <div className={isOpen ? 'profile-component mt-4 mx-auto' : 'collapse-profile-component mt-4 mx-auto'}>
-      <img src="/assets/images/marty.jpg" alt="" />
+    <div className={isOpen ? 'profile-component mt-4 mx-auto padding-card' : 'collapse-profile-component mt-4 mx-auto padding-card'}>
+      <div className={'profileImage'}>{getProfileInitials()}</div>
       <div className="info d-inline-block ml-1">
         <span className="name d-block">
           {' '}
