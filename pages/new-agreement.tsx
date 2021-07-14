@@ -27,7 +27,7 @@ import ConfirmAgreementModal from '@/components/new-agreement/ConfirmAgreementMo
 import ModalAlert from '@/components/reusable/modalAlert/ModalAlert';
 import PdScrollbar from '../components/reusable/pdScrollbar/PdScrollbar';
 import SmartAgreementFormPanel from '../components/new-agreement/SmartAgreementFormPanel';
-
+import CID from 'cids';
 import getContractTemplate from '../redux/actions/template/index';
 import {
   doSetSmartAgreementData,
@@ -194,17 +194,28 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
     setEditTitle(false);
   };
 
+  const toIpfs = async():Promise<CID> => {
+    const ipfsManager = new IPLDManager(did);
+    await ipfsManager.start(process.env.NEXT_PUBLIC_IPFS_URL);
+    const fil = Buffer.from(renderToString(agreementTemplate()));
+    try{
+      return ipfsManager.addSignedObject(fil,
+      {
+        name: agreementTitle,
+        contentType: 'text/html',
+        lastModified: new Date(),
+      });
+    }catch(err){
+      return null;
+    }
+  }
+
   const onSubmitForm = async () => {
     try {
-      const ipfsManager = new IPLDManager(did);
-      await ipfsManager.start(process.env.NEXT_PUBLIC_IPFS_URL);
-      const fil = Buffer.from(renderToString(agreementTemplate()));
-      const cid = await ipfsManager.addSignedObject(fil,
-        {
-          name: agreementTitle,
-          contentType: 'text/html',
-          lastModified: new Date(),
-        });
+      let cid = null;
+      while(!cid){
+        cid = await toIpfs();
+      }
 
       const types = [];
       const values = [];
@@ -248,11 +259,14 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
         templateId,
         metadata,
         validUntil,
+        {
+          gasLimit:3000000
+        }
       );
       setOpenConfirmAgreementModal(true);
-      const info = await tx.wait();
-      console.log('info', info);
+      await tx.wait();
     } catch (error) {
+      console.log(error);
       setOpenAlertModal(true);
     }
     // dispatch(createAgreement(newAgreement));
