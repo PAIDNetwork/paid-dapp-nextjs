@@ -129,12 +129,12 @@ const SideBar: FC<SideBarProps> = ({ routerName }) => {
             <div>
               <div>
                 {' '}
-                {paidToken}
+                {(paidToken).toFixed(4)}
                 {' '}
                 PAID
               </div>
               <div>
-                { (balance as any / 1E18) }
+                { (balance as any / 1E18).toFixed(4) }
                 {' '}
                 {connector !== 'bsc' ? 'ETH' : 'BNB'}
               </div>
