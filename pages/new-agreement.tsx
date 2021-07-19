@@ -25,9 +25,9 @@ import { IPLDManager } from 'xdv-universal-wallet-core';
 import { ethers } from 'ethers';
 import ConfirmAgreementModal from '@/components/new-agreement/ConfirmAgreementModal';
 import ModalAlert from '@/components/reusable/modalAlert/ModalAlert';
+import CID from 'cids';
 import PdScrollbar from '../components/reusable/pdScrollbar/PdScrollbar';
 import SmartAgreementFormPanel from '../components/new-agreement/SmartAgreementFormPanel';
-import CID from 'cids';
 import getContractTemplate from '../redux/actions/template/index';
 import {
   doSetSmartAgreementData,
@@ -107,6 +107,7 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
   const [agreementTitle, setAgreementTitle] = useState('Untitled Agreement');
   const [openConfirmAgreementModal, setOpenConfirmAgreementModal] = useState(false);
   const [openAlertModal, setOpenAlertModal] = useState(false);
+  const [agreementError, setAgreementError] = useState(null);
 
   const {
     register, errors, handleSubmit,
@@ -194,26 +195,26 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
     setEditTitle(false);
   };
 
-  const toIpfs = async():Promise<CID> => {
+  const toIpfs = async ():Promise<CID> => {
     const ipfsManager = new IPLDManager(did);
     await ipfsManager.start(process.env.NEXT_PUBLIC_IPFS_URL);
     const fil = Buffer.from(renderToString(agreementTemplate()));
-    try{
+    try {
       return ipfsManager.addSignedObject(fil,
-      {
-        name: agreementTitle,
-        contentType: 'text/html',
-        lastModified: new Date(),
-      });
-    }catch(err){
+        {
+          name: agreementTitle,
+          contentType: 'text/html',
+          lastModified: new Date(),
+        });
+    } catch (err) {
       return null;
     }
-  }
+  };
 
   const onSubmitForm = async () => {
     try {
       let cid = null;
-      while(!cid){
+      while (!cid) {
         cid = await toIpfs();
       }
 
@@ -260,13 +261,14 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
         metadata,
         validUntil,
         {
-          gasLimit:3000000
-        }
+          gasLimit: 3000000,
+          gasPrice: (1000000000 * 30),
+        },
       );
       setOpenConfirmAgreementModal(true);
       await tx.wait();
     } catch (error) {
-      console.log(error);
+      setAgreementError(error.error);
       setOpenAlertModal(true);
     }
     // dispatch(createAgreement(newAgreement));
@@ -412,7 +414,7 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
               <ModalAlert
                 open={openAlertModal}
                 onClose={() => setOpenAlertModal(false)}
-                message="There was an issue with gas estimation. please try again"
+                message={agreementError}
               />
             </div>
           </div>

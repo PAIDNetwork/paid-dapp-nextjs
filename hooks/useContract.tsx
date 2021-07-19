@@ -1,10 +1,10 @@
 import { ethers } from 'ethers';
 import { useEffect, useState } from 'react';
 import { useWallet } from 'react-binance-wallet';
-import { JsonFragment } from "@ethersproject/abi";
+import { JsonFragment } from '@ethersproject/abi';
 import { getTokenEscrowAbi, getSmartAgreementAnchoringAbi } from '@master-ventures/paid-dapp-contracts';
-import PaidTokenContract from '../contracts/PaidTokenContract.json';
 import { SmartAgreementAnchoring, TokenEscrow } from 'types/typechain';
+import PaidTokenContract from '../contracts/PaidTokenContract.json';
 
 declare global {
   interface Window {
@@ -19,6 +19,7 @@ function useContract() {
   const [escrowContract, setEscrowContract] = useState<TokenEscrow>(null);
   const [tokenContract, setTokenContract] = useState(null);
   const [tokenSignerContract, setTokenSignerContract] = useState(null);
+  const [networkName, setNetworkName] = useState(null);
   const metamask = (window as any).ethereum;
   const binanceWallet = (window as any).BinanceChain;
   let provider;
@@ -28,6 +29,11 @@ function useContract() {
     provider = new ethers.providers.Web3Provider(binanceWallet);
   }
   useEffect(() => {
+    const handleNewWorkName = async () => {
+      const network = await ethers.providers.getNetwork(chainId);
+      setNetworkName(network.name);
+    };
+
     const handleContract = () => {
       const abi = getSmartAgreementAnchoringAbi<JsonFragment>();
       const Contract = new ethers.Contract(
@@ -48,7 +54,7 @@ function useContract() {
     };
 
     const handleEscrowContract = () => {
-      const abi = getTokenEscrowAbi<JsonFragment>()
+      const abi = getTokenEscrowAbi<JsonFragment>();
       const currentContract = new ethers.Contract(
         process.env.NEXT_PUBLIC_CONTRACT_ESCROW_ADDRESS, abi, provider,
       ) as TokenEscrow;
@@ -70,6 +76,7 @@ function useContract() {
       setTokenSignerContract(currentContract);
     };
 
+    handleNewWorkName();
     handleContract();
     handleContractSigner();
     handleEscrowContract();
@@ -83,6 +90,7 @@ function useContract() {
     escrowContract,
     tokenContract,
     tokenSignerContract,
+    networkName,
   };
 }
 

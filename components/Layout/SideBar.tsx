@@ -1,12 +1,13 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Navbar } from 'reactstrap';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import classnames from 'classnames';
+import { useWallet } from 'react-binance-wallet';
 
-import useWindowSize from 'hooks/useWindowsSize';
-import setOpenMenu from 'redux/actions/menu';
+import setOpenMenu from '@/redux/actions/menu';
+import useContract from '../../hooks/useContract';
 import ProfileCard from '../reusable/ProfileCard';
 
 type SideBarProps = {
@@ -14,8 +15,14 @@ type SideBarProps = {
 };
 
 const SideBar: FC<SideBarProps> = ({ routerName }) => {
+  const { tokenContract, networkName } = useContract();
+  const { balance, connector } = useWallet();
   const [toggleVisible, setToggleVisible] = useState(false);
+  const [paidToken, setPaidToken] = useState(0);
   const isOpen = useSelector((state: any) => state.menuReducer.isOpen);
+  const currentWallet = useSelector(
+    (state: { walletReducer: any }) => state.walletReducer.currentWallet,
+  );
   const dispatch = useDispatch();
   const profile = useSelector((state: any) => state.profileReducer.profile);
   const {
@@ -23,7 +30,16 @@ const SideBar: FC<SideBarProps> = ({ routerName }) => {
     did,
   } = profile;
 
-  const size = useWindowSize();
+  useEffect(() => {
+    const getToken = async () => {
+      if (tokenContract) {
+        const tokenBalance = await tokenContract.balanceOf(currentWallet);
+        setPaidToken(tokenBalance.toString() / 1E18);
+      }
+    };
+    getToken();
+  }, [tokenContract]);
+
   const paidSmallLogo = '/assets/icon/logoSmall.svg';
   const collapseOut = '/assets/icon/collapse_out.png';
   const [smallLogo, setSmallLogo] = useState(paidSmallLogo);
@@ -110,8 +126,19 @@ const SideBar: FC<SideBarProps> = ({ routerName }) => {
           </Link>
           <li className={classnames('mb-4', { 'no-cursor': emptyProfile })}>
             <img className="mr-3" src="/assets/icon/paid.svg" alt="" />
-            {' '}
-            1,458 PAID
+            <div>
+              <div>
+                {' '}
+                {paidToken}
+                {' '}
+                PAID
+              </div>
+              <div>
+                { (balance as any / 1E18) }
+                {' '}
+                {connector !== 'bsc' ? 'ETH' : 'BNB'}
+              </div>
+            </div>
           </li>
           <Link href="/binance_chain">
             <li className={routerName === '/binance_chain' ? 'mb-4 active' : 'mb-4'}>
@@ -130,7 +157,9 @@ const SideBar: FC<SideBarProps> = ({ routerName }) => {
           <li className="mb-4 no-cursor">
             <a>
               <img className="mr-3" src="/assets/icon/networkBi.svg" alt="" />
-              Network: RINKEBY
+              Network:
+              {' '}
+              { networkName }
             </a>
           </li>
         </ul>

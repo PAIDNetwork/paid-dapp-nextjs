@@ -14,7 +14,7 @@ const ModalAlert: React.FC<ModalAlertProps> = ({
   <PdModal
     isOpen={open}
   >
-    <PdModalHeader toggle={onClose} title="" />
+    <PdModalHeader toggle={onClose} title="" className="p-0 pr-2" />
     <PdModalBody>
       <PdSvgWarning className="mr-2" color="danger" />
       {message}
