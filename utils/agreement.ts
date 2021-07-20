@@ -38,3 +38,7 @@ export const COUNTER_PARTY_NAME_FIELD = 'counterPartyName';
 export const COUNTER_PARTY_EMAIL_FIELD = 'counterPartyEmail';
 export const COUNTER_PARTY_ADDRESS_FIELD = 'counterPartyAddress';
 export const COUNTER_PARTY_WALLET_FIELD = 'counterPartyWallet';
+export const DATE = 'date';
+export const STATE = 'stateOfCompany';
+export const COMPANY_NAME = 'companyName';
+export const COMPANY_TYPE = 'typeOfCompany';

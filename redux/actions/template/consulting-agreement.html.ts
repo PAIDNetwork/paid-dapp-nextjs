@@ -1,7 +1,7 @@
 /* eslint-disable no-tabs */
 const ConsultingAgreement = `<div class="contract" style="width: 100%; background-color:white; color: black;text-align:center;"><span align="center" id="customTitle">{{companyName}}</span><h1 id="title" style="text-align: center;">CONSULTING AGREEMENT</h1><p align="center"><strong><span id="partyName" style="display: none">{{partyName}}</span></strong></p>
 <p align="center" style="color:#000;"><u><strong>CONSULTING AGREEMENT</strong></u></p>
-<p style="color:#000;">This Consulting Agreement (this &ldquo;<u>Agreement</u>&rdquo;) is made as of <span style="background-color:#f79632">{{date}}</span>, by and between <span style="background-color:#f79632">{{partyName}}</span>, a <span style="background-color:#f79632">{{stateOfCompany}}</span> <span style="background-color:#f79632">{{typeOfCompany}}</span> (the &ldquo;<u>Company</u>&rdquo;), and <span style="background-color:#f79632">{{counterPartyName}}</span>(&ldquo;<u>Consultant</u>&rdquo;).</p>
+<p style="color:#000;">This Consulting Agreement (this &ldquo;<u>Agreement</u>&rdquo;) is made as of <span style="background-color:#f79632">{{date}}</span>, by and between <span style="background-color:#f79632">{{companyName}}</span>, a <span style="background-color:#f79632">{{stateOfCompany}}</span> <span style="background-color:#f79632">{{typeOfCompany}}</span> (the &ldquo;<u>Company</u>&rdquo;), and <span style="background-color:#f79632">{{counterPartyName}}</span>(&ldquo;<u>Consultant</u>&rdquo;).</p>
 <ol>
 <li> 
 <p style="color:#000;"><u><strong>Consulting Relationship</strong></u><strong>.</strong> During the term of this Agreement, Consultant will provide consulting services to the Company as described on <u>Exhibit&nbsp;A</u> hereto (the &ldquo;<u>Services</u>&rdquo;). Consultant represents that Consultant is duly licensed (as applicable) and has the qualifications, the experience and the ability to properly perform the Services. Consultant shall use Consultant&rsquo;s best efforts to perform the Services such that the results are satisfactory to the Company.</p>
@@ -112,14 +112,14 @@ const ConsultingAgreement = `<div class="contract" style="width: 100%; backgroun
 <p align="center" style="color:#000;"><u><strong>EXHIBIT B</strong></u></p>
 <p align="center" style="color:#000;"><strong>COMPENSATION</strong></p>
 <p style="color:#000;">Check applicable payment terms:</p>
-<div style="display: block; background-color:#f79632; width: 100%; overflow-wrap: break-word;"><p style="color:#000;"><span>{{#serviceRenderChecked}}[ X ]{{/serviceRenderChecked}}{{^serviceRenderChecked}}[ ]{{/serviceRenderChecked}}</span> For Services rendered by Consultant under this Agreement, the Company shall pay Consultant at the rate of $ {{serviceRate}} per hour, payable {{servicePayable}}.  Unless otherwise agreed upon in writing by Company, Company’s maximum liability for all Services performed during the term of this Agreement shall not exceed $ {{serviceAmountLimit}}.</p>
-<p style="color:#000;">{{#consultantChecked}}[ X ]{{/consultantChecked}}{{^consultantChecked}}[ ]{{/consultantChecked}} Consultant shall be paid $ {{consultantExecutionAmount}} upon the execution of this Agreement and $ {{consultantCompletionAmount}} upon completion of the Services specified on Exhibit A to this Agreement.</p>
-<p style="color:#000;">{{#companyWillChecked}}[ X ]{{/companyWillChecked}}{{^companyWillChecked}}[ ]{{/companyWillChecked}} The Company will recommend that the Board grant a non-qualified option to purchase {{sharesAmount}} shares of the Company’s Common Stock, at an exercise price equal to the fair market value (as determined by the Company’s Board of Directors) on the date of grant, and which will vest and become exercisable as follows
+<div style="display: block; background-color:#f79632; width: 100%; overflow-wrap: break-word;"><p style="color:#000;"><span>{{#serviceRate}}[ X ]{{/serviceRate}}{{^serviceRate}}[ ]{{/serviceRate}}</span> For Services rendered by Consultant under this Agreement, the Company shall pay Consultant at the rate of $ {{serviceRate}} per hour, payable {{servicePayable}}.  Unless otherwise agreed upon in writing by Company, Company’s maximum liability for all Services performed during the term of this Agreement shall not exceed $ {{serviceAmountLimit}}.</p>
+<p style="color:#000;">{{#consultantExecutionAmount}}[ X ]{{/consultantExecutionAmount}}{{^consultantExecutionAmount}}[ ]{{/consultantExecutionAmount}} Consultant shall be paid $ {{consultantExecutionAmount}} upon the execution of this Agreement and $ {{consultantCompletionAmount}} upon completion of the Services specified on Exhibit A to this Agreement.</p>
+<p style="color:#000;">{{#sharesAmount}}[ X ]{{/sharesAmount}}{{^sharesAmount}}[ ]{{/sharesAmount}} The Company will recommend that the Board grant a non-qualified option to purchase {{sharesAmount}} shares of the Company’s Common Stock, at an exercise price equal to the fair market value (as determined by the Company’s Board of Directors) on the date of grant, and which will vest and become exercisable as follows
 <br/>
 {{vestingInformation}}
 </p>
 <p style="color:#000;">Upon mutual agreement between Consultant and the Company, such compensation may be issued in the form of a right to purchase restricted shares of the Company’s Common Stock.</p>
-<p style="color:#000;">{{#otherChecked}}[ X ]{{/otherChecked}}{{^otherChecked}}[ ]{{/otherChecked}} Other:</p>
+<p style="color:#000;">{{#other}}[ X ]{{/other}}{{^other}}[ ]{{/other}} Other:</p>
 <p style="white-space:break-spaces;color:#000;">{{other}}</p>
 </div>
 <p align="center" style="color:#000;"><strong><u>EXHIBIT C</u></strong></p>
@@ -133,7 +133,7 @@ const ConsultingAgreement = `<div class="contract" style="width: 100%; backgroun
 <p class="western" style="white-space:break-spaces;color:#000;">{{listCompanies}}</p>
 <p class="western">&nbsp;</p>
 </div>
-<div style="display: inline-block; background-color:#f79632; width: 100%"><p style="color:#000;">[ ] No conflicts</p></div>
+<div style="display: inline-block; background-color:#f79632; width: 100%"><p style="color:#000;">{{#noConflictCheck}}[ X ]{{/noConflictCheck}}{{^noConflictCheck}}[ ]{{/noConflictCheck}} No conflicts</p></div>
 <p style="color:#000;">___ Additional Sheets Attached</p>
 <p style="color:#000;">Signature of Consultant: </p>
 <p style="color:#000;">Print Name of Consultant: <span id="counterPartyAddress" style="background-color:#f79632">{{counterPartyName}}</span></p>
