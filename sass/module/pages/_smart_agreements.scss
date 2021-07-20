@@ -1,0 +1,74 @@
+.paid-coming-soon {
+  .paid-gradient {
+    font-style: normal;
+    font-weight: 900;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 5px;
+    background: linear-gradient(90.8deg, #DA1E5D 0.53%, #F59222 99.71%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -moz-text-fill-color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .desc {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 25px;
+    line-height: 32px;
+    color: #34286C;
+  }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+  .paid-coming-soon {
+    .paid-gradient {
+      line-height: normal;
+    }
+    .desc {
+      line-height: normal;
+    }
+  }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+  .paid-coming-soon {
+    .paid-gradient {
+      font-size: 50px;
+      line-height: 100px;
+    }
+    .desc {
+      line-height: 32px;
+    }
+  }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+  .paid-coming-soon {
+    .paid-gradient {
+      font-size: 80px;
+      line-height: 120px;
+    }
+    .desc {
+      line-height: 32px;
+    }
+  }
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+  .paid-coming-soon {
+    .paid-gradient {
+      font-size: 110px;
+      line-height: 139px;
+    }
+    .desc {
+      line-height: 32px;
+    }
+  }
+}

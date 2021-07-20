@@ -153,7 +153,6 @@ const SideBar: FC<SideBarProps> = ({ routerName }) => {
 
       <div className="menu-bottom mt-5 pt-5">
         <ul className="pl-3">
-
           <li className={classnames('mb-4 no-cursor')}>
             <img className="mr-3" src="/assets/icon/networkBi.svg" alt="" />
             Network:
