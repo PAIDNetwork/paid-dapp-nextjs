@@ -45,6 +45,19 @@ import {
   COUNTER_PARTY_EMAIL_FIELD,
   COUNTER_PARTY_NAME_FIELD,
   COUNTER_PARTY_WALLET_FIELD,
+  COMPANY_NAME_FIELD,
+  COMPANY_STATE_FIELD,
+  DATE_FIELD,
+  COMPANY_TYPE_FIELD,
+  PROVIDER_NAME_FIELD,
+  PROVIDER_STATE_FIELD,
+  PROVIDER_TYPE_FIELD,
+  TERMINATION_DATE_FIELD,
+  COUNTY_FIELD,
+  COMISSION_FIELD,
+  COMISSION_DATE_FIELD,
+  TITLE_COMPANY_FIELD,
+  TITLE_PROVIDER_FIELD
 } from '../utils/agreement';
 
 type NewAgreementProps = {
@@ -133,17 +146,29 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
   useEffect(() => {
     const data = smartAgreementsState[dataName];
     if (data) {
-      if (data[PARTY_NAME_FIELD] === undefined || data[PARTY_NAME_FIELD] === null || data[PARTY_NAME_FIELD] === '') {
-        data[PARTY_NAME_FIELD] = isEditing ? `${name}` : '';
-        data[PARTY_EMAIL_FIELD] = isEditing ? email : '';
-        data[PARTY_ADDRESS_FIELD] = '';
-        data[PARTY_WALLET_FIELD] = isEditing ? currentWallet : '';
-        data[COUNTER_PARTY_NAME_FIELD] = '';
-        data[COUNTER_PARTY_EMAIL_FIELD] = '';
-        data[COUNTER_PARTY_ADDRESS_FIELD] = '';
-        data[COUNTER_PARTY_WALLET_FIELD] = '';
-        data[COUNTER_PARTY_WALLET_FIELD] = '';
-      }
+      //if (data[PARTY_NAME_FIELD] === undefined || data[PARTY_NAME_FIELD] === null || data[PARTY_NAME_FIELD] === '') {
+        data[PARTY_NAME_FIELD] = isEditing ? `${name}` : '[PARTY NAME]';
+        data[PARTY_EMAIL_FIELD] = isEditing ? email : '[PARTY EMAIL]';
+        data[PARTY_ADDRESS_FIELD] = isEditing ? (data[PARTY_ADDRESS_FIELD] === '[PARTY ADDRESS]' ? '' : data[PARTY_ADDRESS_FIELD]) : '[PARTY ADDRESS]';
+        data[PARTY_WALLET_FIELD] = isEditing ? currentWallet : '[PARTY WALLET]';
+        data[COUNTER_PARTY_NAME_FIELD] = isEditing ? (data[COUNTER_PARTY_NAME_FIELD] === '[COUNTER PARTY NAME]' ? '' : data[COUNTER_PARTY_NAME_FIELD]) : '[COUNTER PARTY NAME]';
+        data[COUNTER_PARTY_EMAIL_FIELD] = isEditing ? (data[COUNTER_PARTY_EMAIL_FIELD] === '[COUNTER PARTY EMAIL]' ? '' : data[COUNTER_PARTY_EMAIL_FIELD]) : '[COUNTER PARTY EMAIL]';
+        data[COUNTER_PARTY_ADDRESS_FIELD] = isEditing ? (data[COUNTER_PARTY_ADDRESS_FIELD] === '[COUNTER PARTY ADDRESS]' ? '' : data[COUNTER_PARTY_ADDRESS_FIELD]) : '[COUNTER PARTY ADDRESS]';
+        data[COUNTER_PARTY_WALLET_FIELD] = isEditing ? (data[COUNTER_PARTY_WALLET_FIELD] === '[COUNTER PARTY WALLET]' ? '' : data[COUNTER_PARTY_WALLET_FIELD]) : '[COUNTER PARTY WALLET]';
+        data[DATE_FIELD] = isEditing ? (data[DATE_FIELD] === '[DATE]' ? '' : data[DATE_FIELD]) : '[DATE]';
+        data[COMPANY_NAME_FIELD] = isEditing ? (data[COMPANY_NAME_FIELD] === '[COMPANY NAME]' ? '' : data[COMPANY_NAME_FIELD]) : '[COMPANY NAME]';
+        data[COMPANY_STATE_FIELD] = isEditing ? (data[COMPANY_STATE_FIELD] === '[STATE]' ? '' : data[COMPANY_STATE_FIELD]) : '[STATE]';
+        data[COMPANY_TYPE_FIELD] = isEditing ? (data[COMPANY_TYPE_FIELD] === '[TYPE OF COMPANY]' ? '' : data[COMPANY_TYPE_FIELD]) : '[TYPE OF COMPANY]';
+        data[PROVIDER_NAME_FIELD] = isEditing ? (data[PROVIDER_NAME_FIELD] === '[PROVIDER NAME]' ? '' : data[PROVIDER_NAME_FIELD]) : '[PROVIDER NAME]';
+        data[PROVIDER_STATE_FIELD] = isEditing ? (data[PROVIDER_STATE_FIELD] === '[PROVIDER STATE]' ? '' : data[PROVIDER_STATE_FIELD]) : '[PROVIDER STATE]';
+        data[PROVIDER_TYPE_FIELD] = isEditing ? (data[PROVIDER_TYPE_FIELD] === '[TYPE OF COMPANY]' ? '' : data[PROVIDER_TYPE_FIELD]) : '[TYPE OF COMPANY]';
+        data[TERMINATION_DATE_FIELD] = isEditing ? (data[TERMINATION_DATE_FIELD] === '[TERMINATION DATE]' ? '' : data[TERMINATION_DATE_FIELD]) : '[TERMINATION DATE]';
+        data[COUNTY_FIELD] = isEditing ? (data[COUNTY_FIELD] === '[COUNTY]' ? '' : data[COUNTY_FIELD]) : '[COUNTY]';
+        data[COMISSION_FIELD] = isEditing ? (data[COMISSION_FIELD] === '[COMISSION]' ? '' : data[COMISSION_FIELD]) : '[COMISSION]';
+        data[COMISSION_DATE_FIELD] = isEditing ? (data[COMISSION_DATE_FIELD] === '[COMISSION DATE]' ? '' : data[COMISSION_DATE_FIELD]) : '[COMISSION DATE]';
+        data[TITLE_COMPANY_FIELD] = isEditing ? (data[TITLE_COMPANY_FIELD] === '[TITLE]' ? '' : data[TITLE_COMPANY_FIELD]) : '[TITLE]';
+        data[TITLE_PROVIDER_FIELD] = isEditing ? (data[TITLE_PROVIDER_FIELD] === '[TITLE]' ? '' : data[TITLE_PROVIDER_FIELD]) : '[TITLE]';
+      //}
     }
     setAgreementData(data);
   }, [smartAgreementsState, dataName, agreementTitle]);

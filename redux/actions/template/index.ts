@@ -766,6 +766,10 @@ const getContractTemplate = (contractName: String): contractTemplate => {
           type: 'object',
           title: 'My information (the “Company)',
           properties: {
+            titleCompany:{
+              title: 'Title',
+              type: 'string',
+            },
             companyName: {
               title: 'Company name',
               type: 'string',
@@ -774,18 +778,26 @@ const getContractTemplate = (contractName: String): contractTemplate => {
               title: 'State',
               type: 'string',
             },
+            county: {
+              title: 'County',
+              type: 'string',
+            },
             typeOfCompany: {
               title: 'Type of company',
               type: 'string',
             },
             ...sharedProperties.party,
           },
-          required: ['companyName', 'stateOfCompany', 'typeOfCompany', ...sharedProperties.required],
+          required: ['companyName', 'stateOfCompany', 'typeOfCompany','county', ...sharedProperties.required],
         },
         {
           type: 'object',
           title: 'Advisor information (“Provider”)',
           properties: {
+            titleProvider:{
+              title: 'Title',
+              type: 'string',
+            },
             providerName: {
               title: 'Provider name',
               type: 'string',
