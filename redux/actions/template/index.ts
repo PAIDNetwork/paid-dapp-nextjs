@@ -5,6 +5,8 @@ import ConsultingAgreement from './consulting-agreement.html';
 import ReferalAgreement from './referral-agreement.html';
 import Saft from './saft.html';
 
+import PlainConsultingAgreement from './previews/consulting-agreement.html';
+
 enum contractsTemplates {
   TemplateNda = '001',
   TemplateCiia = '002',
@@ -23,7 +25,7 @@ interface contractTemplate {
   uiSchema: Object;
 }
 
-const getContractTemplate = (contractName: String): contractTemplate => {
+const getContractTemplate = (contractName: String, isEditing:Boolean): contractTemplate => {
   let contractTemplate;
   let title;
   let dataName = '';
@@ -415,7 +417,7 @@ const getContractTemplate = (contractName: String): contractTemplate => {
 
     case contractsTemplates.TemplateConsultingAgreement:
       title = 'CONSULTING AGREEMENT';
-      contractTemplate = ConsultingAgreement;
+      contractTemplate = isEditing ?  ConsultingAgreement : PlainConsultingAgreement;
       dataName = 'consultingAgreementData';
       jsonSchemas = [
         {

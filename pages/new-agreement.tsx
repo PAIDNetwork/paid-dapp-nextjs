@@ -45,10 +45,6 @@ import {
   COUNTER_PARTY_EMAIL_FIELD,
   COUNTER_PARTY_NAME_FIELD,
   COUNTER_PARTY_WALLET_FIELD,
-  DATE,
-  STATE,
-  COMPANY_NAME,
-  COMPANY_TYPE
 } from '../utils/agreement';
 
 type NewAgreementProps = {
@@ -126,7 +122,7 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
   } = useContract();
 
   useEffect(() => {
-    const templateData = getContractTemplate(templateTypeCode);
+    const templateData = getContractTemplate(templateTypeCode, isEditing);
     setDataName(templateData.dataName);
     setTitle(templateData.title);
     setAgreementDocument(templateData.template);
@@ -137,21 +133,17 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
   useEffect(() => {
     const data = smartAgreementsState[dataName];
     if (data) {
-      //if (data[PARTY_NAME_FIELD] === undefined || data[PARTY_NAME_FIELD] === null || data[PARTY_NAME_FIELD] === '') {
-        data[PARTY_NAME_FIELD] = isEditing ? `${name}` : '[PARTY NAME]';
-        data[PARTY_EMAIL_FIELD] = isEditing ? email : '[PARTY EMAIL]';
-        data[PARTY_ADDRESS_FIELD] = isEditing ? (data[PARTY_ADDRESS_FIELD] === '[PARTY ADDRESS]' ? '' : data[PARTY_ADDRESS_FIELD]) : '[PARTY ADDRESS]';
-        data[PARTY_WALLET_FIELD] = isEditing ? currentWallet : '[PARTY WALLET]';
-        data[COUNTER_PARTY_NAME_FIELD] = isEditing ? (data[COUNTER_PARTY_NAME_FIELD] === '[COUNTER PARTY NAME]' ? '' : data[COUNTER_PARTY_NAME_FIELD]) : '[COUNTER PARTY NAME]';
-        data[COUNTER_PARTY_EMAIL_FIELD] = isEditing ? (data[COUNTER_PARTY_EMAIL_FIELD] === '[COUNTER PARTY EMAIL]' ? '' : data[COUNTER_PARTY_EMAIL_FIELD]) : '[COUNTER PARTY EMAIL]';
-        data[COUNTER_PARTY_ADDRESS_FIELD] = isEditing ? (data[COUNTER_PARTY_ADDRESS_FIELD] === '[COUNTER PARTY ADDRESS]' ? '' : data[COUNTER_PARTY_ADDRESS_FIELD]) : '[COUNTER PARTY ADDRESS]';
-        data[COUNTER_PARTY_WALLET_FIELD] = isEditing ? (data[COUNTER_PARTY_WALLET_FIELD] === '[COUNTER PARTY WALLET]' ? '' : data[COUNTER_PARTY_WALLET_FIELD]) :'[COUNTER PARTY WALLET]';
-        data[COUNTER_PARTY_WALLET_FIELD] = isEditing ? (data[COUNTER_PARTY_WALLET_FIELD] === '[COUNTER PARTY WALLET]' ? '' : data[COUNTER_PARTY_WALLET_FIELD]) : '[COUNTER PARTY WALLET]';
-        data[DATE] = isEditing ? (data[DATE] === '[DATE]' ? '' : data[DATE]) : '[DATE]';
-        data[STATE] = isEditing ? (data[STATE] === '[STATE]' ? '' : data[STATE]) : '[STATE]';
-        data[COMPANY_NAME] = isEditing ? (data[COMPANY_NAME] === '[COMPANY NAME]' ? '' : data[COMPANY_NAME]) : '[COMPANY NAME]';
-        data[COMPANY_TYPE] = isEditing ? (data[COMPANY_TYPE] === '[COMPANY TYPE]' ? '' : data[COMPANY_TYPE]) : '[COMPANY TYPE]';
-      //}
+      if (data[PARTY_NAME_FIELD] === undefined || data[PARTY_NAME_FIELD] === null || data[PARTY_NAME_FIELD] === '') {
+        data[PARTY_NAME_FIELD] = isEditing ? `${name}` : '';
+        data[PARTY_EMAIL_FIELD] = isEditing ? email : '';
+        data[PARTY_ADDRESS_FIELD] = '';
+        data[PARTY_WALLET_FIELD] = isEditing ? currentWallet : '';
+        data[COUNTER_PARTY_NAME_FIELD] = '';
+        data[COUNTER_PARTY_EMAIL_FIELD] = '';
+        data[COUNTER_PARTY_ADDRESS_FIELD] = '';
+        data[COUNTER_PARTY_WALLET_FIELD] = '';
+        data[COUNTER_PARTY_WALLET_FIELD] = '';
+      }
     }
     setAgreementData(data);
   }, [smartAgreementsState, dataName, agreementTitle]);
