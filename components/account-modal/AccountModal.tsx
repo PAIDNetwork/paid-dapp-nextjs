@@ -76,10 +76,10 @@ const AccountModal: FC<AccountModalProps> = ({
   }, [profile, step]);
 
   return (
-    <PdModal isOpen={open}>
+    <PdModal isOpen={open} id="account-modal-content">
       <PdModalBody className="account-pd-modal">
-        <h1>Create your PAID account</h1>
-        <p>Create your DID account to start using PAID Smart Agreements</p>
+        <h1 className="mb-4">Create your PAID account</h1>
+        <p className="mb-4">Create your DID account to start using PAID Smart Agreements</p>
         {step === 0
           ? <FormAccountStepOne setStpe={setStpe} setProfile={setProfile} />
           : <FormAccountStepTwo setStpe={setStpe} setProfile={setProfile} profile={profile} />}
