@@ -159,7 +159,7 @@ const FormProfile: FC<FormProfileProps> = ({
                     label="Confirm Passphrase:"
                     name="confirmPassphrase"
                     type="password"
-                    placeholder="Enter your Confim Passphrase"
+                    placeholder="Enter your Confirm Passphrase"
                     inputClassNames={classNames({
                         'is-invalid': errors.confirmPassphrase,
                     })}
