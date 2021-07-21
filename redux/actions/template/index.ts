@@ -4,6 +4,7 @@ import Ciia from './ciia.html';
 import ConsultingAgreement from './consulting-agreement.html';
 import ReferalAgreement from './referral-agreement.html';
 import Saft from './saft.html';
+import PlainSaft from './preview/saft.html';
 
 enum contractsTemplates {
   TemplateNda = '001',
@@ -23,7 +24,7 @@ interface contractTemplate {
   uiSchema: Object;
 }
 
-const getContractTemplate = (contractName: String): contractTemplate => {
+const getContractTemplate = (contractName: String, isEditing:Boolean, agreementReviewed:Boolean): contractTemplate => {
   let contractTemplate;
   let title;
   let dataName = '';
@@ -873,29 +874,54 @@ const getContractTemplate = (contractName: String): contractTemplate => {
 
     case contractsTemplates.TemplateSaft:
       title = 'SIMPLE AGREEMENT FOR FUTURE TOKENS';
-      contractTemplate = Saft;
+      contractTemplate = isEditing ? Saft : agreementReviewed ? Saft : PlainSaft;
       dataName = 'saftAgreementData';
       jsonSchemas = [
         {
           type: 'object',
+          title: 'Date when Agreement will become effective',
+          properties: {
+            date: {
+              title: 'Date',
+              type: 'string',
+              format: 'date',
+            },
+          },
+          required: ['date'],
+        },
+        {
+          type: 'object',
           title: 'My information ("the Company")',
           properties: {
-            typeOfCompany: {
+            companyName: {
               title: 'Company name',
               type: 'string',
             },
+            
+            typeOfCompany: {
+              title: 'Type of company',
+              type: 'string',
+            },
             jurisdiction: {
-              title: 'Jurisdiction',
+              title: 'Company NON-U.S. Jurisdiction',
+              type: 'string',
+            },
+            companyTitle: {
+              title: 'Title',
               type: 'string',
             },
             ...sharedProperties.party,
           },
-          required: ['typeOfCompany', ...sharedProperties.required],
+          required: ['companyName','typeOfCompany', ...sharedProperties.required],
         },
         {
           type: 'object',
           title: 'Advisor information ("the Purchaser")',
           properties: {
+            purchaserTitle: {
+              title: 'Title',
+              type: 'string',
+            },
             ...sharedProperties.couterparty,
           },
           required: sharedProperties.requiredCounterParty,
@@ -917,7 +943,7 @@ const getContractTemplate = (contractName: String): contractTemplate => {
         },
         {
           type: 'object',
-          Title: 'Discount rate',
+          Title: 'Discount rate (%)',
           properties: {
             discountRate: {
               title: 'Rate (%)',
@@ -931,7 +957,7 @@ const getContractTemplate = (contractName: String): contractTemplate => {
           title: 'Applicable Exchange rate',
           properties: {
             website: {
-              title: 'Website',
+              title: 'Website address',
               type: 'string',
             },
           },
@@ -939,82 +965,50 @@ const getContractTemplate = (contractName: String): contractTemplate => {
         },
         {
           type: 'object',
-          title: 'Payment options',
+          title: 'Payment by U.S Dollars',
           properties: {
-            paymentOption: {
-              title: 'Payment Options',
+            bankName: {
+              title: 'Bank Name',
               type: 'string',
-              enum: ['dollar', 'eth', 'btc'],
-              enumNames: ['U.S. Dollars', 'Ethereum', 'Bitcoin'],
-              default: 'dollar',
             },
-          },
-          dependencies: {
-            paymentOption: {
-              oneOf: [
-                {
-                  properties: {
-                    paymentOption: {
-                      enum: ['dollar'],
-                    },
-                    bankName: {
-                      title: 'Bank Name',
-                      type: 'string',
-                    },
-                    address: {
-                      title: 'Address',
-                      type: 'string',
-                    },
-                    aba: {
-                      title: 'ABA#',
-                      type: 'string',
-                    },
-                    payeeAccount: {
-                      title: 'Payee Account #',
-                      type: 'string',
-                    },
-                    payeeAccountName: {
-                      title: 'Payee Account Name',
-                      type: 'string',
-                    },
-                  },
-                },
-                {
-                  properties: {
-                    paymentOption: {
-                      enum: ['eth'],
-                    },
-                    ethereum: {
-                      title: 'Ethereum address',
-                      type: 'string',
-                    },
-                  },
-                },
-                {
-                  properties: {
-                    paymentOption: {
-                      enum: ['btc'],
-                    },
-                    bitcoin: {
-                      title: 'Bitcoin address',
-                      type: 'string',
-                    },
-                  },
-                },
-              ],
+            address: {
+              title: 'Address',
+              type: 'string',
             },
+            aba: {
+              title: 'ABA#',
+              type: 'string',
+            },
+            payeeAccount: {
+              title: 'Payee Account #',
+              type: 'string',
+            },
+            payeeAccountName: {
+              title: 'Payee Account Name',
+              type: 'string',
+            }
           },
-          required: [
-            'paymentOption',
-            'bankName',
-            'address',
-            'aba',
-            'payeeAccount',
-            'payeeAccountName',
-            'ethereum',
-            'bitcoin',
-          ],
         },
+        {
+          type: 'object',
+          title: 'Payment by Ethereum',
+          properties: {
+            ethereum: {
+              title: 'Ethereum address',
+              type: 'string',
+            }
+          }
+        },
+        {
+          type: 'object',
+          title: 'Payment by Bitcoin',
+          properties: {
+            bitcoin: {
+              title: 'Bitcoin address',
+              type: 'string',
+            }
+          }
+        }
       ];
       uiSchema = {
         typeOfCompany: {
