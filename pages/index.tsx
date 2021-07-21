@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { Button } from 'reactstrap';
+import TagManager from 'react-gtm-module';
 import { useDispatch, useSelector } from 'react-redux';
 import WalletSelectorModal from '@/components/connect/WalletSelectorModal';
 import doConnectToWallet from '../redux/actions/wallet';
@@ -22,6 +23,10 @@ const Index: React.FC = () => {
   );
 
   useEffect(() => {
+    TagManager.initialize({ gtmId: 'GTM-5KG4364' });
+  }, []);
+
+  useEffect(() => {
     if (currentWallet) {
       setOpenConnectSelector(false);
     }
@@ -32,6 +37,15 @@ const Index: React.FC = () => {
       <Head>
         <title>Paid-Dapp</title>
         <link rel="icon" href="/assets/icon/.ico" />
+        <noscript>
+          <iframe
+            title="googletagmanager"
+            src="https://www.googletagmanager.com/ns.html?id=GTM-5KG4364"
+            height="0"
+            width="0"
+            style={{ display: 'none', visibility: 'hidden' }}
+          />
+        </noscript>
       </Head>
 
       <div className="index m-0 p-0 container-fluid">
