@@ -25,7 +25,7 @@ interface contractTemplate {
   uiSchema: Object;
 }
 
-const getContractTemplate = (contractName: String, isEditing:Boolean): contractTemplate => {
+const getContractTemplate = (contractName: String, isEditing:Boolean, agreementReviewed:Boolean): contractTemplate => {
   let contractTemplate;
   let title;
   let dataName = '';
@@ -417,7 +417,7 @@ const getContractTemplate = (contractName: String, isEditing:Boolean): contractT
 
     case contractsTemplates.TemplateConsultingAgreement:
       title = 'CONSULTING AGREEMENT';
-      contractTemplate = isEditing ?  ConsultingAgreement : PlainConsultingAgreement;
+      contractTemplate = isEditing ?  ConsultingAgreement : !agreementReviewed ? PlainConsultingAgreement : ConsultingAgreement;
       dataName = 'consultingAgreementData';
       jsonSchemas = [
         {
