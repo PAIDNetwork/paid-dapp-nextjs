@@ -105,7 +105,7 @@ const SideBar: FC<SideBarProps> = ({ routerName }) => {
         </a>
       </Link>
       <div className="menu mt-5">
-        <ul className="pl-3" style={isOpen ? {} : {paddingLeft: "1.5rem"}}>
+        <ul className="pl-3" style={isOpen ? {} : { paddingLeft: '1.5rem' }}>
           <Link href="/agreements">
             <li className={routerName === '/agreements' ? 'mb-4 active' : 'mb-4'}>
               <a>
@@ -124,7 +124,7 @@ const SideBar: FC<SideBarProps> = ({ routerName }) => {
               </a>
             </li>
           </Link>
-          <li className={classnames('mb-4', { 'no-cursor': emptyProfile })}>
+          <li className={classnames('mb-4 no-cursor')}>
             <img className="mr-3" src="/assets/icon/paid.svg" alt="" />
             <div>
               <div>
@@ -153,14 +153,11 @@ const SideBar: FC<SideBarProps> = ({ routerName }) => {
 
       <div className="menu-bottom mt-5 pt-5">
         <ul className="pl-3">
-
-          <li className="mb-4 no-cursor">
-            <a>
-              <img className="mr-3" src="/assets/icon/networkBi.svg" alt="" />
-              Network:
-              {' '}
-              { networkName }
-            </a>
+          <li className={classnames('mb-4 no-cursor')}>
+            <img className="mr-3" src="/assets/icon/networkBi.svg" alt="" />
+            Network:
+            {' '}
+            { networkName }
           </li>
         </ul>
       </div>

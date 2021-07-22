@@ -51,7 +51,6 @@ const Agreements: React.FC = () => {
       if (account && contract) {
         const ipfs = new IPLDManager(did);
         await ipfs.start(process.env.NEXT_PUBLIC_IPFS_URL);
-
         const filter = contract.filters.SignatureRequested(account);
         const events = await contract.queryFilter(filter);
         const filterRec = contract.filters.SignatureRequested(null, null, account);
