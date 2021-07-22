@@ -4,6 +4,7 @@ import Ciia from './ciia.html';
 import ConsultingAgreement from './consulting-agreement.html';
 import ReferalAgreement from './referral-agreement.html';
 import Saft from './saft.html';
+import PlanCiia from './preview/ciia.html';
 
 enum contractsTemplates {
   TemplateNda = '001',
@@ -23,7 +24,7 @@ interface contractTemplate {
   uiSchema: Object;
 }
 
-const getContractTemplate = (contractName: String): contractTemplate => {
+const getContractTemplate = (contractName: String, isEditing:Boolean,agreementReviewed:Boolean): contractTemplate => {
   let contractTemplate;
   let title;
   let dataName = '';
@@ -335,7 +336,7 @@ const getContractTemplate = (contractName: String): contractTemplate => {
 
     case contractsTemplates.TemplateCiia:
       title = 'CONFIDENTIAL INFORMATION AND INVENTION ASSIGNMENT AGREEMENT';
-      contractTemplate = Ciia;
+      contractTemplate = isEditing ? Ciia : agreementReviewed ? Ciia : PlanCiia;
       dataName = 'ciiaAgreementData';
       jsonSchemas = [
         {

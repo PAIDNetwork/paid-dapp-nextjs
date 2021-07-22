@@ -21,6 +21,10 @@ const templateAgreements: TemplateAgreementModel[] = [
     code: '006',
     name: 'Advisor Agreement',
   },
+  {
+    code: '002',
+    name: 'CIIA',
+  }
 ];
 
 export default templateAgreements;
