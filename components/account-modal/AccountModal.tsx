@@ -24,7 +24,7 @@ const AccountModal: FC<AccountModalProps> = ({
     (state: any) => state.profileReducer,
   );
   const { account } = useWallet();
-  const [profile, setProfile] = useState<ProfileModel>(profileState.profile);
+  const [profile, setProfile] = useState<ProfileModel>({});
   const router = useRouter();
   const { query } = useRouter();
   const { formatDateProfile } = helper;
@@ -66,6 +66,7 @@ const AccountModal: FC<AccountModalProps> = ({
           created,
           did: provider.did,
         };
+        console.log('in current in current');
         dispatch(doSetProfile(currentProfile));
         dispatch(setCurrentWallet(account, router, query));
       }
