@@ -25,7 +25,11 @@ interface contractTemplate {
   uiSchema: Object;
 }
 
-const getContractTemplate = (contractName: String, isEditing:Boolean, agreementReviewed:Boolean): contractTemplate => {
+const getContractTemplate = (
+  contractName: String,
+  isEditing?:Boolean,
+  agreementReviewed?:Boolean,
+): contractTemplate => {
   let contractTemplate;
   let title;
   let dataName = '';
