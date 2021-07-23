@@ -5,8 +5,6 @@ import ConsultingAgreement from './consulting-agreement.html';
 import ReferalAgreement from './referral-agreement.html';
 import Saft from './saft.html';
 
-import PlainConsultingAgreement from './previews/consulting-agreement.html';
-
 enum contractsTemplates {
   TemplateNda = '001',
   TemplateCiia = '002',
@@ -421,7 +419,7 @@ const getContractTemplate = (
 
     case contractsTemplates.TemplateConsultingAgreement:
       title = 'CONSULTING AGREEMENT';
-      contractTemplate = isEditing ?  ConsultingAgreement : !agreementReviewed ? PlainConsultingAgreement : ConsultingAgreement;
+      contractTemplate = ConsultingAgreement;
       dataName = 'consultingAgreementData';
       jsonSchemas = [
         {

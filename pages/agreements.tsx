@@ -67,7 +67,7 @@ const Agreements: React.FC = () => {
         myDocuments.map((myDocument: any) => {
           const { templateId, metadata } = myDocument;
           const templateIdStr = helper.padLeadingZeros(templateId.toString(), 3);
-          const templateData = getContractTemplate(templateIdStr,false,false);
+          const templateData = getContractTemplate(templateIdStr);
           const { jsonSchemas } = templateData;
           try {
             const types = [];

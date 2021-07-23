@@ -1,7 +1,7 @@
 /* eslint-disable no-tabs */
-const ConsultingAgreement = `<div class="contract" style="width: 100%; background-color:white; color: black;text-align:center;"><span align="center" id="customTitle">{{companyName}}</span><h1 id="title" style="text-align: center;">CONSULTING AGREEMENT</h1><p align="center"><strong><span id="partyName" style="display: none">{{partyName}}</span></strong></p>
+const ConsultingAgreement = `<div class="contract" style="width: 100%; background-color:white; color: black;text-align:center;"><span align="center" id="customTitle">{{#companyName}}{{companyName}}{{/companyName}}{{^companyName}}[COMPANY NAME]{{/companyName}}</span><h1 id="title" style="text-align: center;">CONSULTING AGREEMENT</h1><p align="center"><strong><span id="partyName" style="display: none">{{partyName}}</span></strong></p>
 <p align="center" style="color:#000;"><u><strong>CONSULTING AGREEMENT</strong></u></p>
-<p style="color:#000;">This Consulting Agreement (this &ldquo;<u>Agreement</u>&rdquo;) is made as of <span style="background-color:#f79632">{{date}}</span>, by and between <span style="background-color:#f79632">{{companyName}}</span>, a <span style="background-color:#f79632">{{stateOfCompany}}</span> <span style="background-color:#f79632">{{typeOfCompany}}</span> (the &ldquo;<u>Company</u>&rdquo;), and <span style="background-color:#f79632">{{counterPartyName}}</span>(&ldquo;<u>Consultant</u>&rdquo;).</p>
+<p style="color:#000;">This Consulting Agreement (this &ldquo;<u>Agreement</u>&rdquo;) is made as of <span style="background-color:#f79632">{{#date}}{{date}}{{/date}}{{^date}}[DATE]{{/date}}</span>, by and between <span style="background-color:#f79632">{{#companyName}}{{companyName}}{{/companyName}}{{^companyName}}[COMPANY NAME]{{/companyName}}</span>, a <span style="background-color:#f79632">{{#stateOfCompany}}{{stateOfCompany}}{{/stateOfCompany}}{{^stateOfCompany}}[STATE]{{/stateOfCompany}}</span> <span style="background-color:#f79632">{{#typeOfCompany}}{{typeOfCompany}}{{/typeOfCompany}}{{^typeOfCompany}}[TYPE OF COMPANY]{{/typeOfCompany}}</span> (the &ldquo;<u>Company</u>&rdquo;), and <span style="background-color:#f79632">{{#counterPartyName}}{{counterPartyName}}{{/counterPartyName}}{{^counterPartyName}}[COUNTER PARTY NAME]{{/counterPartyName}}</span>(&ldquo;<u>Consultant</u>&rdquo;).</p>
 <ol>
 <li> 
 <p style="color:#000;"><u><strong>Consulting Relationship</strong></u><strong>.</strong> During the term of this Agreement, Consultant will provide consulting services to the Company as described on <u>Exhibit&nbsp;A</u> hereto (the &ldquo;<u>Services</u>&rdquo;). Consultant represents that Consultant is duly licensed (as applicable) and has the qualifications, the experience and the ability to properly perform the Services. Consultant shall use Consultant&rsquo;s best efforts to perform the Services such that the results are satisfactory to the Company.</p>
@@ -52,7 +52,7 @@ const ConsultingAgreement = `<div class="contract" style="width: 100%; backgroun
 <p style="color:#000;"><u><strong>Miscellaneous</strong></u><strong>.</strong></p>
 <ol type="a">
 <li>
-<p style="color:#000;"><u><strong>Governing Law</strong></u><strong>.</strong> The validity, interpretation, construction and performance of this Agreement, and all acts and transactions pursuant hereto and the rights and obligations of the parties hereto shall be governed, construed and interpreted in accordance with the laws of the state of <span style="background-color:#f79632">{{stateOfCompany}}</span>, without giving effect to principles of conflicts of law.</p>
+<p style="color:#000;"><u><strong>Governing Law</strong></u><strong>.</strong> The validity, interpretation, construction and performance of this Agreement, and all acts and transactions pursuant hereto and the rights and obligations of the parties hereto shall be governed, construed and interpreted in accordance with the laws of the state of <span style="background-color:#f79632">{{#stateOfCompany}}{{stateOfCompany}}{{/stateOfCompany}}{{^stateOfCompany}}[STATE]{{/stateOfCompany}}</span>, without giving effect to principles of conflicts of law.</p>
 </li>
 <li>
 <p style="color:#000;"><u><strong>Entire Agreement</strong></u><strong>.</strong> This Agreement sets forth the entire agreement and understanding of the parties relating to the subject matter herein and supersedes all prior or contemporaneous discussions, understandings and agreements, whether oral or written, between them relating to the subject matter hereof.</p>
@@ -86,18 +86,18 @@ const ConsultingAgreement = `<div class="contract" style="width: 100%; backgroun
 <p style="color:#000;"><strong>THE COMPANY:</strong></p>
 <p style="color:#000;">(Signature)</p>
 <p style="color:#000;">_______________________________________</p>
-<p style="color:#000;">Name: <span id="partyName" style="background-color:#f79632">{{partyName}}</span></p>
-<p style="color:#000;">Email: <span id="partyEmail" style="background-color:#f79632">{{partyEmail}}</span></p>
-<p style="color:#000;">Address: <span id="partyAddress" style="background-color:#f79632">{{partyAddress}}</span><br /> <br /> </p>
-<p style="color:#000;">Wallet: <span id="partyWallet" style="background-color:#f79632">{{partyWallet}}</span></p>
+<p style="color:#000;">Name: <span id="partyName" style="background-color:#f79632">{{#partyName}}{{partyName}}{{/partyName}}{{^partyName}}[PARTY NAME]{{/partyName}}</span></p>
+<p style="color:#000;">Email: <span id="partyEmail" style="background-color:#f79632">{{#partyEmail}}{{partyEmail}}{{/partyEmail}}{{^partyEmail}}[PARTY EMAIL]{{/partyEmail}}</span></p>
+<p style="color:#000;">Address: <span id="partyAddress" style="background-color:#f79632">{{#partyAddress}}{{partyAddress}}{{/partyAddress}}{{^partyAddress}}[PARTY ADDRESS]{{/partyAddress}}</span><br /> <br /> </p>
+<p style="color:#000;">Wallet: <span id="partyWallet" style="background-color:#f79632">{{#partyWallet}}{{partyWallet}}{{/partyWallet}}{{^partyWallet}}[PARTY WALLET]{{/partyWallet}}</span></p>
 <p><u> <br /> </u><br /> </p>
 <p style="color:#000;"><strong>CONSULTANT:</strong></p>
 <p style="color:#000;">(Signature)</p>
 <p style="color:#000;">_______________________________________</p>
-<p style="color:#000;">Name:<span id="counterPartyName" style="background-color:#f79632">{{counterPartyName}}</span></p>
-<p style="color:#000;">Email: <span id="counterPartyEmail" style="background-color:#f79632">{{counterPartyEmail}}</span></p>
-<p style="color:#000;">Address: <span id="counterPartyAddress" style="background-color:#f79632">{{counterPartyAddress}}</span><br /> <br /> </p>
-<p style="color:#000;">Wallet: <span id="counterPartyWallet" style="background-color:#f79632">{{counterPartyWallet}}</span>
+<p style="color:#000;">Name:<span id="counterPartyName" style="background-color:#f79632">{{#counterPartyName}}{{counterPartyName}}{{/counterPartyName}}{{^counterPartyName}}[COUNTER PARTY NAME]{{/counterPartyName}}</span></p>
+<p style="color:#000;">Email: <span id="counterPartyEmail" style="background-color:#f79632">{{#counterPartyEmail}}{{counterPartyEmail}}{{/counterPartyEmail}}{{^counterPartyEmail}}[COUNTER PARTY EMAIL]{{/counterPartyEmail}}</span></p>
+<p style="color:#000;">Address: <span id="counterPartyAddress" style="background-color:#f79632">{{#counterPartyAddress}}{{counterPartyAddress}}{{/counterPartyAddress}}{{^counterPartyAddress}}[COUNTER PARTY ADDRESS]{{/counterPartyAddress}}</span><br /> <br /> </p>
+<p style="color:#000;">Wallet: <span id="counterPartyWallet" style="background-color:#f79632">{{#counterPartyWallet}}{{counterPartyWallet}}{{/counterPartyWallet}}{{^counterPartyWallet}}[COUNTER PARTY WALLET]{{/counterPartyWallet}}</span>
 <p><u> <br /> </u><br /> </p>
 <p class="western">&nbsp;</p>
 <p align="center" style="color:#000;"><u><strong>EXHIBIT A</strong></u></p>
@@ -136,8 +136,8 @@ const ConsultingAgreement = `<div class="contract" style="width: 100%; backgroun
 <div style="display: inline-block; background-color:#f79632; width: 100%"><p style="color:#000;">{{#noConflictCheck}}[ X ]{{/noConflictCheck}}{{^noConflictCheck}}[ ]{{/noConflictCheck}} No conflicts</p></div>
 <p style="color:#000;">___ Additional Sheets Attached</p>
 <p style="color:#000;">Signature of Consultant: </p>
-<p style="color:#000;">Print Name of Consultant: <span id="counterPartyAddress" style="background-color:#f79632">{{counterPartyName}}</span></p>
-<p style="color:#000;">Date: <span id="counterPartyAddress" style="background-color:#f79632">{{date}}</span></p>
+<p style="color:#000;">Print Name of Consultant: <span id="counterPartyAddress" style="background-color:#f79632">{{#counterPartyName}}{{counterPartyName}}{{/counterPartyName}}{{^counterPartyName}}[COUNTER PARTY NAME]{{/counterPartyName}}</span></p>
+<p style="color:#000;">Date: <span id="counterPartyAddress" style="background-color:#f79632">{{#date}}{{date}}{{/date}}{{^date}}[DATE]{{/date}}</span></p>
 <p><br /> </p>
 <p style="color:#000;"><em><u><strong>Instructions</strong></u></em><u>:</u> If no companies need to be excluded under Section 8, please check &ldquo;No Conflicts&rdquo; and sign and date above.</p>
 </div>`;
