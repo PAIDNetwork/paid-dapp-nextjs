@@ -124,7 +124,7 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
   } = useContract();
 
   useEffect(() => {
-    const templateData = getContractTemplate(templateTypeCode, isEditing, agreementReviewed);
+    const templateData = getContractTemplate(templateTypeCode);
     setDataName(templateData.dataName);
     setTitle(templateData.title);
     setAgreementDocument(templateData.template);
