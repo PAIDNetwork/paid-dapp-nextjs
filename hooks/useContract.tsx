@@ -23,10 +23,19 @@ function useContract() {
   const metamask = (window as any).ethereum;
   const binanceWallet = (window as any).BinanceChain;
   let provider;
+  let anchorinngAddress;
+  let escrowAddress;
+  let paidTokenAddress;
   if (connector !== 'bsc') {
     provider = new ethers.providers.Web3Provider(metamask, 'any');
+    anchorinngAddress = process.env.NEXT_PUBLIC_CONTRACT_ETH_ADDRESS;
+    escrowAddress = process.env.NEXT_PUBLIC_CONTRACT_ETH_ESCROW_ADDRESS;
+    paidTokenAddress = process.env.NEXT_PUBLIC_CONTRACT_ETH_PAID_TOKEN_ADDRESS;
   } else {
     provider = new ethers.providers.Web3Provider(binanceWallet);
+    anchorinngAddress = process.env.NEXT_PUBLIC_CONTRACT_ANCHORINNG_ADDRESS;
+    escrowAddress = process.env.NEXT_PUBLIC_CONTRACT_ESCROW_ADDRESS;
+    paidTokenAddress = process.env.NEXT_PUBLIC_CONTRACT_PAID_TOKEN_ADDRESS;
   }
   useEffect(() => {
     const handleNewWorkName = async () => {
@@ -37,7 +46,7 @@ function useContract() {
     const handleContract = () => {
       const abi = getSmartAgreementAnchoringAbi<JsonFragment>();
       const Contract = new ethers.Contract(
-        process.env.NEXT_PUBLIC_CONTRACT_ANCHORINNG_ADDRESS, abi, provider,
+        anchorinngAddress, abi, provider,
       ) as SmartAgreementAnchoring;
       setContract(Contract);
     };
@@ -46,7 +55,7 @@ function useContract() {
       const signer = provider.getSigner(account);
       const abi = getSmartAgreementAnchoringAbi<JsonFragment>();
       const ContractSigner = new ethers.Contract(
-        process.env.NEXT_PUBLIC_CONTRACT_ANCHORINNG_ADDRESS,
+        anchorinngAddress,
         abi,
         signer,
       ) as SmartAgreementAnchoring;
@@ -56,14 +65,14 @@ function useContract() {
     const handleEscrowContract = () => {
       const abi = getTokenEscrowAbi<JsonFragment>();
       const currentContract = new ethers.Contract(
-        process.env.NEXT_PUBLIC_CONTRACT_ESCROW_ADDRESS, abi, provider,
+        escrowAddress, abi, provider,
       ) as TokenEscrow;
       setEscrowContract(currentContract);
     };
 
     const handleTokenContract = () => {
       const currentContract = new ethers.Contract(
-        process.env.NEXT_PUBLIC_CONTRACT_PAID_TOKEN_ADDRESS, PaidTokenContract.abi, provider,
+        paidTokenAddress, PaidTokenContract.abi, provider,
       );
       setTokenContract(currentContract);
     };
@@ -71,7 +80,7 @@ function useContract() {
     const handleTokenSignerContract = () => {
       const signer = provider.getSigner(account);
       const currentContract = new ethers.Contract(
-        process.env.NEXT_PUBLIC_CONTRACT_PAID_TOKEN_ADDRESS, PaidTokenContract.abi, signer,
+        paidTokenAddress, PaidTokenContract.abi, signer,
       );
       setTokenSignerContract(currentContract);
     };

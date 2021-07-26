@@ -10,11 +10,10 @@ import ProfileStateModel from '@/models/profileStateModel';
 import { setCurrentWallet } from '../../redux/actions/wallet';
 import doSetProfile from '../../redux/actions/profile';
 import helper from '../../utils/helper';
-import FormAccountStepOne from './FormAccountStepOne';
-import FormAccountStepTwo from './FormAccountStepTwo';
+import FormAccount from './FormAccount';
 
 interface AccountModalProps {
-  open: boolean;
+    open: boolean;
 }
 
 const AccountModal: FC<AccountModalProps> = ({
@@ -25,15 +24,14 @@ const AccountModal: FC<AccountModalProps> = ({
     (state: any) => state.profileReducer,
   );
   const { account } = useWallet();
-  const [profile, setProfile] = useState<ProfileModel>(profileState.profile);
-  const [step, setStpe] = useState(0);
+  const [profile, setProfile] = useState<ProfileModel>({});
   const router = useRouter();
   const { query } = useRouter();
   const { formatDateProfile } = helper;
 
   useEffect(() => {
     const bootstrapAsync = async () => {
-      if (profile.passphrase && step === 2) {
+      if (profile.passphrase && profile.passphrase !== '') {
         const created = formatDateProfile(new Date());
         const accountName = `${profile.name.toLocaleLowerCase()}${profile.lastName.toLocaleLowerCase()}`;
         const xdvWallet = new Wallet({ isWeb: true });
@@ -68,21 +66,20 @@ const AccountModal: FC<AccountModalProps> = ({
           created,
           did: provider.did,
         };
+        console.log('in current in current');
         dispatch(doSetProfile(currentProfile));
         dispatch(setCurrentWallet(account, router, query));
       }
     };
     bootstrapAsync();
-  }, [profile, step]);
+  }, [profile]);
 
   return (
     <PdModal isOpen={open}>
       <PdModalBody className="account-pd-modal">
         <h1>Create your PAID account</h1>
         <p>Create your DID account to start using PAID Smart Agreements</p>
-        {step === 0
-          ? <FormAccountStepOne setStpe={setStpe} setProfile={setProfile} />
-          : <FormAccountStepTwo setStpe={setStpe} setProfile={setProfile} profile={profile} />}
+        <FormAccount setProfile={setProfile} profile={profile} />
       </PdModalBody>
     </PdModal>
   );
