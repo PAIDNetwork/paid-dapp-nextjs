@@ -29,6 +29,7 @@ import CID from 'cids';
 import PdScrollbar from '../components/reusable/pdScrollbar/PdScrollbar';
 import SmartAgreementFormPanel from '../components/new-agreement/SmartAgreementFormPanel';
 import getContractTemplate from '../redux/actions/template/index';
+
 import {
   doSetSmartAgreementData,
   resetTemplateAgreement,
@@ -108,6 +109,7 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
   const [openConfirmAgreementModal, setOpenConfirmAgreementModal] = useState(false);
   const [openAlertModal, setOpenAlertModal] = useState(false);
   const [agreementError, setAgreementError] = useState(null);
+  const [inReview, setReview] = useState(false);
 
   const {
     register, errors, handleSubmit,
@@ -184,6 +186,7 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
     const activePageLength = (activePageIndex + 1);
     if (activePageLength === jsonSchemas.length) {
       dispatch(setIsEditing(false));
+      setReview(true);
       dispatch(setAgreementReviewed(true));
     } else {
       setActivePageIndex((index) => index + 1);
@@ -268,6 +271,7 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
       setOpenConfirmAgreementModal(true);
       await tx.wait();
     } catch (error) {
+      console.log(error);
       setAgreementError(error.error);
       setOpenAlertModal(true);
     }

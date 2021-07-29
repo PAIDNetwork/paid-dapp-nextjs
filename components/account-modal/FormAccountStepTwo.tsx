@@ -70,6 +70,24 @@ const FormAccountStepTwo: FC<FormAccountStepTwoProps> = ({
           />
                 )}
       />
+      <StackedInput
+        label="Address:"
+        name="address"
+        type="text"
+        placeholder="Enter your address"
+        inputClassNames={classNames({ 'is-invalid': errors.address })}
+        innerRef={register({
+          required: 'Address is required',
+        })}
+        errorComponent={(
+          <ErrorMessage
+            className="error-message"
+            name="address"
+            as="div"
+            errors={errors}
+          />
+        )}
+      />
       <div className="pt-3 text-center">
         <button className="btn btn-primary btn-form-save w-75" type="submit">
           Done

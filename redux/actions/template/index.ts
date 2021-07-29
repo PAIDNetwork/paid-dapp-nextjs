@@ -23,7 +23,11 @@ interface contractTemplate {
   uiSchema: Object;
 }
 
-const getContractTemplate = (contractName: String): contractTemplate => {
+const getContractTemplate = (
+  contractName: String,
+  isEditing?:Boolean,
+  agreementReviewed?:Boolean,
+): contractTemplate => {
   let contractTemplate;
   let title;
   let dataName = '';
@@ -425,7 +429,7 @@ const getContractTemplate = (contractName: String): contractTemplate => {
             date: {
               title: 'Date',
               type: 'string',
-              format: 'date',
+              format: 'date'
             },
           },
           required: ['date'],
@@ -436,7 +440,8 @@ const getContractTemplate = (contractName: String): contractTemplate => {
           properties: {
             companyName:{
               title:'Company name',
-              type:'string'
+              type:'string',
+              default:''
             },
             stateOfCompany:{
               title:'State',
@@ -480,7 +485,7 @@ const getContractTemplate = (contractName: String): contractTemplate => {
           Title: 'Consulting services',
           properties: {
             descriptionConsulting: {
-              title: 'Description',
+              title: 'Description of consulting services',
               type: 'string',
             },
             // consultantChecked: {
@@ -558,27 +563,64 @@ const getContractTemplate = (contractName: String): contractTemplate => {
         },
         {
           type: 'object',
-          title: 'Compensation for services rendered',
+          title: 'Compensation',
           properties: {
-            serviceRate: {
-              type: 'number',
-              title: 'Rate per hour ($)',
-            },
-            servicePayable: {
+            compensationRadio: {
               type: 'string',
-              title: 'Payment terms',
-            },
-            serviceAmountLimit: {
-              type: 'number',
-              title: 'Company’s total liability',
+              title: 'Compensation',
+              enum: ['Hourly rate','Fixed compensation']
+            }, 
+          },
+          dependencies: {
+            compensationRadio: {
+              oneOf: [
+                {
+                  properties: {
+                    compensationRadio: {
+                      enum: ['Hourly rate'],
+                    },
+                    serviceRate: {
+                      type: 'string',
+                      title: 'Rate per hour ($)',
+                    },
+                    servicePayable: {
+                      type: 'string',
+                      title: 'Payment terms',
+                    },
+                    serviceAmountLimit: {
+                      type: 'string',
+                      title: 'Company’s total liability',
+                    },
+                  },
+                  dependencies: {
+                    'serviceRate': ['servicePayable','serviceAmountLimit'],
+                    'servicePayable': ['serviceRate','serviceAmountLimit'],
+                    'serviceAmountLimit': ['serviceRate','servicePayable']
+
+                  }
+                },
+                {
+                  properties: {
+                    compensationRadio: {
+                      enum: ['Fixed compensation'],
+                    },
+                    consultantExecutionAmount: {
+                      type: 'string',
+                      title: 'Upon execution amount ($)',
+                    },
+                    consultantCompletionAmount: {
+                      type: 'string',
+                      title: 'Upon completion amount ($)',
+                    }
+                  },
+                  dependencies: {
+                    'consultantExecutionAmount': ['consultantCompletionAmount'],
+                    'consultantCompletionAmount':['consultantExecutionAmount']
+                  }
+                },
+              ]
             },
           },
-          required: [
-            'serviceRenderChecked',
-            'serviceRate',
-            'servicePayable',
-            'serviceAmountLimit',
-          ],
         },
         // {
         //   type: 'object',
@@ -588,24 +630,6 @@ const getContractTemplate = (contractName: String): contractTemplate => {
         //   },
         //   required: sharedProperties.required,
         // },
-        {
-          type: 'object',
-          title: 'Fixed compensation',
-          properties: {
-            consultantExecutionAmount: {
-              type: 'number',
-              title: 'Upon execution amount ($)',
-            },
-            consultantCompletionAmount: {
-              type: 'number',
-              title: 'Upon completion amount ($)',
-            },
-          },
-          required: [
-            'consultantExecutionAmount',
-            'consultantCompletionAmount',
-          ],
-        },
         {
           type: 'object',
           title: 'Option to purchase shares',
@@ -618,6 +642,10 @@ const getContractTemplate = (contractName: String): contractTemplate => {
               title: 'Vesting and exercise information',
               type: 'string',
             },
+          },
+          dependencies: {
+            'sharesAmount': ['vestingInformation'],
+            'vestingInformation':['sharesAmount']
           }
         },
         {
@@ -628,16 +656,20 @@ const getContractTemplate = (contractName: String): contractTemplate => {
               title: 'Description',
               type: 'string',
             },
-          },
-          required: ['other'],
+          }
         },
         {
           type: 'object',
-          title: 'Consulting or Other Services for Competitors',
+          title: 'List of companies excluded under section 8.',
           properties: {
             listCompanies: {
               title: 'List of Companies',
               type: 'string',
+            },
+            noConflictCheck: {
+                title: 'No conflicts',
+                type: 'boolean',
+                default: false
             }
           }
         },
@@ -663,6 +695,8 @@ const getContractTemplate = (contractName: String): contractTemplate => {
           'state',
           'descriptionConsulting',
           'serviceRenderChecked',
+          'compensationRadio',
+          //'fixedRateCheck',
           'serviceRate',
           'servicePayable',
           'serviceAmountLimit',
@@ -676,8 +710,12 @@ const getContractTemplate = (contractName: String): contractTemplate => {
           'vestingInformation',
           'otherChecked',
           'other',
-          'listCompanies'
+          'listCompanies',
+          'noConflictCheck'
         ],
+        compensationOption: {
+          'ui:widget': 'checkbox',
+        },
         descriptionConsulting: {
           'ui:widget': 'textarea',
           'ui:options': {
@@ -687,16 +725,6 @@ const getContractTemplate = (contractName: String): contractTemplate => {
         },
         serviceRenderChecked: {
           'ui:widget': 'checkbox',
-        },
-        serviceRate: {
-          'ui:emptyValue': '0',
-        },
-        servicePayable: {
-          'ui:emptyValue': '',
-          'ui:placeholder': 'Payment terms',
-        },
-        serviceAmountLimit: {
-          'ui:emptyValue': '0',
         },
         consultantChecked: {
           'ui:widget': 'checkbox',
@@ -713,6 +741,15 @@ const getContractTemplate = (contractName: String): contractTemplate => {
             rows: 9,
           },
           'ui:placeholder': 'Description',
+        },
+        serviceRate: {
+          'ui:placeholder': 'Rate per hour ($)',
+        },
+        servicePayable: {
+          'ui:placeholder': 'Payment terms',
+        },
+        serviceAmountLimit: {
+          'ui:placeholder': 'Company’s total liability',
         },
         consultantExecutionAmount: {
           'ui:placeholder': 'Upon execution amount ($)',
@@ -734,6 +771,9 @@ const getContractTemplate = (contractName: String): contractTemplate => {
           'ui:options': {
             rows: 9,
           },
+        },
+        compensationRadio:{
+          'ui:widget': 'radio',
         },
         ...sharedProperties.uiSchema,
       };
