@@ -135,49 +135,6 @@ const FormAccount: FC<FormAccountProps> = ({
                 )}
             />
 
-            {/*<StackedInput
-                label="Passphrase:"
-                name="passphrase"
-                type="password"
-                placeholder="Enter your Passphrase"
-                inputClassNames={classNames({'is-invalid': errors.passphrase})}
-                innerRef={register({
-                    required: 'Passphrase is required',
-                    minLength: {
-                        value: 12,
-                        message: 'Passphrase must have 12 characters',
-                    },
-                })}
-                errorComponent={(
-                    <ErrorMessage
-                        className="error-message"
-                        name="passphrase"
-                        as="div"
-                        errors={errors}
-                    />
-                )}
-            />
-            <StackedInput
-                label="Confirm Passphrase:"
-                name="confirmPassphrase"
-                type="password"
-                placeholder="Enter your Confim Passphrase"
-                inputClassNames={classNames({
-                    'is-invalid': errors.confirmPassphrase,
-                })}
-                innerRef={register({
-                    validate: (value) => value === passphrase.current || 'The passwords do not match',
-                })}
-                errorComponent={(
-                    <ErrorMessage
-                        className="error-message"
-                        name="confirmPassphrase"
-                        as="div"
-                        errors={errors}
-                    />
-                )}
-            />*/}
-
             <StackedInput
                 label="Address:"
                 name="address"
