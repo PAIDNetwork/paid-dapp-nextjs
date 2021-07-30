@@ -1,15 +1,25 @@
 import React, {Component} from 'react';
 import classNames from 'classnames';
+interface StackedPasswordProps {
+    id: string;
+    innerRef?: any;
+    label: string;
+    name: string;
+    placeholder?: string;
+    groupClassNames?: string;
+    labelClassNames?: string;
+    inputClassNames?: string;
+    errorComponent?: any;
+    class?:string;
+}
 
-class StackedPassword extends Component {
+class StackedPassword extends Component<StackedPasswordProps> {
     state = {
         type: 'password',
         iconEye: 'fa fa-eye'
     };
 
     showHide = () => {
-        // e.preventDefault();
-        // e.stopPropagation();
         this.setState({
             type: this.state.type === 'text' ? 'password' : 'text',
             iconEye: this.state.iconEye === 'fa fa-eye' ? 'fa fa-eye-slash' : 'fa fa-eye'
@@ -35,7 +45,7 @@ class StackedPassword extends Component {
                         ref={this.props.innerRef}
                         className={classNames('form-control stacked-control', this.props.class)}
                     />
-                <i className={classNames('eye', this.state.iconEye)} aria-hidden="true" onClick={this.showHide}></i>
+                <i className={classNames('eye', this.state.iconEye)} aria-hidden="true" onClick={this.showHide}/>
                 </span>
                 {this.props.errorComponent}
             </div>

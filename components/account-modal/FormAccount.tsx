@@ -93,7 +93,6 @@ const FormAccount: FC<FormAccountProps> = ({
                 label="Passphrase:"
                 id="account_phrase"
                 name="passphrase"
-                type="password"
                 placeholder="Enter your Passphrase"
                 class={classNames({'is-invalid': errors.passphrase})}
                 innerRef={register({
@@ -117,7 +116,6 @@ const FormAccount: FC<FormAccountProps> = ({
                 label="Confirm Passphrase:"
                 id="account_phrase_confirm"
                 name="confirmPassphrase"
-                type="password"
                 placeholder="Enter your Confim Passphrase"
                 class={classNames({
                     'is-invalid': errors.confirmPassphrase,
