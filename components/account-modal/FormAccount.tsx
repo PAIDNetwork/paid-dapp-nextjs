@@ -3,6 +3,7 @@ import {useForm} from 'react-hook-form';
 import {ErrorMessage} from '@hookform/error-message';
 import classNames from 'classnames';
 import StackedInput from '../reusable/StackedInput';
+import StackedPassword from "@/components/reusable/StackedPassword";
 import ProfileModel from '../../models/profileModel';
 
 interface FormAccountProps {
@@ -88,7 +89,53 @@ const FormAccount: FC<FormAccountProps> = ({
                 )}
             />
 
-            <StackedInput
+            <StackedPassword
+                label="Passphrase:"
+                id="account_phrase"
+                name="passphrase"
+                type="password"
+                placeholder="Enter your Passphrase"
+                class={classNames({'is-invalid': errors.passphrase})}
+                innerRef={register({
+                    required: 'Passphrase is required',
+                    minLength: {
+                        value: 12,
+                        message: 'Passphrase must have 12 characters',
+                    },
+                })}
+                errorComponent={(
+                    <ErrorMessage
+                        className="error-message"
+                        name="passphrase"
+                        as="div"
+                        errors={errors}
+                    />
+                )}
+            />
+
+            <StackedPassword
+                label="Confirm Passphrase:"
+                id="account_phrase_confirm"
+                name="confirmPassphrase"
+                type="password"
+                placeholder="Enter your Confim Passphrase"
+                class={classNames({
+                    'is-invalid': errors.confirmPassphrase,
+                })}
+                innerRef={register({
+                    validate: (value) => value === passphrase.current || 'The passwords do not match',
+                })}
+                errorComponent={(
+                    <ErrorMessage
+                        className="error-message"
+                        name="confirmPassphrase"
+                        as="div"
+                        errors={errors}
+                    />
+                )}
+            />
+
+            {/*<StackedInput
                 label="Passphrase:"
                 name="passphrase"
                 type="password"
@@ -129,7 +176,7 @@ const FormAccount: FC<FormAccountProps> = ({
                         errors={errors}
                     />
                 )}
-            />
+            />*/}
 
             <StackedInput
                 label="Address:"
