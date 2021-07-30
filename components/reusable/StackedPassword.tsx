@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import classNames from 'classnames';
+
 interface StackedPasswordProps {
     id: string;
     innerRef?: any;
@@ -10,7 +11,7 @@ interface StackedPasswordProps {
     labelClassNames?: string;
     inputClassNames?: string;
     errorComponent?: any;
-    class?:string;
+    class?: string;
 }
 
 class StackedPassword extends Component<StackedPasswordProps> {
@@ -45,7 +46,7 @@ class StackedPassword extends Component<StackedPasswordProps> {
                         ref={this.props.innerRef}
                         className={classNames('form-control stacked-control', this.props.class)}
                     />
-                <i className={classNames('eye', this.state.iconEye)} aria-hidden="true" onClick={this.showHide}/>
+                    <i className={classNames('eye', this.state.iconEye)} aria-hidden="true" onClick={this.showHide}/>
                 </span>
                 {this.props.errorComponent}
             </div>
