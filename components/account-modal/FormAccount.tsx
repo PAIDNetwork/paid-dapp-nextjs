@@ -3,6 +3,7 @@ import {useForm} from 'react-hook-form';
 import {ErrorMessage} from '@hookform/error-message';
 import classNames from 'classnames';
 import StackedInput from '../reusable/StackedInput';
+import StackedPassword from "@/components/reusable/StackedPassword";
 import ProfileModel from '../../models/profileModel';
 
 interface FormAccountProps {
@@ -88,12 +89,12 @@ const FormAccount: FC<FormAccountProps> = ({
                 )}
             />
 
-            <StackedInput
+            <StackedPassword
                 label="Passphrase:"
+                id="account_phrase"
                 name="passphrase"
-                type="password"
                 placeholder="Enter your Passphrase"
-                inputClassNames={classNames({'is-invalid': errors.passphrase})}
+                class={classNames({'is-invalid': errors.passphrase})}
                 innerRef={register({
                     required: 'Passphrase is required',
                     minLength: {
@@ -110,12 +111,13 @@ const FormAccount: FC<FormAccountProps> = ({
                     />
                 )}
             />
-            <StackedInput
+
+            <StackedPassword
                 label="Confirm Passphrase:"
+                id="account_phrase_confirm"
                 name="confirmPassphrase"
-                type="password"
                 placeholder="Enter your Confim Passphrase"
-                inputClassNames={classNames({
+                class={classNames({
                     'is-invalid': errors.confirmPassphrase,
                 })}
                 innerRef={register({

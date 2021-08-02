@@ -26,6 +26,22 @@
   }
 }
 
+.paid-component-password{
+  position: relative;
+  .paid-component-password__input{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: block;
+    i.eye{
+      position: absolute;
+      right: 11px;
+      cursor: pointer;
+      bottom: 9px;
+    }
+  }
+}
+
 .error-message {
   color: $danger;
   font-size: 0.75rem;
