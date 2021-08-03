@@ -25,8 +25,6 @@ const Profile: FC = () => {
 
   const onSubmit = async (values: ProfileModel) => {
     try {
-
-      console.log("onSubmit Profile Tsx")
       const getCurrentWallet = global.localStorage.getItem(currentWallet);
       const profileData = JSON.parse(getCurrentWallet);
       const accountName = `${values.name.toLocaleLowerCase()}${values.lastName.toLocaleLowerCase()}`;
