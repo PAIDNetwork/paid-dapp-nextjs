@@ -1,99 +1,79 @@
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { Provider, useSelector, useDispatch } from "react-redux";
-import { WalletProvider, useWallet } from "react-binance-wallet";
-import { Wallet } from "xdv-universal-wallet-core";
+import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import { Provider, useSelector, useDispatch } from 'react-redux'
+import { WalletProvider, useWallet } from 'react-binance-wallet'
+// import { Wallet } from 'xdv-universal-wallet-core'
 
-import PassphraseModal from "@/components/profile/PassphraseModal";
-import AccountModal from "@/components/account-modal/AccountModal";
-import PrivateLayout from "@/components/Layout/PrivateLayout";
-import doSetProfile from "../redux/actions/profile";
-import { setCurrentWallet, doDisconnected } from "../redux/actions/wallet";
-import { useStore } from "../redux/store";
-import "../sass/styles.scss";
-import "./index.css";
-import "../node_modules/font-awesome/css/font-awesome.min.css";
+import PassphraseModal from '@/components/profile/PassphraseModal'
+import AccountModal from '@/components/account-modal/AccountModal'
+import PrivateLayout from '@/components/Layout/PrivateLayout'
+import getDidXdv from '../utils/xdv-universal-wallet'
+import doSetProfile from '../redux/actions/profile'
+import { setCurrentWallet, doDisconnected } from '../redux/actions/wallet'
+import { useStore } from '../redux/store'
+import '../sass/styles.scss'
+import './index.css'
+import '../node_modules/font-awesome/css/font-awesome.min.css'
 
 // eslint-disable-next-line react/prop-types
 function MyApp({ Component, pageProps }) {
   // eslint-disable-next-line react/prop-types
-  const store = useStore(pageProps.initialReduxState);
+  const store = useStore(pageProps.initialReduxState)
 
   const ConnectOptions = () => {
-    const { account, connect, reset } = useWallet();
-    const [openAccountModal, setOpenAccountModal] = useState(false);
-    const [passphrase, setPassphrase] = useState(null);
-    const [openPassphraseModal, setOpenPassphraseModal] = useState(false);
-    const [errorPassphrase, setErrorPassphrase] = useState(false);
-    const dispatch = useDispatch();
-    const router = useRouter();
-    const { query } = useRouter();
+    const { account, connect, reset } = useWallet()
+    const [openAccountModal, setOpenAccountModal] = useState(false)
+    const [passphrase, setPassphrase] = useState(null)
+    const [openPassphraseModal, setOpenPassphraseModal] = useState(false)
+    const [errorPassphrase, setErrorPassphrase] = useState(false)
+    const dispatch = useDispatch()
+    const router = useRouter()
+    const { query } = useRouter()
 
-    const walletReducer = useSelector((state) => state.walletReducer);
+    const walletReducer = useSelector((state) => state.walletReducer)
 
     useEffect(() => {
       const bootstrapAsync = async () => {
-        const getCurrentWallet = global.localStorage.getItem(account);
+        const getCurrentWallet = global.localStorage.getItem(account)
         if (getCurrentWallet) {
           if (passphrase) {
             try {
-              const profileData = JSON.parse(getCurrentWallet);
-              const accountName = profileData.profileName;
+              const didXdv = await getDidXdv(getCurrentWallet)
+              const { profileData, provider } = didXdv
 
-              const xdvWallet = new Wallet({ isWeb: true });
-              await xdvWallet.open(accountName, passphrase);
-
-              const acct = await xdvWallet.getAccount();
-              let walletId;
-
-              if (acct.keystores.length === 0) {
-                // Adds a wallet.
-                walletId = await xdvWallet.addWallet();
-              } else {
-                // Gets first wallet
-                walletId = acct.keystores[0].walletId;
-              }
-
-              const provider = await xdvWallet.createEd25519({
-                passphrase: profileData.passphrase,
-                rpcUrl: process.env.NEXT_PUBLIC_RPC_URL,
-                walletId,
-                registry: "",
-                accountName: profileData.name,
-              });
-
-              await provider.did.authenticate();
-              xdvWallet.close();
+              console.log(didXdv)
 
               const currentProfile = {
                 ...profileData,
                 created: profileData.created,
                 did: provider.did,
-              };
-              setErrorPassphrase(false);
-              setPassphrase(null);
-              setOpenPassphraseModal(false);
-              dispatch(doSetProfile(currentProfile));
-              dispatch(setCurrentWallet(account, router, query));
+                // did: 'did:key:z6Mkj9sEPGqknnNPLMBqYpVzDopajWqgf8RALRLvT7UGLoLh',
+              }
+
+              setErrorPassphrase(false)
+              setPassphrase(null)
+              setOpenPassphraseModal(false)
+              dispatch(doSetProfile(currentProfile))
+              dispatch(setCurrentWallet(account, router, query))
             } catch (e) {
-              setErrorPassphrase(true);
+              setErrorPassphrase(true)
             }
           }
         }
-      };
+      }
 
-      bootstrapAsync();
-    }, [passphrase]);
+      bootstrapAsync()
+    }, [passphrase])
 
     useEffect(() => {
       if (walletReducer.provider) {
-        if (walletReducer.provider === "meta") {
-          connect("injected");
+        if (walletReducer.provider === 'meta') {
+          connect('injected')
         } else {
-          connect(walletReducer.provider);
+          connect(walletReducer.provider)
         }
       }
-    }, [walletReducer.provider]);
+    }, [walletReducer.provider])
 
     useEffect(() => {
       if (
@@ -101,26 +81,26 @@ function MyApp({ Component, pageProps }) {
         account &&
         !walletReducer.isDisconnecting
       ) {
-        const getCurrentWallet = global.localStorage.getItem(account);
+        const getCurrentWallet = global.localStorage.getItem(account)
         if (getCurrentWallet) {
-          setOpenPassphraseModal(true);
+          setOpenPassphraseModal(true)
         } else {
-          setOpenAccountModal(true);
+          setOpenAccountModal(true)
         }
       }
-    }, [account, !walletReducer.currentWallet]);
+    }, [account, !walletReducer.currentWallet])
 
     useEffect(() => {
       if (walletReducer.isDisconnecting) {
-        reset();
-        dispatch(doDisconnected());
-        router.push("/");
+        reset()
+        dispatch(doDisconnected())
+        router.push('/')
       }
-    }, [account, walletReducer.isDisconnecting]);
+    }, [account, walletReducer.isDisconnecting])
 
     return (
       <>
-        {router.pathname === "/" ? (
+        {router.pathname === '/' ? (
           <Component {...pageProps} />
         ) : (
           <PrivateLayout routerName={router.pathname}>
@@ -145,8 +125,8 @@ function MyApp({ Component, pageProps }) {
           setPassphrase={setPassphrase}
         />
       </>
-    );
-  };
+    )
+  }
 
   return (
     <Provider store={store}>
@@ -154,7 +134,7 @@ function MyApp({ Component, pageProps }) {
         <ConnectOptions />
       </WalletProvider>
     </Provider>
-  );
+  )
 }
 
-export default MyApp;
+export default MyApp
