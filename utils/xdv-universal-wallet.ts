@@ -7,8 +7,8 @@ const getDidXdv = async (currentWallet: string) => {
   const { profileName, passphrase, name } = profileData
 
   const xdvWallet = new Wallet({ isWeb: true })
-  await xdvWallet.open(profileName, passphrase)
-
+  const wallet = await xdvWallet.open(profileName, passphrase)
+  console.log(wallet)
   const acct = await xdvWallet.getAccount()
 
   if (acct.keystores.length === 0) {
