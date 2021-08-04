@@ -25,8 +25,8 @@ interface contractTemplate {
 
 const getContractTemplate = (
   contractName: String,
-  isEditing?:Boolean,
-  agreementReviewed?:Boolean,
+  isEditing?: Boolean,
+  agreementReviewed?: Boolean,
 ): contractTemplate => {
   let contractTemplate;
   let title;
@@ -79,14 +79,8 @@ const getContractTemplate = (
         custom: 'address',
       },
     },
-    wallet: {
-    },
-    required: [
-      'partyName',
-      'partyAddress',
-      'partyEmail',
-      'partyWallet',
-    ],
+    wallet: {},
+    required: ['partyName', 'partyAddress', 'partyEmail', 'partyWallet'],
     requiredCounterParty: [
       'counterPartyName',
       'counterPartyEmail',
@@ -135,9 +129,7 @@ const getContractTemplate = (
               format: 'date',
             },
           },
-          required: [
-            'date',
-          ],
+          required: ['date'],
         },
         {
           type: 'object',
@@ -247,26 +239,26 @@ const getContractTemplate = (
                     advisorOption: {
                       enum: ['nonstatutory'],
                     },
-                    option: {
-                      title: 'Option',
-                      type: 'string',
-                    },
-                    options: {
-                      title: 'Options',
-                      type: 'string',
-                    },
-                    stockOptions: {
-                      title: 'Stock Options',
-                      type: 'string',
-                    },
-                    anOption: {
-                      title: 'An option',
-                      type: 'string',
-                    },
-                    exercise: {
-                      title: 'Exercise',
-                      type: 'string',
-                    },
+                    // option: {
+                    //   title: 'Option',
+                    //   type: 'string',
+                    // },
+                    // options: {
+                    //   title: 'Options',
+                    //   type: 'string',
+                    // },
+                    // stockOptions: {
+                    //   title: 'Stock Options',
+                    //   type: 'string',
+                    // },
+                    // anOption: {
+                    //   title: 'An option',
+                    //   type: 'string',
+                    // },
+                    // exercise: {
+                    //   title: 'Exercise',
+                    //   type: 'string',
+                    // },
                   },
                 },
                 {
@@ -274,26 +266,26 @@ const getContractTemplate = (
                     advisorOption: {
                       enum: ['right'],
                     },
-                    purchaseRight: {
-                      title: 'purchase right',
-                      type: 'string',
-                    },
-                    restrictedStockPurchaseAwards: {
-                      title: 'restricted stock purchase awards',
-                      type: 'string',
-                    },
-                    restrictedStockPurchase: {
-                      title: 'restricted stock purchase',
-                      type: 'string',
-                    },
-                    aRight: {
-                      title: 'A right',
-                      type: 'string',
-                    },
-                    purchase: {
-                      title: 'Purchase',
-                      type: 'string',
-                    },
+                    // purchaseRight: {
+                    //   title: 'purchase right',
+                    //   type: 'string',
+                    // },
+                    // restrictedStockPurchaseAwards: {
+                    //   title: 'restricted stock purchase awards',
+                    //   type: 'string',
+                    // },
+                    // restrictedStockPurchase: {
+                    //   title: 'restricted stock purchase',
+                    //   type: 'string',
+                    // },
+                    // aRight: {
+                    //   title: 'A right',
+                    //   type: 'string',
+                    // },
+                    // purchase: {
+                    //   title: 'Purchase',
+                    //   type: 'string',
+                    // },
                   },
                 },
               ],
@@ -315,9 +307,7 @@ const getContractTemplate = (
               type: 'number',
             },
           },
-          required: [
-            'numberOfYears',
-          ],
+          required: ['numberOfYears'],
         },
       ];
       uiSchema = {
@@ -480,7 +470,7 @@ const getContractTemplate = (
             },
             listCompAgreements: {
               title:
-              'List of companies and/or agreements excluded under section 10(b)',
+                'List of companies and/or agreements excluded under section 10(b)',
               type: 'string',
               format: 'textarea',
             },
@@ -528,7 +518,12 @@ const getContractTemplate = (
             },
             ...sharedProperties.party,
           },
-          required: ['companyName', 'stateOfCompany', 'typeOfCompany', ...sharedProperties.required],
+          required: [
+            'companyName',
+            'stateOfCompany',
+            'typeOfCompany',
+            ...sharedProperties.required,
+          ],
         },
         {
           type: 'object',
@@ -578,9 +573,7 @@ const getContractTemplate = (
             //   default: '',
             // },
           },
-          required: [
-            'descriptionConsulting',
-          ],
+          required: ['descriptionConsulting'],
           // dependencies: {
           //   consultantChecked: {
           //     oneOf: [
@@ -671,7 +664,6 @@ const getContractTemplate = (
                     serviceRate: ['servicePayable', 'serviceAmountLimit'],
                     servicePayable: ['serviceRate', 'serviceAmountLimit'],
                     serviceAmountLimit: ['serviceRate', 'servicePayable'],
-
                   },
                 },
                 {
@@ -895,7 +887,12 @@ const getContractTemplate = (
             },
             ...sharedProperties.party,
           },
-          required: ['companyName', 'stateOfCompany', 'typeOfCompany', ...sharedProperties.required],
+          required: [
+            'companyName',
+            'stateOfCompany',
+            'typeOfCompany',
+            ...sharedProperties.required,
+          ],
         },
         {
           type: 'object',
@@ -919,7 +916,12 @@ const getContractTemplate = (
             //   type: 'string',
             // },
           },
-          required: ['providerName', 'stateOfProvider', 'typeOfProvider', ...sharedProperties.requiredCounterParty],
+          required: [
+            'providerName',
+            'stateOfProvider',
+            'typeOfProvider',
+            ...sharedProperties.requiredCounterParty,
+          ],
         },
         {
           type: 'object',
