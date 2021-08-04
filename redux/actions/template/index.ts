@@ -429,7 +429,7 @@ const getContractTemplate = (
             date: {
               title: 'Date',
               type: 'string',
-              format: 'date'
+              format: 'date',
             },
           },
           required: ['date'],
@@ -438,22 +438,22 @@ const getContractTemplate = (
           type: 'object',
           title: 'My information (the “Company”)',
           properties: {
-            companyName:{
-              title:'Company name',
-              type:'string',
-              default:''
+            companyName: {
+              title: 'Company name',
+              type: 'string',
+              default: '',
             },
-            stateOfCompany:{
-              title:'State',
-              type:'string'
+            stateOfCompany: {
+              title: 'State',
+              type: 'string',
             },
-            typeOfCompany:{
-              title:'Type of company',
-              type:'string'
+            typeOfCompany: {
+              title: 'Type of company',
+              type: 'string',
             },
             ...sharedProperties.party,
           },
-          required: ['companyName', 'stateOfCompany','typeOfCompany', ...sharedProperties.required],
+          required: ['companyName', 'stateOfCompany', 'typeOfCompany', ...sharedProperties.required],
         },
         {
           type: 'object',
@@ -463,7 +463,7 @@ const getContractTemplate = (
           },
           required: sharedProperties.requiredCounterParty,
         },
-        /*{
+        /* {
           type: 'object',
           title: 'Governing Law',
           properties: {
@@ -479,10 +479,10 @@ const getContractTemplate = (
           required: [
             'state',
           ],
-        },*/
+        }, */
         {
           type: 'object',
-          Title: 'Consulting services',
+          title: 'Consulting services',
           properties: {
             descriptionConsulting: {
               title: 'Description of consulting services',
@@ -568,8 +568,8 @@ const getContractTemplate = (
             compensationRadio: {
               type: 'string',
               title: 'Compensation',
-              enum: ['Hourly rate','Fixed compensation']
-            }, 
+              enum: ['Hourly rate', 'Fixed compensation'],
+            },
           },
           dependencies: {
             compensationRadio: {
@@ -580,7 +580,7 @@ const getContractTemplate = (
                       enum: ['Hourly rate'],
                     },
                     serviceRate: {
-                      type: 'string',
+                      type: 'number',
                       title: 'Rate per hour ($)',
                     },
                     servicePayable: {
@@ -588,16 +588,15 @@ const getContractTemplate = (
                       title: 'Payment terms',
                     },
                     serviceAmountLimit: {
-                      type: 'string',
+                      type: 'number',
                       title: 'Company’s total liability',
                     },
                   },
                   dependencies: {
-                    'serviceRate': ['servicePayable','serviceAmountLimit'],
-                    'servicePayable': ['serviceRate','serviceAmountLimit'],
-                    'serviceAmountLimit': ['serviceRate','servicePayable']
-
-                  }
+                    serviceRate: ['servicePayable', 'serviceAmountLimit'],
+                    servicePayable: ['serviceRate', 'serviceAmountLimit'],
+                    serviceAmountLimit: ['serviceRate', 'servicePayable'],
+                  },
                 },
                 {
                   properties: {
@@ -605,20 +604,20 @@ const getContractTemplate = (
                       enum: ['Fixed compensation'],
                     },
                     consultantExecutionAmount: {
-                      type: 'string',
+                      type: 'number',
                       title: 'Upon execution amount ($)',
                     },
                     consultantCompletionAmount: {
-                      type: 'string',
+                      type: 'number',
                       title: 'Upon completion amount ($)',
-                    }
+                    },
                   },
                   dependencies: {
-                    'consultantExecutionAmount': ['consultantCompletionAmount'],
-                    'consultantCompletionAmount':['consultantExecutionAmount']
-                  }
+                    consultantExecutionAmount: ['consultantCompletionAmount'],
+                    consultantCompletionAmount: ['consultantExecutionAmount'],
+                  },
                 },
-              ]
+              ],
             },
           },
         },
@@ -644,9 +643,9 @@ const getContractTemplate = (
             },
           },
           dependencies: {
-            'sharesAmount': ['vestingInformation'],
-            'vestingInformation':['sharesAmount']
-          }
+            sharesAmount: ['vestingInformation'],
+            vestingInformation: ['sharesAmount'],
+          },
         },
         {
           type: 'object',
@@ -656,7 +655,7 @@ const getContractTemplate = (
               title: 'Description',
               type: 'string',
             },
-          }
+          },
         },
         {
           type: 'object',
@@ -667,11 +666,11 @@ const getContractTemplate = (
               type: 'string',
             },
             noConflictCheck: {
-                title: 'No conflicts',
-                type: 'boolean',
-                default: false
-            }
-          }
+              title: 'No conflicts',
+              type: 'boolean',
+              default: false,
+            },
+          },
         },
       ];
       uiSchema = {
@@ -696,7 +695,7 @@ const getContractTemplate = (
           'descriptionConsulting',
           'serviceRenderChecked',
           'compensationRadio',
-          //'fixedRateCheck',
+          // 'fixedRateCheck',
           'serviceRate',
           'servicePayable',
           'serviceAmountLimit',
@@ -711,7 +710,7 @@ const getContractTemplate = (
           'otherChecked',
           'other',
           'listCompanies',
-          'noConflictCheck'
+          'noConflictCheck',
         ],
         compensationOption: {
           'ui:widget': 'checkbox',
@@ -766,13 +765,13 @@ const getContractTemplate = (
         vestingInformation: {
           'ui:placeholder': 'Vesting and exercise information',
         },
-        listCompanies:{
+        listCompanies: {
           'ui:widget': 'textarea',
           'ui:options': {
             rows: 9,
           },
         },
-        compensationRadio:{
+        compensationRadio: {
           'ui:widget': 'radio',
         },
         ...sharedProperties.uiSchema,
