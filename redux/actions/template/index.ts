@@ -790,9 +790,13 @@ const getContractTemplate = (
               title: 'Tittle',
               type: 'string',
             },
+            county: {
+              title: 'County',
+              type: 'string',
+            },
           },
           // required: ['commisionDate'],
-          required: ['date'],
+          required: ['date','county'],
         },
 
         {

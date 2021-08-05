@@ -219,18 +219,23 @@ const ReferalAgreement = `<div class="contract" style="width: 100%; background-c
 <p>&nbsp;</p>
 <p class="western" lang="x-none" style="color:#000;"><span lang="en-US"> IN WITNESS WHEREOF, each party to this Agreement has caused it to be executed on the Effective Date.</span></p>
 <p class="western" align="justify">&nbsp;</p>
-<p class="western" lang="x-none" align="justify"><span style="color: #000000;"><span lang="en-US"><strong>THE COMPANY:</strong></span></span></p>
+<p class="western" lang="x-none" align="justify"><span style="color: #000000;"><span lang="en-US"><strong>COMPANY:</strong></span></span></p>
+<p style="color:#000;">{{#companyName}}{{companyName}}{{/companyName}}{{^companyName}}[COMPANY NAME]{{/companyName}}</p>
 <p style="color:#000;">(Signature)</p>
 <p style="color:#000;">_______________________________________</p>
 <p style="color:#000;">Name: <div style="display: inline-block; background-color:#f79632"><span id="partyName">{{#partyName}}{{partyName}}{{/partyName}}{{^partyName}}[PARTY NAME]{{/partyName}}</span></div></p>
+<p style="color:#000;">Tittle: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyName">{{#titleCompany}}{{titleCompany}}{{/titleCompany}}{{^titleCompany}}[TITTLE]{{/titleCompany}}</span></div></p>
 <p style="color:#000;">Email: <div style="display: inline-block; background-color:#f79632"><span id="partyEmail">{{#partyEmail}}{{partyEmail}}{{/partyEmail}}{{^partyEmail}}[PARTY EMAIL]{{/partyEmail}}</span></div></p>
 <p style="color:#000;">Address: <div style="display: inline-block; background-color:#f79632"><span id="partyAddress">{{#partyAddress}}{{partyAddress}}{{/partyAddress}}{{^partyAddress}}[PARTY ADDRESS]{{/partyAddress}}</span></div></p>
 <p style="color:#000;">Wallet: <div style="display: inline-block; background-color:#f79632"><span id="partyWallet">{{#partyWallet}}{{partyWallet}}{{/partyWallet}}{{^partyWallet}}[PARTY WALLET]{{/partyWallet}}</span></div></p>
 <p>&nbsp;</p>
 <p class="western" lang="x-none" style="color:#000;"><span lang="en-US"> IN WITNESS WHEREOF, each party to this Agreement has caused it to be executed on the Effective Date.</span></p>
+<p class="western" lang="x-none" align="justify"><span style="color: #000000;"><span lang="en-US"><strong>PROVIDER:</strong></span></span></p>
+<p style="color:#000;">{{#counterPartyName}}{{counterPartyName}}{{/counterPartyName}}{{^counterPartyName}}[PROVIDER NAME]{{/counterPartyName}}</p>
 <p style="color:#000;">(Signature)</p>
 <p style="color:#000;">_______________________________________</p>
 <p style="color:#000;">Name: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyName">{{#counterPartyName}}{{counterPartyName}}{{/counterPartyName}}{{^counterPartyName}}[COUNTER PARTY NAME]{{/counterPartyName}}</span></div></p>
+<p style="color:#000;">Tittle: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyName">{{#titleProvider}}{{titleProvider}}{{/titleProvider}}{{^titleProvider}}[TITTLE]{{/titleProvider}}</span></div></p>
 <p style="color:#000;">Email: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyEmail">{{#counterPartyEmail}}{{counterPartyEmail}}{{/counterPartyEmail}}{{^counterPartyEmail}}[COUNTER PARTY EMAIL]{{/counterPartyEmail}}</span></div></p>
 <p style="color:#000;">Address: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyAddress">{{#counterPartyAddress}}{{counterPartyAddress}}{{/counterPartyAddress}}{{^counterPartyAddress}}[COUNTER PARTY ADDRESS]{{/counterPartyAddress}}</span></div></p>
 <p style="color:#000;">Wallet: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyWallet">{{#counterPartyWallet}}{{counterPartyWallet}}{{/counterPartyWallet}}{{^counterPartyWallet}}[COUNTER PARTY WALLET]{{/counterPartyWallet}}</span></div>
