@@ -170,7 +170,7 @@ const Ciia = `<div class="contract" style="width: 100%; background-color:white; 
 <p style="color: black;" class="western"><div style="display: inline-block; background-color:#f79632">{{title}}</div></p>
 </td>
 <td width="194">
-<p style="color: black;" class="western"><div style="display: inline-block; background-color:#f79632">{{datea}}</div></p>
+<p style="color: black;" class="western"><div style="display: inline-block; background-color:#f79632">{{date}}</div></p>
 </td>
 <td width="194">
 <p style="color: black;" class="western"><div style="display: inline-block; background-color:#f79632">{{idNumberBriefDesc}}</div></p>
