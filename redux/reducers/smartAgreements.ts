@@ -129,11 +129,26 @@ const smartAgreementsReducer = (
     }
     case SmartAgreementsTypes.SET_CONSULTING_AGREEMENT_DATA: {
       const newConsultingData = payload;
+
+      let additionalData = {};
+      if (newConsultingData.compensationRadio === 'Hourly rate') {
+        additionalData = {
+          consultantExecutionAmount: undefined,
+          consultantCompletionAmount: undefined,
+        };
+      } else if (newConsultingData.compensationRadio === 'Fixed compensation') {
+        additionalData = {
+          serviceRate: undefined,
+          servicePayable: undefined,
+          serviceAmountLimit: undefined,
+        };
+      }
       return {
         ...state,
         consultingAgreementData: {
           ...state.consultingAgreementData,
           ...newConsultingData,
+          ...additionalData,
         },
       };
     }
