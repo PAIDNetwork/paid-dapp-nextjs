@@ -1,5 +1,5 @@
 /* eslint-disable no-tabs */
-const Ciia = `<div class="contract" style="width: 100%; background-color:white; color: black;"><span id="customTitle" style="display: none">{{customTitle}}</span><p align="center"><strong><span id="partyName" style="background-color:#f79632">[COMPANY NAME]</v></strong></p>
+const PlanCiia = `<div class="contract" style="width: 100%; background-color:white; color: black;"><span id="customTitle" style="display: none">{{customTitle}}</span><p align="center"><strong><span id="partyName" style="background-color:#f79632">[COMPANY NAME]</v></strong></p>
 <p align="center" style="color: black;"><strong><u>CONFIDENTIAL INFORMATION AND</u><br /> <u>INVENTION ASSIGNMENT AGREEMENT</u></strong></p>
 <p align="center" style="color: black;"><em>Consultant Name:</em> <span style="background-color:#f79632">_____________________</span> (&ldquo;<u>Consultant</u>&rdquo;)</p>
 <p align="center" style="color: black;"><em>Effective Date: <span style="background-color:#f79632">_______________________</span></em></p>
@@ -173,8 +173,8 @@ const Ciia = `<div class="contract" style="width: 100%; background-color:white; 
 <td width="33%" style="text-align: center;">
 <p style="color: black;" class="western"><div style="display: inline-block; background-color:#f79632">[TITLE]</div></p>
 </td>
-<td width="194">
-<p style="color: black;" class="western"><div style="display: inline-block; background-color:#f79632">{{date}}</div></p>
+<td width="33%" style="text-align: center;">
+<p style="color: black;" class="western"><div style="display: inline-block; background-color:#f79632">[DATE]</div></p>
 </td>
 <td width="33%" style="text-align: center;">
 <p style="color: black;" class="western"><div style="display: inline-block; background-color:#f79632">[ID NUMBER OR BRIEF DESCRIPTION]</div></p>
@@ -215,4 +215,4 @@ const Ciia = `<div class="contract" style="width: 100%; background-color:white; 
 <p style="color: black;">Date: _____________________</p>
 </div>`;
 
-export default Ciia;
+export default PlanCiia;
