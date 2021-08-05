@@ -552,7 +552,7 @@ const getContractTemplate = (
         }, */
         {
           type: 'object',
-          Title: 'Consulting services',
+          title: 'Consulting services',
           properties: {
             descriptionConsulting: {
               title: 'Description of consulting services',
@@ -648,7 +648,7 @@ const getContractTemplate = (
                       enum: ['Hourly rate'],
                     },
                     serviceRate: {
-                      type: 'string',
+                      type: 'number',
                       title: 'Rate per hour ($)',
                     },
                     servicePayable: {
@@ -656,7 +656,7 @@ const getContractTemplate = (
                       title: 'Payment terms',
                     },
                     serviceAmountLimit: {
-                      type: 'string',
+                      type: 'number',
                       title: 'Company’s total liability',
                     },
                   },
@@ -672,11 +672,11 @@ const getContractTemplate = (
                       enum: ['Fixed compensation'],
                     },
                     consultantExecutionAmount: {
-                      type: 'string',
+                      type: 'number',
                       title: 'Upon execution amount ($)',
                     },
                     consultantCompletionAmount: {
-                      type: 'string',
+                      type: 'number',
                       title: 'Upon completion amount ($)',
                     },
                   },
