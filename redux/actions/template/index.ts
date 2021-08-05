@@ -1,9 +1,9 @@
-import Nda from './nda.html';
-import AdvisorAgreemt from './advisor-agreement.html';
-import Ciia from './ciia.html';
-import ConsultingAgreement from './consulting-agreement.html';
-import ReferalAgreement from './referral-agreement.html';
-import Saft from './saft.html';
+import Nda from './nda.html'
+import AdvisorAgreemt from './advisor-agreement.html'
+import Ciia from './ciia.html'
+import ConsultingAgreement from './consulting-agreement.html'
+import ReferalAgreement from './referral-agreement.html'
+import Saft from './saft.html'
 
 enum contractsTemplates {
   TemplateNda = '001',
@@ -15,24 +15,24 @@ enum contractsTemplates {
 }
 
 interface contractTemplate {
-  title: string;
+  title: string
   // interpolationFields: Object;
-  template: string;
-  dataName: string;
-  jsonSchemas: any;
-  uiSchema: Object;
+  template: string
+  dataName: string
+  jsonSchemas: any
+  uiSchema: Object
 }
 
 const getContractTemplate = (
   contractName: String,
-  isEditing?:Boolean,
-  agreementReviewed?:Boolean,
+  isEditing?: Boolean,
+  agreementReviewed?: Boolean,
 ): contractTemplate => {
-  let contractTemplate;
-  let title;
-  let dataName = '';
-  let jsonSchemas: any = [];
-  let uiSchema: Object = {};
+  let contractTemplate
+  let title
+  let dataName = ''
+  let jsonSchemas: any = []
+  let uiSchema: Object = {}
   const sharedProperties = {
     party: {
       partyName: {
@@ -79,14 +79,8 @@ const getContractTemplate = (
         custom: 'address',
       },
     },
-    wallet: {
-    },
-    required: [
-      'partyName',
-      'partyAddress',
-      'partyEmail',
-      'partyWallet',
-    ],
+    wallet: {},
+    required: ['partyName', 'partyAddress', 'partyEmail', 'partyWallet'],
     requiredCounterParty: [
       'counterPartyName',
       'counterPartyEmail',
@@ -117,13 +111,13 @@ const getContractTemplate = (
         'ui:placeholder': 'Counter Party Wallet',
       },
     },
-  };
+  }
 
   switch (contractName) {
     case contractsTemplates.TemplateNda:
-      title = 'MUTUAL NONDISCLOSURE AGREEMENT';
-      contractTemplate = Nda;
-      dataName = 'ndaAgreementData';
+      title = 'MUTUAL NONDISCLOSURE AGREEMENT'
+      contractTemplate = Nda
+      dataName = 'ndaAgreementData'
       jsonSchemas = [
         {
           type: 'object',
@@ -135,9 +129,7 @@ const getContractTemplate = (
               format: 'date',
             },
           },
-          required: [
-            'date',
-          ],
+          required: ['date'],
         },
         {
           type: 'object',
@@ -155,16 +147,16 @@ const getContractTemplate = (
           },
           required: sharedProperties.requiredCounterParty,
         },
-      ];
+      ]
       uiSchema = {
         ...sharedProperties.uiSchema,
-      };
-      break;
+      }
+      break
 
     case contractsTemplates.TemplateAdvisorAgreement:
-      title = 'ADVISOR AGREEMENT';
-      contractTemplate = AdvisorAgreemt;
-      dataName = 'advisorAgreementData';
+      title = 'ADVISOR AGREEMENT'
+      contractTemplate = AdvisorAgreemt
+      dataName = 'advisorAgreementData'
       jsonSchemas = [
         {
           type: 'object',
@@ -267,9 +259,7 @@ const getContractTemplate = (
               type: 'number',
             },
           },
-          required: [
-            'numberOfYears',
-          ],
+          required: ['numberOfYears'],
         },
         {
           type: 'object',
@@ -286,13 +276,9 @@ const getContractTemplate = (
               default: '[STATE]',
             },
           },
-          required: [
-            'stateOfAdvisor',
-            'companyName',
-            'typeCompany',
-          ],
+          required: ['stateOfAdvisor', 'companyName', 'typeCompany'],
         },
-      ];
+      ]
       uiSchema = {
         purchaseOption: {
           'ui:widget': 'radio',
@@ -334,13 +320,13 @@ const getContractTemplate = (
           'ui:placeholder': 'State name',
         },
         ...sharedProperties.uiSchema,
-      };
-      break;
+      }
+      break
 
     case contractsTemplates.TemplateCiia:
-      title = 'CONFIDENTIAL INFORMATION AND INVENTION ASSIGNMENT AGREEMENT';
-      contractTemplate = Ciia;
-      dataName = 'ciiaAgreementData';
+      title = 'CONFIDENTIAL INFORMATION AND INVENTION ASSIGNMENT AGREEMENT'
+      contractTemplate = Ciia
+      dataName = 'ciiaAgreementData'
       jsonSchemas = [
         {
           type: 'object',
@@ -405,22 +391,22 @@ const getContractTemplate = (
             },
             listCompAgreements: {
               title:
-              'List of companies and/or agreements excluded under section 10(b)',
+                'List of companies and/or agreements excluded under section 10(b)',
               type: 'string',
               format: 'textarea',
             },
           },
         },
-      ];
+      ]
       uiSchema = {
         ...sharedProperties.uiSchema,
-      };
-      break;
+      }
+      break
 
     case contractsTemplates.TemplateConsultingAgreement:
-      title = 'CONSULTING AGREEMENT';
-      contractTemplate = ConsultingAgreement;
-      dataName = 'consultingAgreementData';
+      title = 'CONSULTING AGREEMENT'
+      contractTemplate = ConsultingAgreement
+      dataName = 'consultingAgreementData'
       jsonSchemas = [
         {
           type: 'object',
@@ -453,7 +439,12 @@ const getContractTemplate = (
             },
             ...sharedProperties.party,
           },
-          required: ['companyName', 'stateOfCompany', 'typeOfCompany', ...sharedProperties.required],
+          required: [
+            'companyName',
+            'stateOfCompany',
+            'typeOfCompany',
+            ...sharedProperties.required,
+          ],
         },
         {
           type: 'object',
@@ -503,9 +494,7 @@ const getContractTemplate = (
             //   default: '',
             // },
           },
-          required: [
-            'descriptionConsulting',
-          ],
+          required: ['descriptionConsulting'],
           // dependencies: {
           //   consultantChecked: {
           //     oneOf: [
@@ -672,7 +661,7 @@ const getContractTemplate = (
             },
           },
         },
-      ];
+      ]
       uiSchema = {
         'ui:widget': 'checkbox',
         'ui:order': [
@@ -775,13 +764,13 @@ const getContractTemplate = (
           'ui:widget': 'radio',
         },
         ...sharedProperties.uiSchema,
-      };
-      break;
+      }
+      break
 
     case contractsTemplates.TemplateReferalAgreement:
-      title = 'SALES COMMISSION AGREEMENT';
-      contractTemplate = ReferalAgreement;
-      dataName = 'referralAgreementData';
+      title = 'SALES COMMISSION AGREEMENT'
+      contractTemplate = ReferalAgreement
+      dataName = 'referralAgreementData'
       jsonSchemas = [
         {
           type: 'object',
@@ -797,14 +786,27 @@ const getContractTemplate = (
               type: 'string',
               format: 'date',
             },
+            titleProvider: {
+              title: 'Tittle',
+              type: 'string',
+            },
+            county: {
+              title: 'County',
+              type: 'string',
+            },
           },
           // required: ['commisionDate'],
-          required: ['date'],
+          required: ['date','county'],
         },
+
         {
           type: 'object',
           title: 'My information (the “Company)',
           properties: {
+            titleCompany: {
+              title: 'Tittle',
+              type: 'string',
+            },
             companyName: {
               title: 'Company name',
               type: 'string',
@@ -819,7 +821,12 @@ const getContractTemplate = (
             },
             ...sharedProperties.party,
           },
-          required: ['companyName', 'stateOfCompany', 'typeOfCompany', ...sharedProperties.required],
+          required: [
+            'companyName',
+            'stateOfCompany',
+            'typeOfCompany',
+            ...sharedProperties.required,
+          ],
         },
         {
           type: 'object',
@@ -843,7 +850,12 @@ const getContractTemplate = (
             //   type: 'string',
             // },
           },
-          required: ['providerName', 'stateOfProvider', 'typeOfProvider', ...sharedProperties.requiredCounterParty],
+          required: [
+            'providerName',
+            'stateOfProvider',
+            'typeOfProvider',
+            ...sharedProperties.requiredCounterParty,
+          ],
         },
         {
           type: 'object',
@@ -889,7 +901,7 @@ const getContractTemplate = (
           },
           required: ['stateOfCompany'],
         }, */
-      ];
+      ]
       uiSchema = {
         terminationDate: {
           'ui:emptyValue': '',
@@ -907,13 +919,13 @@ const getContractTemplate = (
           'ui:placeholder': 'State name',
         },
         ...sharedProperties.uiSchema,
-      };
-      break;
+      }
+      break
 
     case contractsTemplates.TemplateSaft:
-      title = 'SIMPLE AGREEMENT FOR FUTURE TOKENS';
-      contractTemplate = Saft;
-      dataName = 'saftAgreementData';
+      title = 'SIMPLE AGREEMENT FOR FUTURE TOKENS'
+      contractTemplate = Saft
+      dataName = 'saftAgreementData'
       jsonSchemas = [
         {
           type: 'object',
@@ -1054,7 +1066,7 @@ const getContractTemplate = (
             'bitcoin',
           ],
         },
-      ];
+      ]
       uiSchema = {
         typeOfCompany: {
           'ui:placeholder': 'Company name',
@@ -1096,11 +1108,11 @@ const getContractTemplate = (
           'ui:placeholder': 'Bitcoin address',
         },
         ...sharedProperties.uiSchema,
-      };
-      break;
+      }
+      break
 
     default:
-      throw new Error('No template Found');
+      throw new Error('No template Found')
   }
   return {
     title,
@@ -1109,7 +1121,7 @@ const getContractTemplate = (
     dataName,
     jsonSchemas,
     uiSchema,
-  };
-};
+  }
+}
 
-export default getContractTemplate;
+export default getContractTemplate
