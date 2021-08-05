@@ -4,7 +4,7 @@ import Ciia from './ciia.html';
 import ConsultingAgreement from './consulting-agreement.html';
 import ReferalAgreement from './referral-agreement.html';
 import Saft from './saft.html';
-import PlanCiia from './preview/ciia.html';
+import PlanCiia from './previews/ciia.html';
 
 enum contractsTemplates {
   TemplateNda = '001',
@@ -386,7 +386,7 @@ const getContractTemplate = (
               title: 'State',
               type: 'string',
             },
-            typeOfComapny: {
+            typeOfCompany: {
               title: 'Type of Company',
               type: 'string',
             },

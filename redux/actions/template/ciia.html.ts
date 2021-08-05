@@ -1,9 +1,9 @@
 /* eslint-disable no-tabs */
-const Ciia = `<div class="contract" style="width: 100%; background-color:white; color: black;"><span id="customTitle" style="display: none">{{customTitle}}</span><p align="center"><strong><span id="partyName" style="background-color:#f79632">[COMPANY NAME]</v></strong></p>
+const Ciia = `<div class="contract" style="width: 100%; background-color:white; color: black;"><span id="customTitle" style="display: none">{{customTitle}}</span><p align="center"><strong><span id="partyName" style="background-color:#f79632">{{#companyName}}{{companyName}}{{/companyName}}{{^companyName}}[COMPANY NAME]{{/companyName}}</v></strong></p>
 <p align="center" style="color: black;"><strong><u>CONFIDENTIAL INFORMATION AND</u><br /> <u>INVENTION ASSIGNMENT AGREEMENT</u></strong></p>
-<p align="center" style="color: black;"><em>Consultant Name:</em> <span style="background-color:#f79632">_____________________</span> (&ldquo;<u>Consultant</u>&rdquo;)</p>
-<p align="center" style="color: black;"><em>Effective Date: <span style="background-color:#f79632">_______________________</span></em></p>
-<p style="color: black;">As a condition of becoming retained (or Consultant&rsquo;s consulting relationship being continued) by <span style="background-color:#f79632">[COMPANY NAME]</span>, a <span style="background-color:#f79632">[STATE]</span> <span style="background-color:#f79632">[TYPE OF COMPANY]</span>, or any of its current or future subsidiaries, affiliates, successors or assigns (collectively, the &ldquo;<u>Company</u>&rdquo;), and in consideration of Consultant&rsquo;s consulting relationship with the Company and receipt of the compensation now and hereafter paid by the Company, Consultant agrees to the following:</p>
+<p align="center" style="color: black;"><em>Consultant Name:</em> <span style="background-color:#f79632">{{#counterPartyName}}{{counterPartyName}}{{/counterPartyName}}{{^counterPartyName}}[COUNTER PARTY NAME]{{/counterPartyName}}</span> (&ldquo;<u>Consultant</u>&rdquo;)</p>
+<p align="center" style="color: black;"><em>Effective Date: <span style="background-color:#f79632">{{#effectiveDate}}{{effectiveDate}}{{/effectiveDate}}{{^effectiveDate}}[Effective Date]{{/effectiveDate}}</span></em></p>
+<p style="color: black;">As a condition of becoming retained (or Consultant&rsquo;s consulting relationship being continued) by <span style="background-color:#f79632">{{#companyName}}{{companyName}}{{/companyName}}{{^companyName}}[COMPANY NAME]{{/companyName}}</span>, a <span style="background-color:#f79632">{{#stateOfCompany}}{{stateOfCompany}}{{/stateOfCompany}}{{^stateOfCompany}}[STATE]{{/stateOfCompany}}</span> <span style="background-color:#f79632">{{#typeOfCompany}}{{typeOfCompany}}{{/typeOfCompany}}{{^typeOfCompany}}[TYPE OF COMPANY]{{/typeOfCompany}}</span>, or any of its current or future subsidiaries, affiliates, successors or assigns (collectively, the &ldquo;<u>Company</u>&rdquo;), and in consideration of Consultant&rsquo;s consulting relationship with the Company and receipt of the compensation now and hereafter paid by the Company, Consultant agrees to the following:</p>
 <ol>
 <li>
 <p style="color: black;"><span style="font-size: small;"><u><strong><span style="font-size: medium;">Relationship</span></strong></u></span><strong>.</strong> This Confidential Information and Invention Assignment Agreement (this &ldquo;<u>Agreement</u>&rdquo;) will apply to Consultant&rsquo;s consulting relationship with the Company. If that relationship ends and the Company, within a year thereafter, either employs Consultant or re-engages Consultant as a consultant, this Agreement will also apply to such later employment or consulting relationship, unless the parties hereto otherwise agree in writing. Any such employment or consulting relationship between the parties hereto, whether commenced prior to, upon or after the date of this Agreement, is referred to herein as the &ldquo;<u>Relationship</u>.&rdquo;</p>
@@ -103,7 +103,7 @@ const Ciia = `<div class="contract" style="width: 100%; background-color:white; 
 <p style="color: black;"><span style="font-size: small;"><u><strong><span style="font-size: medium;">Miscellaneous</span></strong></u></span><strong>.</strong></p>
 <ol type="a">
 <li>
-<p style="color: black;"><u><strong>Governing Law</strong></u><strong>.</strong> The validity, interpretation, construction and performance of this Agreement, and all acts and transactions pursuant hereto and the rights and obligations of the parties hereto shall be governed, construed and interpreted in accordance with the laws of the state of <span style="background-color:#f79632">[STATE]</span>, without giving effect to the principles of conflict of laws.</p>
+<p style="color: black;"><u><strong>Governing Law</strong></u><strong>.</strong> The validity, interpretation, construction and performance of this Agreement, and all acts and transactions pursuant hereto and the rights and obligations of the parties hereto shall be governed, construed and interpreted in accordance with the laws of the state of <span style="background-color:#f79632">{{#stateOfCompany}}{{stateOfCompany}}{{/stateOfCompany}}{{^stateOfCompany}}[STATE]{{/stateOfCompany}}</span>, without giving effect to the principles of conflict of laws.</p>
 </li>
 <li>
 <p style="color: black;"><u><strong>Entire Agreement</strong></u><strong>.</strong> Except as described in Section&nbsp;2., this Agreement sets forth the entire agreement and understanding between the Company and Consultant relating to its subject matter and merges all prior discussions between the parties to this Agreement. No amendment to this Agreement will be effective unless in writing signed by both parties to this Agreement. The Company shall not be deemed hereby to have waived any rights or remedies it may have in law or equity, nor to have given any authorizations or waived any of its rights under this Agreement, unless, and only to the extent, it does so by a specific writing signed by a duly authorized officer of the Company. Any subsequent change or changes in Consultant&rsquo;s duties, obligations, rights or compensation will not affect the validity or scope of this Agreement.</p>
@@ -132,25 +132,22 @@ const Ciia = `<div class="contract" style="width: 100%; background-color:white; 
 <p class="western" align="center" style="color: black;"><em>[Signature Page Follows]</em></p>
 <p align="justify" style="color: black;">The parties have executed this Agreement on the date first above written.</p>
 <p style="color: black;"><strong>THE COMPANY:</strong></p>
-<p style="color: black;"><span style="background-color:#f79632">[COMPANY NAME]</span></p>
+<p style="color: black;"><span style="background-color:#f79632">{{#companyName}}{{companyName}}{{/companyName}}{{^companyName}}[COMPANY NAME]{{/companyName}}</span></p>
 <p style="color: black;">By: _______________________________________</p>
 <p style="color: black;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Signature)</p>
-<p style="color: black;">Name: <span id="partyName"></span></p>
-<p style="color: black;">___________________________________________</p>
-<p style="color: black;">Title:</p>
-<p style="color: black;">___________________________________________</p>
-<p style="color: black;">Address:</p>
-<p style="color: black;">___________________________________________</p>
+<p style="color:#000;">Name: <div style="display: inline-block; background-color:#f79632"><span id="partyName">{{#partyName}}{{partyName}}{{/partyName}}{{^partyName}}[PARTY NAME]{{/partyName}}</span></div></p>
+<p style="color:#000;">Tittle: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyName">{{#titleCompany}}{{titleCompany}}{{/titleCompany}}{{^titleCompany}}[TITTLE]{{/titleCompany}}</span></div></p>
+<p style="color:#000;">Email: <div style="display: inline-block; background-color:#f79632"><span id="partyEmail">{{#partyEmail}}{{partyEmail}}{{/partyEmail}}{{^partyEmail}}[PARTY EMAIL]{{/partyEmail}}</span></div></p>
+<p style="color:#000;">Wallet: <div style="display: inline-block; background-color:#f79632"><span id="partyWallet">{{#partyWallet}}{{partyWallet}}{{/partyWallet}}{{^partyWallet}}[PARTY WALLET]{{/partyWallet}}</span></div></p>
 <p style="color: black;"><br /> </p>
 <p style="color: black;"><strong>CONSULTANT:</strong></p>
-<p style="color: black;">___________________________________________</p>
-<p style="color: black;">(PRINT NAME)</p>
+<p style="color:#000;">Name: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyName">{{#counterPartyName}}{{counterPartyName}}{{/counterPartyName}}{{^counterPartyName}}[COUNTER PARTY NAME]{{/counterPartyName}}</span></div></p>
 <p style="color: black;">___________________________________________</p>
 <p style="color: black;">(Signature)</p>
-<p style="color: black;">Address:</p>
-<p style="color: black;">___________________________________________</p>
-<p style="color: black;">Email:</p>
-<p style="color: black;">___________________________________________</p>
+<p style="color:#000;">Title: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyName">{{#titleProvider}}{{titleProvider}}{{/titleProvider}}{{^titleProvider}}[TITTLE]{{/titleProvider}}</span></div></p>
+<p style="color:#000;">Address: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyAddress">{{#counterPartyAddress}}{{counterPartyAddress}}{{/counterPartyAddress}}{{^counterPartyAddress}}[COUNTER PARTY ADDRESS]{{/counterPartyAddress}}</span></div></p>
+<p style="color:#000;">Email: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyEmail">{{#counterPartyEmail}}{{counterPartyEmail}}{{/counterPartyEmail}}{{^counterPartyEmail}}[COUNTER PARTY EMAIL]{{/counterPartyEmail}}</span></div></p>
+
 <p style="color: black;"><u> <br /> </u><br /> </p>
 <p style="color: black;"><u> <br /> </u><br /> </p>
 <p align="center" style="color: black;"><u><strong>EXHIBIT&nbsp;A</strong></u></p>
@@ -171,13 +168,13 @@ const Ciia = `<div class="contract" style="width: 100%; background-color:white; 
 </tr>
 <tr valign="top">
 <td width="33%" style="text-align: center;">
-<p style="color: black;" class="western"><div style="display: inline-block; background-color:#f79632">[TITLE]</div></p>
+<p style="color: black;" class="western"><div style="display: inlin-block; background-color:#f79632">{{#title}}{{title}}{{/title}}{{^title}}[TITLE]{{/title}}</div></p>
 </td>
 <td width="194">
-<p style="color: black;" class="western"><div style="display: inline-block; background-color:#f79632">{{date}}</div></p>
+<p style="color: black;" class="western"><div style="display: inline-block; background-color:#f79632">{{#date}}{{date}}{{/date}}{{^date}}[DATE]{{/date}}</div></p>
 </td>
 <td width="33%" style="text-align: center;">
-<p style="color: black;" class="western"><div style="display: inline-block; background-color:#f79632">[ID NUMBER OR BRIEF DESCRIPTION]</div></p>
+<p style="color: black;" class="western"><div style="display: inline-block; background-color:#f79632">{{#idNumberBriefDesc}}{{idNumberBriefDesc}}{{/idNumberBriefDesc}}{{^idNumberBriefDesc}}[ID NUMBER OR BRIEF DESCRIPTION]{{/idNumberBriefDesc}}</div></p>
 </td>
 </tr>
 </tbody>
@@ -187,19 +184,17 @@ const Ciia = `<div class="contract" style="width: 100%; background-color:white; 
 <p style="color: black;">Except as indicated above on this exhibit, Consultant has no inventions, improvements or original works to disclose pursuant to Section&nbsp;(a) of this Agreement.</p>
 <p style="color: black;">___ Additional sheets attached</p>
 <p>Signature of Consultant: ________________________</p>
-<p style="color: black;">Print Name of Consultant: _______________________</p>
+<p style="color:#000;">Name: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyName">{{#counterPartyName}}{{counterPartyName}}{{/counterPartyName}}{{^counterPartyName}}[COUNTER PARTY NAME]{{/counterPartyName}}</span></div></p>
 <p style="color: black;">Date:________________________</p>
 <p style="color: black;" align="center"><strong><u>EXHIBIT&nbsp;B</u> </strong></p>
 <p style="color: black;" align="center"><strong>TERMINATION CERTIFICATION</strong></p>
-<p style="color: black;">This is to certify that Consultant does not have in Consultant&rsquo;s possession, nor has Consultant failed to return, any devices, records, data, notes, reports, proposals, lists, correspondence, specifications, drawings, blueprints, sketches, laboratory notebooks, flow charts, materials, equipment, other documents or property, or copies or reproductions of any aforementioned items belonging to <div style="display: inline-block; background-color:#f79632">[COMPANY NAME]</div>, a <div style="display: inline-block; background-color:#f79632">[STATE]</div> <div style="display: inline-block; background-color:#f79632">[TYPE OF COMPANY]</div>, its subsidiaries, affiliates, successors or assigns (collectively, the &ldquo;<u>Company</u>&rdquo;).</p>
-<p style="color: black;">Consultant further certifies that Consultant has complied with all the terms of the Company&rsquo;s Confidential Information and Invention Assignment Agreement signed by Consultant, including the reporting of any Inventions (as defined therein), conceived or made by Consultant or Consultant&rsquo;s personnel (solely or jointly with others) covered by that agreement, and Consultant acknowledges Consultant&rsquo;s continuing obligations under that agreement.</p>
+<p style="color: black;">This is to certify that Consultant does not have in Consultant&rsquo;s possession, nor has Consultant failed to return, any devices, records, data, notes, reports, proposals, lists, correspondence, specifications, drawings, blueprints, sketches, laboratory notebooks, flow charts, materials, equipment, other documents or property, or copies or reproductions of any aforementioned items belonging to <span style="background-color:#f79632">{{#companyName}}{{companyName}}{{/companyName}}{{^companyName}}[COMPANY NAME]{{/companyName}}</span>, a <span style="background-color:#f79632">{{#stateOfCompany}}{{stateOfCompany}}{{/stateOfCompany}}{{^stateOfCompany}}[STATE]{{/stateOfCompany}}</span> <span style="background-color:#f79632">{{#typeOfCompany}}{{typeOfCompany}}{{/typeOfCompany}}{{^typeOfCompany}}[TYPE OF COMPANY]{{/typeOfCompany}}</span> (the &ldquo;, its subsidiaries, affiliates, successors or assigns (collectively, the &ldquo;<u>Company</u>&rdquo;).</p><p style="color: black;">Consultant further certifies that Consultant has complied with all the terms of the Company&rsquo;s Confidential Information and Invention Assignment Agreement signed by Consultant, including the reporting of any Inventions (as defined therein), conceived or made by Consultant or Consultant&rsquo;s personnel (solely or jointly with others) covered by that agreement, and Consultant acknowledges Consultant&rsquo;s continuing obligations under that agreement.</p>
 <p style="color: black;">Consultant further agrees that, in compliance with the Confidential Information and Invention Assignment Agreement, Consultant will preserve as confidential all trade secrets, confidential knowledge, data or other proprietary information relating to products, processes, know-how, designs, formulas, developmental or experimental work, computer programs, data bases, other original works of authorship, customer lists, business plans, financial information or other subject matter pertaining to any business of the Company or any of its employees, clients, consultants or licensees.</p>
 <p style="color: black;">Consultant further agrees that for twelve (12) months immediately following the termination of Consultant&rsquo;s Relationship with the Company, Consultant shall not either directly or indirectly solicit, induce, recruit or encourage any of the Company&rsquo;s employees or consultants to terminate their relationship with the Company, or attempt to solicit, induce, recruit, encourage or take away employees or consultants of the Company, either for Consultant or for any other person or entity.</p>
 <p style="color: black;">Further, Consultant agrees that Consultant shall not use any Confidential Information of the Company to negatively influence any of the Company&rsquo;s clients or customers from purchasing Company products or services or to solicit or influence or attempt to influence any client, customer or other person either directly or indirectly, to direct any purchase of products and/or services to any person, firm, corporation, institution or other entity in competition with the business of the Company.</p>
-<p style="color: black;">Date: <u><div style="display: inline-block; background-color:#f79632">[DATE]</div></u></p>
+<p style="color: black;">Date: <u><div style="display: inline-block; background-color:#f79632">{{#date}}{{date}}{{/date}}{{^date}}[DATE]{{/date}}</div></u></p>
 <p><strong>CONSULTANT:</strong></p>
-<p style="color: black;">____________________________</p>
-<p style="color: black;">(Print Consultant&rsquo;s Name)</p>
+<p style="color:#000;">Name: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyName">{{#counterPartyName}}{{counterPartyName}}{{/counterPartyName}}{{^counterPartyName}}[COUNTER PARTY NAME]{{/counterPartyName}}</span></div></p>
 <p style="color: black;">____________________________</p>
 <p style="color: black;"><u> </u>(Signature)</p>
 <p style="color: black;" align="center"><strong><u>EXHIBIT&nbsp;</u><u>C</u></strong></p>
