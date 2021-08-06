@@ -786,19 +786,11 @@ const getContractTemplate = (
               type: 'string',
               format: 'date',
             },
-            titleProvider: {
-              title: 'Tittle',
-              type: 'string',
-            },
-            county: {
-              title: 'County',
-              type: 'string',
-            },
+
           },
           // required: ['commisionDate'],
           required: ['date','county'],
         },
-
         {
           type: 'object',
           title: 'My information (the “Company)',
@@ -813,6 +805,10 @@ const getContractTemplate = (
             },
             stateOfCompany: {
               title: 'State',
+              type: 'string',
+            },
+            county: {
+              title: 'County',
               type: 'string',
             },
             typeOfCompany: {
@@ -832,6 +828,10 @@ const getContractTemplate = (
           type: 'object',
           title: 'Advisor information (“Provider”)',
           properties: {
+            titleProvider: {
+              title: 'Tittle',
+              type: 'string',
+            },
             providerName: {
               title: 'Provider name',
               type: 'string',
@@ -841,7 +841,7 @@ const getContractTemplate = (
               type: 'string',
             },
             typeOfProvider: {
-              title: 'Type of company',
+              title: 'Type of Provider',
               type: 'string',
             },
             ...sharedProperties.couterparty,
