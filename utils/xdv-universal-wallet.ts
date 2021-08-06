@@ -7,18 +7,15 @@ const getDidXdv = async (currentWallet: string) => {
   const { profileName, passphrase, name } = profileData
 
   const xdvWallet = new Wallet({ isWeb: true })
-  const wallet = await xdvWallet.open(profileName, passphrase)
-  console.log(wallet)
+  await xdvWallet.open(profileName, passphrase)
   const acct = await xdvWallet.getAccount()
 
-  if (acct.keystores.length === 0) {
+  if (acct.get('keystores').length === 0) {
     // Adds a wallet.
-    console.log('YES / acct.keystores.length')
     walletId = await xdvWallet.addWallet()
   } else {
     // Gets first wallet
-    console.log('NO / acct.keystores.length')
-    walletId = acct.keystores[0].walletId
+    walletId = acct.get('keystores')[0].walletId
   }
 
   const provider = await xdvWallet.createEd25519({
