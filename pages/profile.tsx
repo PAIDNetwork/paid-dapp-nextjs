@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import Head from 'next/head';
 import { Card } from 'reactstrap';
 import { Wallet } from 'xdv-universal-wallet-core';
-// import getDidXdv from '../utils/xdv-universal-wallet'
 import ProfileStateModel from '../models/profileStateModel';
 import FormProfile from '../components/profile/FormProfile';
 import ProfileModel from '../models/profileModel';
@@ -27,22 +26,11 @@ const Profile: FC = () => {
   const onSubmit = async (values: ProfileModel) => {
     try {
       const getCurrentWallet = global.localStorage.getItem(currentWallet);
-
-      // const didXdv = await getDidXdv(getCurrentWallet)
-      // const { profileData, provider} = didXdv
-
-
       const profileData = JSON.parse(getCurrentWallet);
       const accountName = `${values.name.toLocaleLowerCase()}${values.lastName.toLocaleLowerCase()}`;
-
       const xdvWallet = new Wallet({ isWeb: true });
-
-      const wallet = await xdvWallet.open(accountName, values.passphrase);
-
-
+      await xdvWallet.open(accountName, values.passphrase);
       const walletId = await xdvWallet.addWallet();
-      console.log(wallet)
-      console.log("new wallet id", walletId)
 
       const provider = await xdvWallet.createEd25519({
         passphrase: profileData.passphrase,
