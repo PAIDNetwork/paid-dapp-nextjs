@@ -15,12 +15,12 @@ enum contractsTemplates {
 }
 
 interface contractTemplate {
-  title: string;
+  title: string
   // interpolationFields: Object;
-  template: string;
-  dataName: string;
-  jsonSchemas: any;
-  uiSchema: Object;
+  template: string
+  dataName: string
+  jsonSchemas: any
+  uiSchema: Object
 }
 
 const getContractTemplate = (
@@ -865,14 +865,27 @@ const getContractTemplate = (
               type: 'string',
               format: 'date',
             },
+            titleProvider: {
+              title: 'Tittle',
+              type: 'string',
+            },
+            county: {
+              title: 'County',
+              type: 'string',
+            },
           },
           // required: ['commisionDate'],
-          required: ['date'],
+          required: ['date', 'county'],
         },
+
         {
           type: 'object',
           title: 'My information (the “Company)',
           properties: {
+            titleCompany: {
+              title: 'Tittle',
+              type: 'string',
+            },
             companyName: {
               title: 'Company name',
               type: 'string',
