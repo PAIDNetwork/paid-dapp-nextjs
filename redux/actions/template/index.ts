@@ -1,9 +1,10 @@
-import Nda from './nda.html'
-import AdvisorAgreemt from './advisor-agreement.html'
-import Ciia from './ciia.html'
-import ConsultingAgreement from './consulting-agreement.html'
-import ReferalAgreement from './referral-agreement.html'
-import Saft from './saft.html'
+import Nda from './nda.html';
+import AdvisorAgreemt from './advisor-agreement.html';
+import Ciia from './ciia.html';
+import ConsultingAgreement from './consulting-agreement.html';
+import ReferalAgreement from './referral-agreement.html';
+import Saft from './saft.html';
+import PlanCiia from './previews/ciia.html';
 
 enum contractsTemplates {
   TemplateNda = '001',
@@ -324,9 +325,9 @@ const getContractTemplate = (
       break
 
     case contractsTemplates.TemplateCiia:
-      title = 'CONFIDENTIAL INFORMATION AND INVENTION ASSIGNMENT AGREEMENT'
-      contractTemplate = Ciia
-      dataName = 'ciiaAgreementData'
+      title = 'CONFIDENTIAL INFORMATION AND INVENTION ASSIGNMENT AGREEMENT';
+      contractTemplate = isEditing ? Ciia : agreementReviewed ? Ciia : PlanCiia;
+      dataName = 'ciiaAgreementData';
       jsonSchemas = [
         {
           type: 'object',
@@ -385,7 +386,7 @@ const getContractTemplate = (
               title: 'State',
               type: 'string',
             },
-            typeOfComapny: {
+            typeOfCompany: {
               title: 'Type of Company',
               type: 'string',
             },

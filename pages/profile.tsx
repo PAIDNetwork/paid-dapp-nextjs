@@ -28,11 +28,8 @@ const Profile: FC = () => {
       const getCurrentWallet = global.localStorage.getItem(currentWallet);
       const profileData = JSON.parse(getCurrentWallet);
       const accountName = `${values.name.toLocaleLowerCase()}${values.lastName.toLocaleLowerCase()}`;
-
       const xdvWallet = new Wallet({ isWeb: true });
-
       await xdvWallet.open(accountName, values.passphrase);
-
       const walletId = await xdvWallet.addWallet();
 
       const provider = await xdvWallet.createEd25519({
@@ -44,6 +41,8 @@ const Profile: FC = () => {
       });
       await provider.did.authenticate();
       xdvWallet.close();
+
+
       const walletStorage = {
         ...profile,
         ...values,
@@ -58,6 +57,7 @@ const Profile: FC = () => {
         did: provider.did,
         created: profileData.created,
       };
+
       dispatch(doSetProfile(currentProfile));
       setProfile(currentProfile);
     } catch (e) {
