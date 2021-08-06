@@ -816,6 +816,10 @@ const getContractTemplate = (
               title: 'State',
               type: 'string',
             },
+            county: {
+              title: 'County',
+              type: 'string',
+            },
             typeOfCompany: {
               title: 'Type of company',
               type: 'string',
@@ -833,6 +837,10 @@ const getContractTemplate = (
           type: 'object',
           title: 'Advisor information (“Provider”)',
           properties: {
+            titleProvider: {
+              title: 'Tittle',
+              type: 'string',
+            },
             providerName: {
               title: 'Provider name',
               type: 'string',
@@ -842,7 +850,7 @@ const getContractTemplate = (
               type: 'string',
             },
             typeOfProvider: {
-              title: 'Type of company',
+              title: 'Type of Provider',
               type: 'string',
             },
             ...sharedProperties.couterparty,
