@@ -378,7 +378,7 @@ const getContractTemplate = (
           properties: {
             ...sharedProperties.couterparty,
           },
-          required: sharedProperties.couterpartyRequired,
+          required: sharedProperties.requiredCounterParty,
         },
         {
           type: 'object',
