@@ -1,10 +1,10 @@
-import Nda from './nda.html';
-import AdvisorAgreemt from './advisor-agreement.html';
-import Ciia from './ciia.html';
-import ConsultingAgreement from './consulting-agreement.html';
-import ReferalAgreement from './referral-agreement.html';
-import Saft from './saft.html';
-import PlanCiia from './previews/ciia.html';
+import Nda from './nda.html'
+import AdvisorAgreemt from './advisor-agreement.html'
+import Ciia from './ciia.html'
+import ConsultingAgreement from './consulting-agreement.html'
+import ReferalAgreement from './referral-agreement.html'
+import Saft from './saft.html'
+import PlanCiia from './previews/ciia.html'
 
 enum contractsTemplates {
   TemplateNda = '001',
@@ -191,6 +191,7 @@ const getContractTemplate = (
           required: sharedProperties.requiredCounterParty,
         },
         {
+          //
           type: 'object',
           title: 'Vesting information',
           properties: {
@@ -325,20 +326,55 @@ const getContractTemplate = (
       break
 
     case contractsTemplates.TemplateCiia:
-      title = 'CONFIDENTIAL INFORMATION AND INVENTION ASSIGNMENT AGREEMENT';
-      contractTemplate = isEditing ? Ciia : agreementReviewed ? Ciia : PlanCiia;
-      dataName = 'ciiaAgreementData';
+      title = 'CONFIDENTIAL INFORMATION AND INVENTION ASSIGNMENT AGREEMENT'
+      contractTemplate = isEditing ? Ciia : agreementReviewed ? Ciia : PlanCiia
+      dataName = 'ciiaAgreementData'
       jsonSchemas = [
         {
           type: 'object',
-          title: 'Advisor Agreement',
+          title: 'When Agreement will become effective',
           properties: {
-            ...sharedProperties.party,
+            effectiveDate: {
+              title: 'Effective Date',
+              type: 'string',
+              format: 'date',
+            },
           },
-          required: sharedProperties.required,
+          required: ['effectiveDate'],
         },
         {
           type: 'object',
+          title: 'My information (the “Company”)',
+          properties: {
+            companyName: {
+              title: 'CompanyName',
+              type: 'string',
+            },
+            stateCompany: {
+              title: 'Company State of residence',
+              type: 'string',
+            },
+            typeOfCompany: {
+              title: 'Type of company',
+              type: 'string',
+            },
+            titleParty: {
+              title: 'My full name',
+              type: 'string',
+            },
+            ...sharedProperties.party,
+          },
+          required: [
+            'companyName',
+            'companyState',
+            'typeOfCompany',
+            'titleParty',
+            ...sharedProperties.required,
+          ],
+        },
+        {
+          type: 'object',
+          title: 'Counterparty information (“Consultant”)',
           properties: {
             ...sharedProperties.couterparty,
           },
@@ -346,50 +382,36 @@ const getContractTemplate = (
         },
         {
           type: 'object',
+          title:
+            'List of prior inventions and original works of authorship excluded under section 4(a) (EXHIBIT A)',
           properties: {
-            effectiveDate: {
-              title: 'Effective Date',
-              type: 'string',
-              format: 'date',
-            },
-            companyState: {
-              title: 'Company State',
+            titleService: {
+              title:
+                'Title of the the business, product, service or R&D not assigned to the Company',
               type: 'string',
             },
-            stateConsultant: {
-              title: 'State',
-              type: 'string',
-            },
-            typeOfCompanyConsultant: {
-              title: 'Type of company',
-              type: 'string',
-            },
-            title: {
-              title: 'Title',
-              type: 'string',
-            },
-          },
-        },
-        {
-          type: 'object',
-          properties: {
-            datea: {
-              title: 'Date',
+            dateEfectiveService: {
+              title: 'Effective date',
               type: 'string',
               format: 'date',
             },
             idNumberBriefDesc: {
-              title: 'Identifying # or Brief Desc.',
+              title:
+                'Identifying number or brief description of the the business, product, service or R&D not assigned to the Company',
               type: 'string',
             },
-            stateCompany: {
-              title: 'State',
-              type: 'string',
-            },
-            typeOfCompany: {
-              title: 'Type of Company',
-              type: 'string',
-            },
+          },
+          required: [
+            'titleService',
+            'dateEfectiveService',
+            'idNumberBriefDesc',
+          ],
+        },
+        {
+          type: 'object',
+          title:
+            'List of companies and/or agreements excluded under section 10(b) (EXHIBIT C)',
+          properties: {
             listCompAgreements: {
               title:
                 'List of companies and/or agreements excluded under section 10(b)',
@@ -797,7 +819,7 @@ const getContractTemplate = (
             },
           },
           // required: ['commisionDate'],
-          required: ['date','county'],
+          required: ['date', 'county'],
         },
 
         {

@@ -136,7 +136,7 @@ const Ciia = `<div class="contract" style="width: 100%; background-color:white; 
 <p style="color: black;">By: _______________________________________</p>
 <p style="color: black;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Signature)</p>
 <p style="color:#000;">Name: <div style="display: inline-block; background-color:#f79632"><span id="partyName">{{#partyName}}{{partyName}}{{/partyName}}{{^partyName}}[PARTY NAME]{{/partyName}}</span></div></p>
-<p style="color:#000;">Tittle: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyName">{{#titleCompany}}{{titleCompany}}{{/titleCompany}}{{^titleCompany}}[TITTLE]{{/titleCompany}}</span></div></p>
+<p style="color:#000;">Title: <div style="display: inline-block; background-color:#f79632"><span id="titleParty">{{#titleParty}}{{titleParty}}{{/titleParty}}{{^titleParty}}[TITLE]{{/titleParty}}</span></div></p>
 <p style="color:#000;">Email: <div style="display: inline-block; background-color:#f79632"><span id="partyEmail">{{#partyEmail}}{{partyEmail}}{{/partyEmail}}{{^partyEmail}}[PARTY EMAIL]{{/partyEmail}}</span></div></p>
 <p style="color:#000;">Wallet: <div style="display: inline-block; background-color:#f79632"><span id="partyWallet">{{#partyWallet}}{{partyWallet}}{{/partyWallet}}{{^partyWallet}}[PARTY WALLET]{{/partyWallet}}</span></div></p>
 <p style="color: black;"><br /> </p>
@@ -144,7 +144,7 @@ const Ciia = `<div class="contract" style="width: 100%; background-color:white; 
 <p style="color:#000;">Name: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyName">{{#counterPartyName}}{{counterPartyName}}{{/counterPartyName}}{{^counterPartyName}}[COUNTER PARTY NAME]{{/counterPartyName}}</span></div></p>
 <p style="color: black;">___________________________________________</p>
 <p style="color: black;">(Signature)</p>
-<p style="color:#000;">Title: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyName">{{#titleProvider}}{{titleProvider}}{{/titleProvider}}{{^titleProvider}}[TITTLE]{{/titleProvider}}</span></div></p>
+<p style="color:#000;">Title: <div style="display: inline-block; background-color:#f79632"><span id="titleCounterParty">{{#titleCounterParty}}{{titleCounterParty}}{{/titleCounterParty}}{{^titleCounterParty}}[TITLE]{{/titleCounterParty}}</span></div></p>
 <p style="color:#000;">Address: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyAddress">{{#counterPartyAddress}}{{counterPartyAddress}}{{/counterPartyAddress}}{{^counterPartyAddress}}[COUNTER PARTY ADDRESS]{{/counterPartyAddress}}</span></div></p>
 <p style="color:#000;">Email: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyEmail">{{#counterPartyEmail}}{{counterPartyEmail}}{{/counterPartyEmail}}{{^counterPartyEmail}}[COUNTER PARTY EMAIL]{{/counterPartyEmail}}</span></div></p>
 
@@ -168,10 +168,10 @@ const Ciia = `<div class="contract" style="width: 100%; background-color:white; 
 </tr>
 <tr valign="top">
 <td width="33%" style="text-align: center;">
-<p style="color: black;" class="western"><div style="display: inlin-block; background-color:#f79632">{{#title}}{{title}}{{/title}}{{^title}}[TITLE]{{/title}}</div></p>
+<p style="color: black;" class="western"><div style="display: inlin-block; background-color:#f79632">{{#titleService}}{{titleService}}{{/titleService}}{{^titleService}}[TITLE]{{/titleService}}</div></p>
 </td>
 <td width="194">
-<p style="color: black;" class="western"><div style="display: inline-block; background-color:#f79632">{{#date}}{{date}}{{/date}}{{^date}}[DATE]{{/date}}</div></p>
+<p style="color: black;" class="western"><div style="display: inline-block; background-color:#f79632">{{#dateEfectiveService}}{{dateEfectiveService}}{{/dateEfectiveService}}{{^dateEfectiveService}}[DATE]{{/dateEfectiveService}}</div></p>
 </td>
 <td width="33%" style="text-align: center;">
 <p style="color: black;" class="western"><div style="display: inline-block; background-color:#f79632">{{#idNumberBriefDesc}}{{idNumberBriefDesc}}{{/idNumberBriefDesc}}{{^idNumberBriefDesc}}[ID NUMBER OR BRIEF DESCRIPTION]{{/idNumberBriefDesc}}</div></p>
@@ -184,7 +184,7 @@ const Ciia = `<div class="contract" style="width: 100%; background-color:white; 
 <p style="color: black;">Except as indicated above on this exhibit, Consultant has no inventions, improvements or original works to disclose pursuant to Section&nbsp;(a) of this Agreement.</p>
 <p style="color: black;">___ Additional sheets attached</p>
 <p>Signature of Consultant: ________________________</p>
-<p style="color:#000;">Name: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyName">{{#counterPartyName}}{{counterPartyName}}{{/counterPartyName}}{{^counterPartyName}}[COUNTER PARTY NAME]{{/counterPartyName}}</span></div></p>
+<p style="color:#000;">Name: <div style="display: inline-block; background-color:#f79632"><span id="partyName">{{#partyName}}{{partyName}}{{/partyName}}{{^partyName}}[PARTY NAME]{{/partyName}}</span></div></p>
 <p style="color: black;">Date:________________________</p>
 <p style="color: black;" align="center"><strong><u>EXHIBIT&nbsp;B</u> </strong></p>
 <p style="color: black;" align="center"><strong>TERMINATION CERTIFICATION</strong></p>
@@ -206,8 +206,8 @@ const Ciia = `<div class="contract" style="width: 100%; background-color:white; 
 <p style="color: black;">___ Additional sheets attached</p>
 <p style="color: black;"><br /> </p>
 <p style="color: black;">Signature of Consultant agrees: _____________________</p>
-<p style="color: black;">Print Name: _____________________</p>
-<p style="color: black;">Date: _____________________</p>
+<p style="color: black;">Print Name: <span style="background-color:#f79632">{{#partyName}}{{partyName}}{{/partyName}}{{^partyName}}[PARTY NAME]{{/partyName}}</span></p>
+<p style="color: black;">Date: <span style="background-color:#f79632">{{#effectiveDate}}{{effectiveDate}}{{/effectiveDate}}{{^effectiveDate}}[Effective Date]{{/effectiveDate}}</span></p>
 </div>`;
 
 export default Ciia;
