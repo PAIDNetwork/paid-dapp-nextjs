@@ -335,7 +335,7 @@ const getContractTemplate = (
           title: 'When Agreement will become effective',
           properties: {
             effectiveDate: {
-              title: 'Effective Date',
+              title: 'Effective Date ',
               type: 'string',
               format: 'date',
             },
@@ -350,7 +350,7 @@ const getContractTemplate = (
               title: 'CompanyName',
               type: 'string',
             },
-            stateCompany: {
+            stateOfCompany: {
               title: 'Company State of residence',
               type: 'string',
             },
@@ -412,7 +412,7 @@ const getContractTemplate = (
           title:
             'List of companies and/or agreements excluded under section 10(b) (EXHIBIT C)',
           properties: {
-            listCompAgreements: {
+            listCompaniesAgreements: {
               title:
                 'List of companies and/or agreements excluded under section 10(b)',
               type: 'string',

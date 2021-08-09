@@ -52,7 +52,7 @@
     line-height: 30px;
     color: $blue-800;
   }
-  
+
   .modal-agreement-sub-title {
     font-family: Circular Std !important;
     font-style: normal !important;
@@ -72,7 +72,7 @@
   }
 
   span {
-    color: #DA1E5E !important;
+    color: #da1e5e !important;
   }
 
   .btn-confirm-modal {
@@ -84,9 +84,15 @@
     background: transparent;
     border: none;
   }
-
 }
 
 .review-agree-modal {
   max-width: 750px;
+}
+
+.contract {
+  width: 100%;
+  background-color: white;
+  color: black;
+  padding: 4%;
 }
