@@ -1076,6 +1076,16 @@ const getContractTemplate = (
             },
           },
         },
+        {
+          type: 'object',
+          title: 'Miscellanius',
+          properties: {
+            jurisdiction: {
+              title: 'Jurisdiction State',
+              type: 'string',
+            },
+          },
+        }
       ]
       uiSchema = {
         titleCounterParty: {
@@ -1089,6 +1099,9 @@ const getContractTemplate = (
         },
         nonUsJurisdiction: {
           'ui:placeholder': 'Company NON-U.S. Jurisdiction',
+        },
+        jurisdiction: {
+          'ui:placeholder': 'Jurisdiction',
         },
         purchaseAmount: {
           'ui:placeholder': 'Purchase amount (US $)',
