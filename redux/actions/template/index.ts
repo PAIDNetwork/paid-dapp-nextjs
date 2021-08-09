@@ -1029,81 +1029,52 @@ const getContractTemplate = (
         },
         {
           type: 'object',
-          title: 'Payment options',
+          title: 'Payment by U.S. Dollars',
           properties: {
             paymentOption: {
-              title: 'Payment Options',
+              enum: ['dollar'],
+            },
+            bankName: {
+              title: 'Bank Name',
               type: 'string',
-              enum: ['dollar', 'eth', 'btc'],
-              enumNames: ['U.S. Dollars', 'Ethereum', 'Bitcoin'],
-              default: 'dollar',
+            },
+            address: {
+              title: 'Address',
+              type: 'string',
+            },
+            aba: {
+              title: 'ABA#',
+              type: 'string',
+            },
+            payeeAccount: {
+              title: 'Payee Account #',
+              type: 'string',
+            },
+            payeeAccountName: {
+              title: 'Payee Account Name',
+              type: 'string',
             },
           },
-          dependencies: {
-            paymentOption: {
-              oneOf: [
-                {
-                  properties: {
-                    paymentOption: {
-                      enum: ['dollar'],
-                    },
-                    bankName: {
-                      title: 'Bank Name',
-                      type: 'string',
-                    },
-                    address: {
-                      title: 'Address',
-                      type: 'string',
-                    },
-                    aba: {
-                      title: 'ABA#',
-                      type: 'string',
-                    },
-                    payeeAccount: {
-                      title: 'Payee Account #',
-                      type: 'string',
-                    },
-                    payeeAccountName: {
-                      title: 'Payee Account Name',
-                      type: 'string',
-                    },
-                  },
-                },
-                {
-                  properties: {
-                    paymentOption: {
-                      enum: ['eth'],
-                    },
-                    ethereum: {
-                      title: 'Ethereum address',
-                      type: 'string',
-                    },
-                  },
-                },
-                {
-                  properties: {
-                    paymentOption: {
-                      enum: ['btc'],
-                    },
-                    bitcoin: {
-                      title: 'Bitcoin address',
-                      type: 'string',
-                    },
-                  },
-                },
-              ],
+        },
+        {
+          type: 'object',
+          title: 'Payment by Ethereum',
+          properties: {
+            ethereum: {
+              title: 'Ethereum address',
+              type: 'string',
             },
           },
-          required: [
-            'paymentOption',
-            'bankName',
-            'address',
-            'aba',
-            'payeeAccount',
-            'payeeAccountName',
-            'ethereum',
-            'bitcoin',
-          ],
+        },
+        {
+          type: 'object',
+          title: 'Payment by Bitcoin',
+          properties: {
+            bitcoin: {
+              title: 'Bitcoin address',
+              type: 'string',
+            },
+          },
         },
       ]
       uiSchema = {
