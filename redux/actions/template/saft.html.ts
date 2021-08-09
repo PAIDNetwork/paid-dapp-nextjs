@@ -66,6 +66,7 @@ const Saft = `<div class="contract" style="width: 100%; background-color:white; 
 <p>(Signature)</p>
 <p>________________________________________ </p>
 <p>Name: <div style="display: inline-block; background-color:#f79632"><span id="partyName">{{#partyName}}{{partyName}}{{/partyName}}{{^partyName}}[PARTY NAME]{{/partyName}}</span></div></p>
+<p>Title: <div style="display: inline-block; background-color:#f79632"><span id="titleParty">{{#titleParty}}{{titleParty}}{{/titleParty}}{{^titleParty}}[TITLE]{{/titleParty}}</span></div></p>
 <p>Email: <div style="display: inline-block; background-color:#f79632"><span id="partyEmail">{{#partyEmail}}{{partyEmail}}{{/partyEmail}}{{^partyEmail}}[PARTY EMAIL]{{/partyEmail}}</span></div></p>
 <p>Address: <div style="display: inline-block; background-color:#f79632"><span id="partyAddress">{{#partyAddress}}{{partyAddress}}{{/partyAddress}}{{^partyAddress}}[PARTY ADDRESS]{{/partyAddress}}</span></div></p>
 <p>Wallet: <div style="display: inline-block; background-color:#f79632"><span id="partyWallet">{{#partyWallet}}{{partyWallet}}{{/partyWallet}}{{^partyWallet}}[PARTY WALLET]{{/partyWallet}}</span></div></p>
@@ -74,6 +75,7 @@ const Saft = `<div class="contract" style="width: 100%; background-color:white; 
 <p>(Signature)</p>
 <p>________________________________________</p>
 <p>Name: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyName">{{#counterPartyName}}{{counterPartyName}}{{/counterPartyName}}{{^counterPartyName}}[COUNTER PARTY NAME]{{/counterPartyName}}</span></div></p>
+<p>Title: <div style="display: inline-block; background-color:#f79632"><span id="titleCounterParty">{{#titleCounterParty}}{{titleCounterParty}}{{/titleCounterParty}}{{^titleCounterParty}}[TITLE]{{/titleCounterParty}}</span></div></p>
 <p>Email: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyEmail">{{#counterPartyEmail}}{{counterPartyEmail}}{{/counterPartyEmail}}{{^counterPartyEmail}}[COUNTER PARTY EMAIL]{{/counterPartyEmail}}</span></div></p>
 <p>Address: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyAddress">{{#counterPartyAddress}}{{counterPartyAddress}}{{/counterPartyAddress}}{{^counterPartyAddress}}[COUNTER PARTY ADDRESS]{{/counterPartyAddress}}</span></div></p>
 <p>Wallet: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyWallet">{{#counterPartyWallet}}{{counterPartyWallet}}{{/counterPartyWallet}}{{^counterPartyWallet}}[COUNTER PARTY WALLET]{{/counterPartyWallet}}</span></div></p>
