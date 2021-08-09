@@ -962,6 +962,11 @@ const getContractTemplate = (
           type: 'object',
           title: 'My information ("the Company")',
           properties: {
+            date: {
+              title: 'Date',
+              type: 'string',
+              format: 'date',
+            },
             titleParty: {
               title: 'Title Company',
               type: 'string',
