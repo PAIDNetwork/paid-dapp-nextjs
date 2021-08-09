@@ -963,7 +963,7 @@ const getContractTemplate = (
           title: 'My information ("the Company")',
           properties: {
             typeOfCompany: {
-              title: 'Company name',
+              title: 'Type of Company',
               type: 'string',
             },
             jurisdiction: {
@@ -1100,7 +1100,7 @@ const getContractTemplate = (
       ]
       uiSchema = {
         typeOfCompany: {
-          'ui:placeholder': 'Company name',
+          'ui:placeholder': 'Type of Company',
         },
         jurisdiction: {
           'ui:placeholder': 'Company NON-U.S. Jurisdiction',
@@ -1141,7 +1141,7 @@ const getContractTemplate = (
         ...sharedProperties.uiSchema,
       }
       break
-    
+
     default:
       throw new Error('No template Found')
   }
