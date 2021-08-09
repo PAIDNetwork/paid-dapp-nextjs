@@ -962,12 +962,16 @@ const getContractTemplate = (
           type: 'object',
           title: 'My information ("the Company")',
           properties: {
-            typeOfCompany: {
-              title: 'Company name',
+            titleParty: {
+              title: 'Title Company',
               type: 'string',
             },
-            jurisdiction: {
-              title: 'Jurisdiction',
+            typeOfCompany: {
+              title: 'Type of Company',
+              type: 'string',
+            },
+            nonUsJurisdiction: {
+              title: 'Company NON-U.S. Jurisdiction',
               type: 'string',
             },
             ...sharedProperties.party,
@@ -986,6 +990,10 @@ const getContractTemplate = (
           type: 'object',
           title: 'Purchase amount',
           properties: {
+            titleCounterParty: {
+              title: 'Title Purchaser',
+              type: 'string',
+            },
             purchaseAmount: {
               title: 'Purchase amount (US $)',
               type: 'number',
@@ -999,7 +1007,7 @@ const getContractTemplate = (
         },
         {
           type: 'object',
-          Title: 'Discount rate',
+          Title: 'Discount rate (%)',
           properties: {
             discountRate: {
               title: 'Rate (%)',
@@ -1013,7 +1021,7 @@ const getContractTemplate = (
           title: 'Applicable Exchange rate',
           properties: {
             website: {
-              title: 'Website',
+              title: 'Website address',
               type: 'string',
             },
           },
@@ -1021,86 +1029,76 @@ const getContractTemplate = (
         },
         {
           type: 'object',
-          title: 'Payment options',
+          title: 'Payment by U.S. Dollars',
           properties: {
             paymentOption: {
-              title: 'Payment Options',
+              enum: ['dollar'],
+            },
+            bankName: {
+              title: 'Bank Name',
               type: 'string',
-              enum: ['dollar', 'eth', 'btc'],
-              enumNames: ['U.S. Dollars', 'Ethereum', 'Bitcoin'],
-              default: 'dollar',
+            },
+            address: {
+              title: 'Address',
+              type: 'string',
+            },
+            aba: {
+              title: 'ABA#',
+              type: 'string',
+            },
+            payeeAccount: {
+              title: 'Payee Account #',
+              type: 'string',
+            },
+            payeeAccountName: {
+              title: 'Payee Account Name',
+              type: 'string',
             },
           },
-          dependencies: {
-            paymentOption: {
-              oneOf: [
-                {
-                  properties: {
-                    paymentOption: {
-                      enum: ['dollar'],
-                    },
-                    bankName: {
-                      title: 'Bank Name',
-                      type: 'string',
-                    },
-                    address: {
-                      title: 'Address',
-                      type: 'string',
-                    },
-                    aba: {
-                      title: 'ABA#',
-                      type: 'string',
-                    },
-                    payeeAccount: {
-                      title: 'Payee Account #',
-                      type: 'string',
-                    },
-                    payeeAccountName: {
-                      title: 'Payee Account Name',
-                      type: 'string',
-                    },
-                  },
-                },
-                {
-                  properties: {
-                    paymentOption: {
-                      enum: ['eth'],
-                    },
-                    ethereum: {
-                      title: 'Ethereum address',
-                      type: 'string',
-                    },
-                  },
-                },
-                {
-                  properties: {
-                    paymentOption: {
-                      enum: ['btc'],
-                    },
-                    bitcoin: {
-                      title: 'Bitcoin address',
-                      type: 'string',
-                    },
-                  },
-                },
-              ],
-            },
-          },
-          required: [
-            'paymentOption',
-            'bankName',
-            'address',
-            'aba',
-            'payeeAccount',
-            'payeeAccountName',
-            'ethereum',
-            'bitcoin',
-          ],
         },
+        {
+          type: 'object',
+          title: 'Payment by Ethereum',
+          properties: {
+            ethereum: {
+              title: 'Ethereum address',
+              type: 'string',
+            },
+          },
+        },
+        {
+          type: 'object',
+          title: 'Payment by Bitcoin',
+          properties: {
+            bitcoin: {
+              title: 'Bitcoin address',
+              type: 'string',
+            },
+          },
+        },
+        {
+          type: 'object',
+          title: 'Miscellanius',
+          properties: {
+            jurisdiction: {
+              title: 'Jurisdiction State',
+              type: 'string',
+            },
+          },
+        }
       ]
       uiSchema = {
+        titleCounterParty: {
+          'ui:placeholder': 'Title Purchaser',
+        },
+        titleParty: {
+          'ui:placeholder': 'Title Company',
+        },
         typeOfCompany: {
-          'ui:placeholder': 'Company name',
+          'ui:placeholder': 'Type of Company',
+        },
+        nonUsJurisdiction: {
+          'ui:placeholder': 'Company NON-U.S. Jurisdiction',
         },
         jurisdiction: {
           'ui:placeholder': 'Jurisdiction',
@@ -1115,7 +1113,7 @@ const getContractTemplate = (
           'ui:placeholder': 'Rate (%)',
         },
         website: {
-          'ui:placeholder': 'Website',
+          'ui:placeholder': 'Website address',
         },
         bankName: {
           'ui:placeholder': 'Bank Name',
