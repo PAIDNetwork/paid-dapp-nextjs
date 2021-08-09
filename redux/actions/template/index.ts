@@ -1103,7 +1103,7 @@ const getContractTemplate = (
           'ui:placeholder': 'Company name',
         },
         jurisdiction: {
-          'ui:placeholder': 'Jurisdiction',
+          'ui:placeholder': 'Company NON-U.S. Jurisdiction',
         },
         purchaseAmount: {
           'ui:placeholder': 'Purchase amount (US $)',
@@ -1115,7 +1115,7 @@ const getContractTemplate = (
           'ui:placeholder': 'Rate (%)',
         },
         website: {
-          'ui:placeholder': 'Website',
+          'ui:placeholder': 'Website address',
         },
         bankName: {
           'ui:placeholder': 'Bank Name',
@@ -1141,7 +1141,7 @@ const getContractTemplate = (
         ...sharedProperties.uiSchema,
       }
       break
-
+    
     default:
       throw new Error('No template Found')
   }
