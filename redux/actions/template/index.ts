@@ -967,7 +967,7 @@ const getContractTemplate = (
               type: 'string',
             },
             jurisdiction: {
-              title: 'Jurisdiction',
+              title: 'Company NON-U.S. Jurisdiction',
               type: 'string',
             },
             ...sharedProperties.party,
@@ -999,7 +999,7 @@ const getContractTemplate = (
         },
         {
           type: 'object',
-          Title: 'Discount rate',
+          Title: 'Discount rate (%)',
           properties: {
             discountRate: {
               title: 'Rate (%)',
@@ -1013,7 +1013,7 @@ const getContractTemplate = (
           title: 'Applicable Exchange rate',
           properties: {
             website: {
-              title: 'Website',
+              title: 'Website address',
               type: 'string',
             },
           },
