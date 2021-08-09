@@ -7,8 +7,8 @@ import StackedInput from '../reusable/StackedInput';
 import ProfileModel from '../../models/profileModel';
 
 interface FormAccountProps {
-    setProfile: any;
-    profile: any;
+  setProfile: any;
+  profile: any;
 }
 
 const FormAccount: FC<FormAccountProps> = ({
@@ -44,7 +44,7 @@ const FormAccount: FC<FormAccountProps> = ({
               as="div"
               errors={errors}
             />
-                    )}
+          )}
         />
         <StackedInput
           label="Last Name"
@@ -63,7 +63,7 @@ const FormAccount: FC<FormAccountProps> = ({
               as="div"
               errors={errors}
             />
-                    )}
+          )}
         />
       </div>
       <StackedInput
@@ -76,7 +76,7 @@ const FormAccount: FC<FormAccountProps> = ({
           required: 'Email is required',
           pattern: {
             value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-            message: 'invalid email',
+            message: 'Invalid email',
           },
         })}
         errorComponent={(
@@ -86,7 +86,7 @@ const FormAccount: FC<FormAccountProps> = ({
             as="div"
             errors={errors}
           />
-                )}
+        )}
       />
 
       <StackedPassword
@@ -94,7 +94,7 @@ const FormAccount: FC<FormAccountProps> = ({
         id="account_phrase"
         name="passphrase"
         placeholder="Enter your Passphrase"
-        class={classNames({ 'is-invalid': errors.passphrase })}
+        className={classNames({ 'is-invalid': errors.passphrase })}
         innerRef={register({
           required: 'Passphrase is required',
           minLength: {
@@ -109,7 +109,7 @@ const FormAccount: FC<FormAccountProps> = ({
             as="div"
             errors={errors}
           />
-                )}
+        )}
       />
 
       <StackedPassword
@@ -117,7 +117,7 @@ const FormAccount: FC<FormAccountProps> = ({
         id="account_phrase_confirm"
         name="confirmPassphrase"
         placeholder="Enter your Confim Passphrase"
-        class={classNames({
+        className={classNames({
           'is-invalid': errors.confirmPassphrase,
         })}
         innerRef={register({
@@ -130,7 +130,7 @@ const FormAccount: FC<FormAccountProps> = ({
             as="div"
             errors={errors}
           />
-                )}
+        )}
       />
 
       <StackedInput
@@ -149,7 +149,7 @@ const FormAccount: FC<FormAccountProps> = ({
             as="div"
             errors={errors}
           />
-                )}
+        )}
       />
       <div className="pt-3 text-center">
         <button className="btn btn-danger w-100" type="submit">
