@@ -5,7 +5,7 @@ const ReferalAgreement = `<div class="contract" style="width: 100%; background-c
 <p lang="x-none" align="center"><span id="Frame1" dir="ltr"></span><strong><span style="font-size: large;">
 <br />
 <div style="text-align: center;">
-    <h1 id="tittle"><span lang="en-US">SALES COMMISSION AGREEMENT</span></h1>	
+    <h1 id="title"><span lang="en-US">SALES COMMISSION AGREEMENT</span></h1>	
 </div>
     
 </span>
@@ -224,7 +224,7 @@ const ReferalAgreement = `<div class="contract" style="width: 100%; background-c
 <p style="color:#000;">(Signature)</p>
 <p style="color:#000;">_______________________________________</p>
 <p style="color:#000;">Name: <div style="display: inline-block; background-color:#f79632"><span id="partyName">{{#partyName}}{{partyName}}{{/partyName}}{{^partyName}}[PARTY NAME]{{/partyName}}</span></div></p>
-<p style="color:#000;">Tittle: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyName">{{#titleCompany}}{{titleCompany}}{{/titleCompany}}{{^titleCompany}}[TITTLE]{{/titleCompany}}</span></div></p>
+<p style="color:#000;">Title: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyName">{{#titlePartyName}}{{titlePartyName}}{{/titlePartyName}}{{^titlePartyName}}[TITLE]{{/titlePartyName}}</span></div></p>
 <p style="color:#000;">Email: <div style="display: inline-block; background-color:#f79632"><span id="partyEmail">{{#partyEmail}}{{partyEmail}}{{/partyEmail}}{{^partyEmail}}[PARTY EMAIL]{{/partyEmail}}</span></div></p>
 <p style="color:#000;">Address: <div style="display: inline-block; background-color:#f79632"><span id="partyAddress">{{#partyAddress}}{{partyAddress}}{{/partyAddress}}{{^partyAddress}}[PARTY ADDRESS]{{/partyAddress}}</span></div></p>
 <p style="color:#000;">Wallet: <div style="display: inline-block; background-color:#f79632"><span id="partyWallet">{{#partyWallet}}{{partyWallet}}{{/partyWallet}}{{^partyWallet}}[PARTY WALLET]{{/partyWallet}}</span></div></p>
@@ -235,7 +235,7 @@ const ReferalAgreement = `<div class="contract" style="width: 100%; background-c
 <p style="color:#000;">(Signature)</p>
 <p style="color:#000;">_______________________________________</p>
 <p style="color:#000;">Name: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyName">{{#counterPartyName}}{{counterPartyName}}{{/counterPartyName}}{{^counterPartyName}}[COUNTER PARTY NAME]{{/counterPartyName}}</span></div></p>
-<p style="color:#000;">Tittle: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyName">{{#titleProvider}}{{titleProvider}}{{/titleProvider}}{{^titleProvider}}[TITTLE]{{/titleProvider}}</span></div></p>
+<p style="color:#000;">Title: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyName">{{#titleCounterParty}}{{titleCounterParty}}{{/titleCounterParty}}{{^titleCounterParty}}[TITLE]{{/titleCounterParty}}</span></div></p>
 <p style="color:#000;">Email: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyEmail">{{#counterPartyEmail}}{{counterPartyEmail}}{{/counterPartyEmail}}{{^counterPartyEmail}}[COUNTER PARTY EMAIL]{{/counterPartyEmail}}</span></div></p>
 <p style="color:#000;">Address: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyAddress">{{#counterPartyAddress}}{{counterPartyAddress}}{{/counterPartyAddress}}{{^counterPartyAddress}}[COUNTER PARTY ADDRESS]{{/counterPartyAddress}}</span></div></p>
 <p style="color:#000;">Wallet: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyWallet">{{#counterPartyWallet}}{{counterPartyWallet}}{{/counterPartyWallet}}{{^counterPartyWallet}}[COUNTER PARTY WALLET]{{/counterPartyWallet}}</span></div>
@@ -255,7 +255,7 @@ const ReferalAgreement = `<div class="contract" style="width: 100%; background-c
 <p>&nbsp;</p>
 <p lang="x-none" style="color:#000;"><span style="font-family: 'Courier New', serif;"><span style="font-size: small;"><span style="font-family: 'Times New Roman', serif;"><span style="font-size: medium;"><span lang="en-US">The Company shall compensate Provider in accordance with the terms set out below. The Company and Provider may amend this </span></span></span><span style="font-family: 'Times New Roman', serif;"><span style="font-size: medium;"><span lang="en-US"><u>Schedule B</u></span></span></span><span style="font-family: 'Times New Roman', serif;"><span style="font-size: medium;"><span lang="en-US"> in writing from time to time.</span></span></span></span></span></p>
 <p>&nbsp;</p>
-<p style="color:#000;">The Company shall pay Provider a commission equal to <div style="display: inline-block; background-color:#f79632">{{#commisionterminationDate}}{{commisionterminationDate}}{{/commisionterminationDate}}{{^commisionterminationDate}}[COMMISION TERMINATION DATE]{{/commisionterminationDate}}</div>% of Net Revenue actually received by the Company Users referred to the Company by Provider. All commissions payable to Provider pursuant to this provision shall automatically terminate upon <div style="display: inline-block; background-color:#f79632">{{#commisionDate}}{{commisionDate}}{{/commisionDate}}{{^commisionDate}}[COMMISION DATE]{{/commisionDate}}</div>.</p>
+<p style="color:#000;">The Company shall pay Provider a commission equal to <div style="display: inline-block; background-color:#f79632">{{#commision}}{{commision}}{{/commision}}{{^commision}}[COMMISION PERCENT]{{/commision}}</div>% of Net Revenue actually received by the Company Users referred to the Company by Provider. All commissions payable to Provider pursuant to this provision shall automatically terminate upon <div style="display: inline-block; background-color:#f79632">{{#commisionTerminationDate}}{{commisionTerminationDate}}{{/commisionTerminationDate}}{{^commisionTerminationDate}}[COMMISION TERMINATION DATE]{{/commisionTerminationDate}}</div>.</p>
 <p style="color:#000;">The Company and Provider agree to rely upon reports generated by the Company as conclusive evidence of the amount of commission owed to Provider pursuant to this <u>Schedule B</u>. Company shall generate and deliver such reports monthly and will pay all amounts due within 30 days of delivery of such reports to Provider.</p>
 <p class="western" lang="x-none" style="color:#000;"><span lang="en-US">As used in this </span><span lang="en-US"><u>Schedule B</u></span><span lang="en-US">, &ldquo;Net Revenue&rdquo; means all revenue actually received by the Company, less any applicable taxes or fees payable by the Company. For the avoidance of doubt, Net Revenue shall not include amounts that are (a) billed but not collected, or (b) not yet billed. </span></p>
 <p class="western">&nbsp;</p>
