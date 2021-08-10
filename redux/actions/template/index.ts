@@ -1014,6 +1014,10 @@ const getContractTemplate = (
               title: 'Title Company',
               type: 'string',
             },
+            companyName: {
+              title: 'CompanyName',
+              type: 'string',
+            },
             typeOfCompany: {
               title: 'Type of Company',
               type: 'string',
@@ -1030,6 +1034,10 @@ const getContractTemplate = (
           type: 'object',
           title: 'Advisor information ("the Purchaser")',
           properties: {
+            titleCounterParty: {
+              title: 'Title Purchaser',
+              type: 'string',
+            },
             ...sharedProperties.couterparty,
           },
           required: sharedProperties.requiredCounterParty,
@@ -1038,10 +1046,6 @@ const getContractTemplate = (
           type: 'object',
           title: 'Purchase amount',
           properties: {
-            titleCounterParty: {
-              title: 'Title Purchaser',
-              type: 'string',
-            },
             purchaseAmount: {
               title: 'Purchase amount (US $)',
               type: 'number',
@@ -1103,6 +1107,7 @@ const getContractTemplate = (
               type: 'string',
             },
           },
+          required: ['paymentOption'],
         },
         {
           type: 'object',
@@ -1136,6 +1141,9 @@ const getContractTemplate = (
         },
       ]
       uiSchema = {
+        companyName: {
+          'ui:placeholder': 'Company Name',
+        },
         titleCounterParty: {
           'ui:placeholder': 'Title Purchaser',
         },
