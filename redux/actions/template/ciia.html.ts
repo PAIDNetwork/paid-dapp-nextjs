@@ -137,6 +137,7 @@ const Ciia = `<div class="contract" style="width: 100%; background-color:white; 
 <p style="color: black;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Signature)</p>
 <p style="color:#000;">Name: <div style="display: inline-block; background-color:#f79632"><span id="partyName">{{#partyName}}{{partyName}}{{/partyName}}{{^partyName}}[PARTY NAME]{{/partyName}}</span></div></p>
 <p style="color:#000;">Title: <div style="display: inline-block; background-color:#f79632"><span id="titleParty">{{#titleParty}}{{titleParty}}{{/titleParty}}{{^titleParty}}[TITLE]{{/titleParty}}</span></div></p>
+<p style="color:#000;">Address: <div style="display: inline-block; background-color:#f79632"><span id="partyAddress">{{#partyAddress}}{{partyAddress}}{{/partyAddress}}{{^partyAddress}}[PARTY ADDRESS]{{/partyAddress}}</span></div></p>
 <p style="color:#000;">Email: <div style="display: inline-block; background-color:#f79632"><span id="partyEmail">{{#partyEmail}}{{partyEmail}}{{/partyEmail}}{{^partyEmail}}[PARTY EMAIL]{{/partyEmail}}</span></div></p>
 <p style="color:#000;">Wallet: <div style="display: inline-block; background-color:#f79632"><span id="partyWallet">{{#partyWallet}}{{partyWallet}}{{/partyWallet}}{{^partyWallet}}[PARTY WALLET]{{/partyWallet}}</span></div></p>
 <p style="color: black;"><br /> </p>
