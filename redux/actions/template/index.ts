@@ -335,7 +335,7 @@ const getContractTemplate = (
           title: 'When Agreement will become effective',
           properties: {
             effectiveDate: {
-              title: 'Effective Date',
+              title: 'Effective Date ',
               type: 'string',
               format: 'date',
             },
@@ -350,7 +350,7 @@ const getContractTemplate = (
               title: 'CompanyName',
               type: 'string',
             },
-            stateCompany: {
+            stateOfCompany: {
               title: 'Company State of residence',
               type: 'string',
             },
@@ -359,7 +359,7 @@ const getContractTemplate = (
               type: 'string',
             },
             titleParty: {
-              title: 'My full name',
+              title: 'Title Party',
               type: 'string',
             },
             ...sharedProperties.party,
@@ -376,6 +376,10 @@ const getContractTemplate = (
           type: 'object',
           title: 'Counterparty information (“Consultant”)',
           properties: {
+            titleCounterParty: {
+              title: 'Title Counter Party',
+              type: 'string',
+            },
             ...sharedProperties.couterparty,
           },
           required: sharedProperties.requiredCounterParty,
@@ -412,7 +416,7 @@ const getContractTemplate = (
           title:
             'List of companies and/or agreements excluded under section 10(b) (EXHIBIT C)',
           properties: {
-            listCompAgreements: {
+            listCompaniesAgreements: {
               title:
                 'List of companies and/or agreements excluded under section 10(b)',
               type: 'string',
@@ -800,18 +804,14 @@ const getContractTemplate = (
           title: 'Date when Agreement will become effective',
           properties: {
             /* commisionDate: {
-              title: 'Date',
-              type: 'string',
-              format: 'date',
-            }, */
+            title: 'Date',
+            type: 'string',
+            format: 'date',
+          }, */
             date: {
               title: 'Date',
               type: 'string',
               format: 'date',
-            },
-            titleProvider: {
-              title: 'Tittle',
-              type: 'string',
             },
             county: {
               title: 'County',
@@ -821,12 +821,11 @@ const getContractTemplate = (
           // required: ['commisionDate'],
           required: ['date', 'county'],
         },
-
         {
           type: 'object',
           title: 'My information (the “Company)',
           properties: {
-            titleCompany: {
+            titlePartyName: {
               title: 'Tittle',
               type: 'string',
             },
@@ -859,7 +858,7 @@ const getContractTemplate = (
           type: 'object',
           title: 'Advisor information (“Provider”)',
           properties: {
-            titleProvider: {
+            titleCounterParty: {
               title: 'Tittle',
               type: 'string',
             },
@@ -913,7 +912,7 @@ const getContractTemplate = (
               title: 'Commission percent',
               type: 'number',
             },
-            commisionterminationDate: {
+            commisionTerminationDate: {
               title: 'Commission termination date',
               type: 'string',
               format: 'date',
@@ -922,31 +921,46 @@ const getContractTemplate = (
           },
         },
         /* {
-          type: 'object',
-          title: 'Governing Law',
-          properties: {
-            stateOfCompany: {
-              title: 'State name',
-              type: 'string',
-            },
+        type: 'object',
+        title: 'Governing Law',
+        properties: {
+          stateOfCompany: {
+            title: 'State name',
+            type: 'string',
           },
-          required: ['stateOfCompany'],
-        }, */
+        },
+        required: ['stateOfCompany'],
+      }, */
       ]
       uiSchema = {
+        county: {
+          'ui:emptyValue': 'County Name',
+        },
         terminationDate: {
           'ui:emptyValue': '',
+        },
+        titlePartyName: {
+          'ui:emptyValue': 'Company Title',
+        },
+        titleCounterParty: {
+          'ui:emptyValue': 'Provider Title',
+        },
+        typeOfCompany: {
+          'ui:emptyValue': 'Type of company',
         },
         commisionDate: {
           'ui:emptyValue': '',
         },
-        commisionterminationDate: {
+        commisionTerminationDate: {
           'ui:emptyValue': '',
         },
         commision: {
           'ui:placeholder': 'Commission percent',
         },
         stateOfCompany: {
+          'ui:placeholder': 'State name',
+        },
+        stateOfProvider: {
           'ui:placeholder': 'State name',
         },
         ...sharedProperties.uiSchema,
@@ -962,6 +976,11 @@ const getContractTemplate = (
           type: 'object',
           title: 'My information ("the Company")',
           properties: {
+            date: {
+              title: 'Date',
+              type: 'string',
+              format: 'date',
+            },
             titleParty: {
               title: 'Title Company',
               type: 'string',
@@ -1085,7 +1104,7 @@ const getContractTemplate = (
               type: 'string',
             },
           },
-        }
+        },
       ]
       uiSchema = {
         titleCounterParty: {
