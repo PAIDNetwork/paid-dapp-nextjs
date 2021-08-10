@@ -837,10 +837,6 @@ const getContractTemplate = (
               type: 'string',
               format: 'date',
             },
-            county: {
-              title: 'County',
-              type: 'string',
-            },
           },
           // required: ['commisionDate'],
           required: ['date', 'county'],
@@ -957,6 +953,15 @@ const getContractTemplate = (
       }, */
       ]
       uiSchema = {
+        companyName: {
+          'ui:placeholder': 'Company Name',
+        },
+        providerName: {
+          'ui:placeholder': 'Provider Name',
+        },
+        typeOfProvider: {
+          'ui:placeholder': 'Type of Provider',
+        },
         county: {
           'ui:placeholder': 'County Name',
         },
