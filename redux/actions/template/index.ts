@@ -426,6 +426,30 @@ const getContractTemplate = (
         },
       ]
       uiSchema = {
+        companyName: {
+          'ui:placeholder': 'Company Name',
+        },
+        stateOfCompany: {
+          'ui:placeholder': 'State Company Name',
+        },
+        typeOfCompany: {
+          'ui:placeholder': 'Type of company',
+        },
+        titleParty: {
+          'ui:placeholder': 'Title Company',
+        },
+        titleCounterParty: {
+          'ui:placeholder': 'Title Consultant',
+        },
+        titleService: {
+          'ui:placeholder': 'Title Services',
+        },
+        idNumberBriefDesc: {
+          'ui:placeholder': 'Identifying number or brief',
+        },
+        listCompaniesAgreements: {
+          'ui:placeholder': 'List of companies and/or agreements',
+        },
         ...sharedProperties.uiSchema,
       }
       break
@@ -934,19 +958,19 @@ const getContractTemplate = (
       ]
       uiSchema = {
         county: {
-          'ui:emptyValue': 'County Name',
+          'ui:placeholder': 'County Name',
         },
         terminationDate: {
           'ui:emptyValue': '',
         },
         titlePartyName: {
-          'ui:emptyValue': 'Company Title',
+          'ui:placeholder': 'Company Title',
         },
         titleCounterParty: {
-          'ui:emptyValue': 'Provider Title',
+          'ui:placeholder': 'Provider Title',
         },
         typeOfCompany: {
-          'ui:emptyValue': 'Type of company',
+          'ui:placeholder': 'Type of company',
         },
         commisionDate: {
           'ui:emptyValue': '',
