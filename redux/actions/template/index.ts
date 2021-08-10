@@ -1015,7 +1015,7 @@ const getContractTemplate = (
               type: 'string',
             },
             companyName: {
-              title: 'CompanyName',
+              title: 'Company Name',
               type: 'string',
             },
             typeOfCompany: {
