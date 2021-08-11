@@ -1,19 +1,19 @@
 export const columnsAgreement = [
   {
-    Header: 'Counterparty',
-    accessor: 'data.counterpartyName',
-  },
-  {
     Header: 'Title',
     accessor: 'data.documentName',
   },
   {
-    Header: 'Last Modified',
-    accessor: 'event.updatedAt',
+    Header: 'Counterparty',
+    accessor: 'data.counterpartyName',
   },
   {
     Header: 'Created',
     accessor: 'event.createdAt',
+  },
+  {
+    Header: 'Last Modified',
+    accessor: 'event.updatedAt',
   },
   {
     Header: 'Signed on',
