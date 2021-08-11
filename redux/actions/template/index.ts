@@ -924,12 +924,12 @@ const getContractTemplate = (
           type: 'object',
           title: 'My information (the “Company)',
           properties: {
-            titlePartyName: {
-              title: 'Tittle',
-              type: 'string',
-            },
             companyName: {
               title: 'Company name',
+              type: 'string',
+            },
+            titlePartyName: {
+              title: 'Tittle',
               type: 'string',
             },
             stateOfCompany: {
@@ -957,12 +957,12 @@ const getContractTemplate = (
           type: 'object',
           title: 'Advisor information (“Provider”)',
           properties: {
-            titleCounterParty: {
-              title: 'Tittle',
-              type: 'string',
-            },
             providerName: {
               title: 'Provider name',
+              type: 'string',
+            },
+            titleCounterParty: {
+              title: 'Tittle',
               type: 'string',
             },
             stateOfProvider: {
@@ -1049,10 +1049,10 @@ const getContractTemplate = (
           'ui:emptyValue': '',
         },
         titlePartyName: {
-          'ui:placeholder': 'Company Title',
+          'ui:placeholder': 'Title',
         },
         titleCounterParty: {
-          'ui:placeholder': 'Provider Title',
+          'ui:placeholder': 'Title',
         },
         typeOfCompany: {
           'ui:placeholder': 'Type of company',
