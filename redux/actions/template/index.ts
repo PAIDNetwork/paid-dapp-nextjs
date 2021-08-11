@@ -29,11 +29,11 @@ const getContractTemplate = (
   isEditing?: Boolean,
   agreementReviewed?: Boolean,
 ): contractTemplate => {
-  let contractTemplate;
-  let title;
-  let dataName = '';
-  let jsonSchemas: any = [];
-  let uiSchema: Object = {};
+  let contractTemplate
+  let title
+  let dataName = ''
+  let jsonSchemas: any = []
+  let uiSchema: Object = {}
   const sharedProperties = {
     party: {
       partyName: {
@@ -41,7 +41,7 @@ const getContractTemplate = (
         type: 'string',
       },
       partyAddress: {
-        title: 'Address:',
+        title: 'Legal Address:',
         type: 'string',
       },
       partyEmail: {
@@ -56,13 +56,13 @@ const getContractTemplate = (
         readOnly: true,
       },
     },
-    couterparty: {
+    counterparty: {
       counterPartyName: {
         title: 'Name:',
         type: 'string',
       },
       counterPartyAddress: {
-        title: 'Address:',
+        title: 'Legal Address:',
         type: 'string',
       },
       counterPartyEmail: {
@@ -97,7 +97,7 @@ const getContractTemplate = (
         'ui:placeholder': 'Your Email',
       },
       partyAddress: {
-        'ui:placeholder': 'Your Address',
+        'ui:placeholder': 'My full legal address',
       },
       counterPartyName: {
         'ui:placeholder': 'Counter Party Name',
@@ -106,19 +106,19 @@ const getContractTemplate = (
         'ui:placeholder': 'Counter Party Email',
       },
       counterPartyAddress: {
-        'ui:placeholder': 'Counter Party Address',
+        'ui:placeholder': 'Counter Party full legal address',
       },
       counterPartyWallet: {
         'ui:placeholder': 'Counter Party Wallet',
       },
     },
-  };
+  }
 
   switch (contractName) {
     case contractsTemplates.TemplateNda:
-      title = 'MUTUAL NONDISCLOSURE AGREEMENT';
-      contractTemplate = Nda;
-      dataName = 'ndaAgreementData';
+      title = 'MUTUAL NONDISCLOSURE AGREEMENT'
+      contractTemplate = Nda
+      dataName = 'ndaAgreementData'
       jsonSchemas = [
         {
           type: 'object',
@@ -144,20 +144,20 @@ const getContractTemplate = (
           type: 'object',
           title: 'Counterparty information (the “Counterparty”)',
           properties: {
-            ...sharedProperties.couterparty,
+            ...sharedProperties.counterparty,
           },
           required: sharedProperties.requiredCounterParty,
         },
-      ];
+      ]
       uiSchema = {
         ...sharedProperties.uiSchema,
-      };
-      break;
+      }
+      break
 
     case contractsTemplates.TemplateAdvisorAgreement:
-      title = 'ADVISOR AGREEMENT';
-      contractTemplate = AdvisorAgreemt;
-      dataName = 'advisorAgreementData';
+      title = 'ADVISOR AGREEMENT'
+      contractTemplate = AdvisorAgreemt
+      dataName = 'advisorAgreementData'
       jsonSchemas = [
         {
           type: 'object',
@@ -188,7 +188,7 @@ const getContractTemplate = (
           type: 'object',
           title: 'Advisor information ("Advisor")',
           properties: {
-            ...sharedProperties.couterparty,
+            ...sharedProperties.counterparty,
           },
           required: sharedProperties.requiredCounterParty,
         },
@@ -311,7 +311,7 @@ const getContractTemplate = (
           },
           required: ['numberOfYears'],
         },
-      ];
+      ]
       uiSchema = {
         typeOfTriggerAcceleration: {
           'ui:widget': 'radio',
@@ -401,8 +401,8 @@ const getContractTemplate = (
           'percentageVestTrigger',
           'numberOfYears',
         ],
-      };
-      break;
+      }
+      break
 
     case contractsTemplates.TemplateCiia:
       title = 'CONFIDENTIAL INFORMATION AND INVENTION ASSIGNMENT AGREEMENT'
@@ -426,11 +426,11 @@ const getContractTemplate = (
           title: 'My information (the “Company”)',
           properties: {
             companyName: {
-              title: 'CompanyName',
+              title: 'Company Name',
               type: 'string',
             },
             stateOfCompany: {
-              title: 'Company State of residence',
+              title: 'Company State',
               type: 'string',
             },
             typeOfCompany: {
@@ -455,11 +455,7 @@ const getContractTemplate = (
           type: 'object',
           title: 'Counterparty information (“Consultant”)',
           properties: {
-            titleCounterParty: {
-              title: 'Title Counter Party',
-              type: 'string',
-            },
-            ...sharedProperties.couterparty,
+            ...sharedProperties.counterparty,
           },
           required: sharedProperties.requiredCounterParty,
         },
@@ -469,26 +465,19 @@ const getContractTemplate = (
             'List of prior inventions and original works of authorship excluded under section 4(a) (EXHIBIT A)',
           properties: {
             titleService: {
-              title:
-                'Title of the the business, product, service or R&D not assigned to the Company',
+              title: 'Title',
               type: 'string',
             },
             dateEfectiveService: {
-              title: 'Effective date',
+              title: 'Date',
               type: 'string',
               format: 'date',
             },
             idNumberBriefDesc: {
-              title:
-                'Identifying number or brief description of the the business, product, service or R&D not assigned to the Company',
+              title: 'Identifying Number or Brief Description',
               type: 'string',
             },
           },
-          required: [
-            'titleService',
-            'dateEfectiveService',
-            'idNumberBriefDesc',
-          ],
         },
         {
           type: 'object',
@@ -503,19 +492,19 @@ const getContractTemplate = (
             },
           },
         },
-      ];
+      ]
       uiSchema = {
         companyName: {
           'ui:placeholder': 'Company Name',
         },
         stateOfCompany: {
-          'ui:placeholder': 'State Company Name',
+          'ui:placeholder': 'Company state of residence',
         },
         typeOfCompany: {
           'ui:placeholder': 'Type of company',
         },
         titleParty: {
-          'ui:placeholder': 'Title Company',
+          'ui:placeholder': 'Title',
         },
         titleCounterParty: {
           'ui:placeholder': 'Title Consultant',
@@ -530,13 +519,13 @@ const getContractTemplate = (
           'ui:placeholder': 'List of companies and/or agreements',
         },
         ...sharedProperties.uiSchema,
-      };
-      break;
+      }
+      break
 
     case contractsTemplates.TemplateConsultingAgreement:
-      title = 'CONSULTING AGREEMENT';
-      contractTemplate = ConsultingAgreement;
-      dataName = 'consultingAgreementData';
+      title = 'CONSULTING AGREEMENT'
+      contractTemplate = ConsultingAgreement
+      dataName = 'consultingAgreementData'
       jsonSchemas = [
         {
           type: 'object',
@@ -580,7 +569,7 @@ const getContractTemplate = (
           type: 'object',
           title: 'Advisor information (“Consultant”)',
           properties: {
-            ...sharedProperties.couterparty,
+            ...sharedProperties.counterparty,
           },
           required: sharedProperties.requiredCounterParty,
         },
@@ -791,7 +780,7 @@ const getContractTemplate = (
             },
           },
         },
-      ];
+      ]
       uiSchema = {
         'ui:widget': 'checkbox',
         'ui:order': [
@@ -894,13 +883,13 @@ const getContractTemplate = (
           'ui:widget': 'radio',
         },
         ...sharedProperties.uiSchema,
-      };
-      break;
+      }
+      break
 
     case contractsTemplates.TemplateReferalAgreement:
-      title = 'SALES COMMISSION AGREEMENT';
-      contractTemplate = ReferalAgreement;
-      dataName = 'referralAgreementData';
+      title = 'SALES COMMISSION AGREEMENT'
+      contractTemplate = ReferalAgreement
+      dataName = 'referralAgreementData'
       jsonSchemas = [
         {
           type: 'object',
@@ -973,7 +962,7 @@ const getContractTemplate = (
               title: 'Type of Provider',
               type: 'string',
             },
-            ...sharedProperties.couterparty,
+            ...sharedProperties.counterparty,
             // typeOfCompany: {
             //   title: 'Type of company',
             //   type: 'string',
@@ -1073,13 +1062,13 @@ const getContractTemplate = (
           'ui:placeholder': 'State name',
         },
         ...sharedProperties.uiSchema,
-      };
-      break;
+      }
+      break
 
     case contractsTemplates.TemplateSaft:
-      title = 'SIMPLE AGREEMENT FOR FUTURE TOKENS';
-      contractTemplate = Saft;
-      dataName = 'saftAgreementData';
+      title = 'SIMPLE AGREEMENT FOR FUTURE TOKENS'
+      contractTemplate = Saft
+      dataName = 'saftAgreementData'
       jsonSchemas = [
         {
           type: 'object',
@@ -1118,7 +1107,7 @@ const getContractTemplate = (
               title: 'Title Purchaser',
               type: 'string',
             },
-            ...sharedProperties.couterparty,
+            ...sharedProperties.counterparty,
           },
           required: sharedProperties.requiredCounterParty,
         },
@@ -1219,7 +1208,7 @@ const getContractTemplate = (
             },
           },
         },
-      ];
+      ]
       uiSchema = {
         companyName: {
           'ui:placeholder': 'Company Name',
@@ -1273,11 +1262,11 @@ const getContractTemplate = (
           'ui:placeholder': 'Bitcoin address',
         },
         ...sharedProperties.uiSchema,
-      };
-      break;
+      }
+      break
 
     default:
-      throw new Error('No template Found');
+      throw new Error('No template Found')
   }
   return {
     title,
@@ -1286,7 +1275,7 @@ const getContractTemplate = (
     dataName,
     jsonSchemas,
     uiSchema,
-  };
-};
+  }
+}
 
-export default getContractTemplate;
+export default getContractTemplate
