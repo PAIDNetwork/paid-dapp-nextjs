@@ -29,11 +29,11 @@ const getContractTemplate = (
   isEditing?: Boolean,
   agreementReviewed?: Boolean,
 ): contractTemplate => {
-  let contractTemplate
-  let title
-  let dataName = ''
-  let jsonSchemas: any = []
-  let uiSchema: Object = {}
+  let contractTemplate;
+  let title;
+  let dataName = '';
+  let jsonSchemas: any = [];
+  let uiSchema: Object = {};
   const sharedProperties = {
     party: {
       partyName: {
@@ -112,13 +112,13 @@ const getContractTemplate = (
         'ui:placeholder': 'Counter Party Wallet',
       },
     },
-  }
+  };
 
   switch (contractName) {
     case contractsTemplates.TemplateNda:
-      title = 'MUTUAL NONDISCLOSURE AGREEMENT'
-      contractTemplate = Nda
-      dataName = 'ndaAgreementData'
+      title = 'MUTUAL NONDISCLOSURE AGREEMENT';
+      contractTemplate = Nda;
+      dataName = 'ndaAgreementData';
       jsonSchemas = [
         {
           type: 'object',
@@ -148,16 +148,16 @@ const getContractTemplate = (
           },
           required: sharedProperties.requiredCounterParty,
         },
-      ]
+      ];
       uiSchema = {
         ...sharedProperties.uiSchema,
-      }
-      break
+      };
+      break;
 
     case contractsTemplates.TemplateAdvisorAgreement:
-      title = 'ADVISOR AGREEMENT'
-      contractTemplate = AdvisorAgreemt
-      dataName = 'advisorAgreementData'
+      title = 'ADVISOR AGREEMENT';
+      contractTemplate = AdvisorAgreemt;
+      dataName = 'advisorAgreementData';
       jsonSchemas = [
         {
           type: 'object',
@@ -171,12 +171,14 @@ const getContractTemplate = (
             companyName: {
               title: 'Company Name:',
               type: 'string',
-              default: '[COMPANY NAME]',
+            },
+            stateOfAdvisor: {
+              title: 'State',
+              type: 'string',
             },
             typeCompany: {
               title: 'Type of company:',
               type: 'string',
-              default: '[TYPE OF COMPANY]',
             },
             ...sharedProperties.party,
           },
@@ -193,51 +195,102 @@ const getContractTemplate = (
         {
           //
           type: 'object',
-          title: 'Vesting information',
+          title: 'Compensation information',
           properties: {
+            advisorOption: {
+              title: 'Advisor will be granted',
+              type: 'string',
+              enum: ['nonstatutory', 'right'],
+              enumNames: ['A Nonstatutory Option', 'A Right'],
+              default: 'nonstatutory',
+            },
+            stockPlanName: {
+              title: 'Company’s stock plan name',
+              type: 'string',
+            },
             percentageVest: {
-              title: 'Percentage',
+              title: '% of shares to vest on N-month anniversary',
               type: 'number',
             },
             anniversaryMonth: {
               title: 'Anniversary month',
               type: 'number',
             },
+            numberOfShares: {
+              title: 'Total share fraction to vest in monthly installments',
+              type: 'number',
+            },
             typeOfTriggerAcceleration: {
               type: 'string',
-              title: 'Trigger acceleration type',
+              title: 'Acceleration trigger type',
               enum: [
                 'Single Trigger Acceleration...',
                 'Double Trigger Acceleration...',
               ],
             },
-            numberOfShares: {
-              title: 'Price per share type',
+            percentageVestTrigger: {
+              title: '% of unvested shares to vest on trigger',
               type: 'number',
             },
-            acceptionOption: {
-              type: 'string',
-              title: 'Accepting option',
-              enum: ['An Option', 'A Right'],
-            },
-            purchaseOption: {
-              type: 'string',
-              title: 'Purchase Option',
-              enum: ['A Nonstatutory Option', 'A Right'],
-            },
-            termsConditions: {
-              type: 'string',
-              title: 'Terms and Conditions',
-              enum: ['Options', 'Restricted stock purchase awards'],
-            },
-            stockPlanName: {
-              title: 'Stock Plan name',
-              type: 'string',
-            },
-            stockPlanNameValue: {
-              type: 'string',
-              title: 'Stock Plan Name Value',
-              enum: ['Stock option', 'Restricted stock purchase'],
+          },
+          dependencies: {
+            advisorOption: {
+              oneOf: [
+                {
+                  properties: {
+                    advisorOption: {
+                      enum: ['nonstatutory'],
+                    },
+                    // option: {
+                    //   title: 'Option',
+                    //   type: 'string',
+                    // },
+                    // options: {
+                    //   title: 'Options',
+                    //   type: 'string',
+                    // },
+                    // stockOptions: {
+                    //   title: 'Stock Options',
+                    //   type: 'string',
+                    // },
+                    // anOption: {
+                    //   title: 'An option',
+                    //   type: 'string',
+                    // },
+                    // exercise: {
+                    //   title: 'Exercise',
+                    //   type: 'string',
+                    // },
+                  },
+                },
+                {
+                  properties: {
+                    advisorOption: {
+                      enum: ['right'],
+                    },
+                    // purchaseRight: {
+                    //   title: 'purchase right',
+                    //   type: 'string',
+                    // },
+                    // restrictedStockPurchaseAwards: {
+                    //   title: 'restricted stock purchase awards',
+                    //   type: 'string',
+                    // },
+                    // restrictedStockPurchase: {
+                    //   title: 'restricted stock purchase',
+                    //   type: 'string',
+                    // },
+                    // aRight: {
+                    //   title: 'A right',
+                    //   type: 'string',
+                    // },
+                    // purchase: {
+                    //   title: 'Purchase',
+                    //   type: 'string',
+                    // },
+                  },
+                },
+              ],
             },
           },
           required: [
@@ -245,17 +298,12 @@ const getContractTemplate = (
             'anniversaryMonth',
             'typeOfTriggerAcceleration',
             'numberOfShares',
-            'acceptionOption',
           ],
         },
         {
           type: 'object',
           title: 'Terms and Termination information',
           properties: {
-            // vestingCommencement: {
-            //   title: 'Vesting Commencement %',
-            //   type: 'number',
-            // },
             numberOfYears: {
               title: 'Number of years',
               type: 'number',
@@ -263,41 +311,9 @@ const getContractTemplate = (
           },
           required: ['numberOfYears'],
         },
-        {
-          type: 'object',
-          title: 'Governing Law',
-          properties: {
-            // typeOfPrice: {
-            //   type: 'string',
-            //   title: 'Terms and Conditions',
-            //   enum: ['Exersice', 'Purchase'],
-            // },
-            stateOfAdvisor: {
-              title: 'State name ',
-              type: 'string',
-              default: '[STATE]',
-            },
-          },
-          required: ['stateOfAdvisor', 'companyName', 'typeCompany'],
-        },
-      ]
+      ];
       uiSchema = {
-        purchaseOption: {
-          'ui:widget': 'radio',
-        },
-        termsConditions: {
-          'ui:widget': 'radio',
-        },
-        stockPlanNameValue: {
-          'ui:widget': 'radio',
-        },
         typeOfTriggerAcceleration: {
-          'ui:widget': 'radio',
-        },
-        typeOfPrice: {
-          'ui:widget': 'radio',
-        },
-        acceptionOption: {
           'ui:widget': 'radio',
         },
         companyName: {
@@ -321,9 +337,72 @@ const getContractTemplate = (
         stateOfAdvisor: {
           'ui:placeholder': 'State name',
         },
+        option: {
+          'ui:placeholder': 'Option',
+        },
+        options: {
+          'ui:placeholder': 'Options',
+        },
+        stockOptions: {
+          'ui:placeholder': 'Soptions',
+        },
+        anOption: {
+          'ui:placeholder': 'An option',
+        },
+        exercise: {
+          'ui:placeholder': 'Exercise',
+        },
+        purchaseRight: {
+          'ui:placeholder': 'Purchase right',
+        },
+        restrictedStockPurchaseAwards: {
+          'ui:placeholder': 'Estricted stock purchaseAwards',
+        },
+        restrictedStockPurchase: {
+          'ui:placeholder': 'Restricted stock purchase',
+        },
+        aRight: {
+          'ui:placeholder': 'A right',
+        },
+        purchase: {
+          'ui:placeholder': 'Purchase',
+        },
         ...sharedProperties.uiSchema,
-      }
-      break
+        'ui:order': [
+          'date',
+          'companyName',
+          'stateOfAdvisor',
+          'typeCompany',
+          'partyName',
+          'partyAddress',
+          'partyEmail',
+          'partyWallet',
+          'counterPartyName',
+          'counterPartyAddress',
+          'counterPartyEmail',
+          'counterPartyDid',
+          'counterPartyWallet',
+          'advisorOption',
+          'option',
+          'stockOptions',
+          'options',
+          'anOption',
+          'exercise',
+          'purchaseRight',
+          'restrictedStockPurchaseAwards',
+          'restrictedStockPurchase',
+          'aRight',
+          'purchase',
+          'stockPlanName',
+          'percentageVest',
+          'anniversaryMonth',
+          'numberOfShares',
+          'typeOfTriggerAcceleration',
+          'percentageVestTrigger',
+          'numberOfYears',
+        ],
+      };
+      break;
 
     case contractsTemplates.TemplateCiia:
       title = 'CONFIDENTIAL INFORMATION AND INVENTION ASSIGNMENT AGREEMENT'
@@ -424,7 +503,7 @@ const getContractTemplate = (
             },
           },
         },
-      ]
+      ];
       uiSchema = {
         companyName: {
           'ui:placeholder': 'Company Name',
@@ -451,13 +530,13 @@ const getContractTemplate = (
           'ui:placeholder': 'List of companies and/or agreements',
         },
         ...sharedProperties.uiSchema,
-      }
-      break
+      };
+      break;
 
     case contractsTemplates.TemplateConsultingAgreement:
-      title = 'CONSULTING AGREEMENT'
-      contractTemplate = ConsultingAgreement
-      dataName = 'consultingAgreementData'
+      title = 'CONSULTING AGREEMENT';
+      contractTemplate = ConsultingAgreement;
+      dataName = 'consultingAgreementData';
       jsonSchemas = [
         {
           type: 'object',
@@ -712,7 +791,7 @@ const getContractTemplate = (
             },
           },
         },
-      ]
+      ];
       uiSchema = {
         'ui:widget': 'checkbox',
         'ui:order': [
@@ -815,13 +894,13 @@ const getContractTemplate = (
           'ui:widget': 'radio',
         },
         ...sharedProperties.uiSchema,
-      }
-      break
+      };
+      break;
 
     case contractsTemplates.TemplateReferalAgreement:
-      title = 'SALES COMMISSION AGREEMENT'
-      contractTemplate = ReferalAgreement
-      dataName = 'referralAgreementData'
+      title = 'SALES COMMISSION AGREEMENT';
+      contractTemplate = ReferalAgreement;
+      dataName = 'referralAgreementData';
       jsonSchemas = [
         {
           type: 'object',
@@ -948,6 +1027,7 @@ const getContractTemplate = (
             title: 'State name',
             type: 'string',
           },
+
         },
         required: ['stateOfCompany'],
       }, */
@@ -993,13 +1073,13 @@ const getContractTemplate = (
           'ui:placeholder': 'State name',
         },
         ...sharedProperties.uiSchema,
-      }
-      break
+      };
+      break;
 
     case contractsTemplates.TemplateSaft:
-      title = 'SIMPLE AGREEMENT FOR FUTURE TOKENS'
-      contractTemplate = Saft
-      dataName = 'saftAgreementData'
+      title = 'SIMPLE AGREEMENT FOR FUTURE TOKENS';
+      contractTemplate = Saft;
+      dataName = 'saftAgreementData';
       jsonSchemas = [
         {
           type: 'object',
@@ -1139,7 +1219,7 @@ const getContractTemplate = (
             },
           },
         },
-      ]
+      ];
       uiSchema = {
         companyName: {
           'ui:placeholder': 'Company Name',
@@ -1193,11 +1273,11 @@ const getContractTemplate = (
           'ui:placeholder': 'Bitcoin address',
         },
         ...sharedProperties.uiSchema,
-      }
-      break
+      };
+      break;
 
     default:
-      throw new Error('No template Found')
+      throw new Error('No template Found');
   }
   return {
     title,
@@ -1206,7 +1286,7 @@ const getContractTemplate = (
     dataName,
     jsonSchemas,
     uiSchema,
-  }
-}
+  };
+};
 
-export default getContractTemplate
+export default getContractTemplate;
