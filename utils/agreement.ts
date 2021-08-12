@@ -2,6 +2,7 @@ export const columnsAgreement = [
   {
     Header: 'Title',
     accessor: 'data.documentName',
+    showDetail: true,
   },
   {
     Header: 'Counterparty',
