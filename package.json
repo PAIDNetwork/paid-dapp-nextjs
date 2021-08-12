@@ -12,6 +12,7 @@
   "dependencies": {
     "@hookform/error-message": "0.0.5",
     "@rjsf/core": "^2.4.2",
+    "@sentry/nextjs": "^6.11.0",
     "bootstrap": "^4.6.0",
     "classnames": "^2.2.6",
     "date-fns": "^2.19.0",

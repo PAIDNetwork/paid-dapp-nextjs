@@ -4,7 +4,7 @@ const { name, version } = require('./package.json');
 const SENTRY_APP_RELEASE = `${name}@${version}`;
 
 Sentry.init({
-  dsn: SENTRY_DSN || "https://46bd757e8d9c4e128f525015dffd8e97@o910595.ingest.sentry.io/5900878",
+  dsn: "https://46bd757e8d9c4e128f525015dffd8e97@o910595.ingest.sentry.io/5900878",
   // We recommend adjusting this value in production, or using tracesSampler
   // for finer control
   release: SENTRY_APP_RELEASE,
