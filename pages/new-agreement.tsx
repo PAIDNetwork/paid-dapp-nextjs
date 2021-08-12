@@ -124,7 +124,7 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
   } = useContract();
 
   useEffect(() => {
-    const templateData = getContractTemplate(templateTypeCode,isEditing,agreementReviewed);
+    const templateData = getContractTemplate(templateTypeCode, isEditing, agreementReviewed);
     setDataName(templateData.dataName);
     setTitle(templateData.title);
     setAgreementDocument(templateData.template);
@@ -135,18 +135,21 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
   useEffect(() => {
     const data = smartAgreementsState[dataName];
     if (data) {
-      if (data[PARTY_NAME_FIELD] === undefined || data[PARTY_NAME_FIELD] === null || data[PARTY_NAME_FIELD] === '') {
-        data[PARTY_NAME_FIELD] = isEditing ? `${name}` : '';
-        data[PARTY_EMAIL_FIELD] = isEditing ? email : '';
-        data[PARTY_ADDRESS_FIELD] = '';
-        data[PARTY_WALLET_FIELD] = isEditing ? currentWallet : '';
-        data[COUNTER_PARTY_NAME_FIELD] = '';
-        data[COUNTER_PARTY_EMAIL_FIELD] = '';
-        data[COUNTER_PARTY_ADDRESS_FIELD] = '';
-        data[COUNTER_PARTY_WALLET_FIELD] = '';
-        data[COUNTER_PARTY_WALLET_FIELD] = '';
-      }
+      data[PARTY_NAME_FIELD] = name;
+      data[PARTY_EMAIL_FIELD] = email;
+      data[PARTY_ADDRESS_FIELD] = '';
+      data[PARTY_WALLET_FIELD] = currentWallet;
+      data[COUNTER_PARTY_NAME_FIELD] = '';
+      data[COUNTER_PARTY_EMAIL_FIELD] = '';
+      data[COUNTER_PARTY_ADDRESS_FIELD] = '';
+      data[COUNTER_PARTY_WALLET_FIELD] = '';
+      data[COUNTER_PARTY_WALLET_FIELD] = '';
+      setAgreementData(data);
     }
+  }, [dataName])
+
+  useEffect(() => {
+    const data = smartAgreementsState[dataName];
     setAgreementData(data);
   }, [smartAgreementsState, dataName, agreementTitle]);
 
@@ -198,7 +201,7 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
     setEditTitle(false);
   };
 
-  const toIpfs = async ():Promise<CID> => {
+  const toIpfs = async (): Promise<CID> => {
     const ipfsManager = new IPLDManager(did);
     await ipfsManager.start(process.env.NEXT_PUBLIC_IPFS_URL);
     const fil = Buffer.from(renderToString(agreementTemplate()));
@@ -291,10 +294,10 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
       <div className="new-agreement m-0 p-0 px-4 container-fluid">
         <div className="row m-0 p-0 h-100">
           <div className="col-12 py-4 d-flex align-items-center">
-            { !editTitle
+            {!editTitle
               ? (
                 <>
-                  { !isEditing
+                  {!isEditing
                     ? (
                       <h3 className="d-flex mr-auto">{agreementTitle || 'Untitled Agreement'}</h3>
                     )

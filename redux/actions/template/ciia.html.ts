@@ -145,9 +145,9 @@ const Ciia = `<div class="contract" style="width: 100%; background-color:white; 
 <p style="color:#000;">Name: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyName">{{#counterPartyName}}{{counterPartyName}}{{/counterPartyName}}{{^counterPartyName}}[COUNTER PARTY NAME]{{/counterPartyName}}</span></div></p>
 <p style="color: black;">___________________________________________</p>
 <p style="color: black;">(Signature)</p>
-<p style="color:#000;">Title: <div style="display: inline-block; background-color:#f79632"><span id="titleCounterParty">{{#titleCounterParty}}{{titleCounterParty}}{{/titleCounterParty}}{{^titleCounterParty}}[TITLE]{{/titleCounterParty}}</span></div></p>
 <p style="color:#000;">Address: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyAddress">{{#counterPartyAddress}}{{counterPartyAddress}}{{/counterPartyAddress}}{{^counterPartyAddress}}[COUNTER PARTY ADDRESS]{{/counterPartyAddress}}</span></div></p>
 <p style="color:#000;">Email: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyEmail">{{#counterPartyEmail}}{{counterPartyEmail}}{{/counterPartyEmail}}{{^counterPartyEmail}}[COUNTER PARTY EMAIL]{{/counterPartyEmail}}</span></div></p>
+<p style="color:#000;">Wallet: <div style="display: inline-block; background-color:#f79632"><span id="counterPartyWallet">{{#counterPartyWallet}}{{counterPartyWallet}}{{/counterPartyWallet}}{{^counterPartyWallet}}[PARTY WALLET]{{/counterPartyWallet}}</span></div></p>
 
 <p style="color: black;"><u> <br /> </u><br /> </p>
 <p style="color: black;"><u> <br /> </u><br /> </p>
@@ -200,7 +200,7 @@ const Ciia = `<div class="contract" style="width: 100%; background-color:white; 
 <p style="color: black;"><u> </u>(Signature)</p>
 <p style="color: black;" align="center"><strong><u>EXHIBIT&nbsp;</u><u>C</u></strong></p>
 <p style="color: black;" class="western" align="center"><strong>LIST OF COMPANIES AND/OR AGREEMENTS <br /> EXCLUDED UNDER SECTION&nbsp;(b)</strong></p>
-<p><div style="display: inline-block; background-color:#f79632"><span id="listCompaniesAgreements">{{#listCompaniesAgreements}}{{listCompaniesAgreements}}{{/listCompaniesAgreements}}{{^listCompaniesAgreements}}[COMPANIES OR AGREEMENTS EXCLUDED]{{/listCompaniesAgreements}}</span></div></p>
+<p style="white-space:break-spaces; color:#000; background-color:#f79632;" id="listCompaniesAgreements">{{#listCompaniesAgreements}}{{listCompaniesAgreements}}{{/listCompaniesAgreements}}{{^listCompaniesAgreements}}[COMPANIES OR AGREEMENTS EXCLUDED]{{/listCompaniesAgreements}}</p>
 <p style="color: black;" class="western">&nbsp;</p>
 <div style="display: block; background-color:#f79632" class="western"></div>
 <p style="color: black;" class="western">&nbsp;</p>
