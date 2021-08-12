@@ -14,13 +14,13 @@ interface ConsultingAgreementData {
   descriptionConsulting: string;
   serviceRenderChecked: boolean;
   serviceRender: string;
-  serviceRate: number;
+  serviceRate: string;
   servicePayable: string;
-  serviceAmountLimit: number;
+  serviceAmountLimit: string;
   consultantChecked: boolean;
   consultanShall: string;
-  consultantExecutionAmount: number;
-  consultantCompletionAmount: number;
+  consultantExecutionAmount: string;
+  consultantCompletionAmount: string;
   companyWillChecked: boolean;
   companyWillRecommend: string;
   companyShares: string;

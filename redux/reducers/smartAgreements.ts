@@ -19,32 +19,7 @@ interface SmartAgreementsState {
 
 const initialState: SmartAgreementsState = {
   ndaAgreementData: {} as any,
-  advisorAgreementData: {
-    customTitle: '',
-    partyName: '',
-    partyEmail: '',
-    partyAddress: '',
-    partyWallet: '',
-    date: '',
-    counterPartyName: '',
-    counterPartyEmail: '',
-    counterPartyAddress: '',
-    counterPartyWallet: '',
-    state: '',
-    typeOfCompany: '',
-    stockPlanName: '',
-    percentageVest: '',
-    purchaseOption: 'A Right',
-    numberOfShares: '1',
-    stockPlanNameValue: 'Stock option',
-    termsConditions: 'Options',
-    anniversaryMonth: '',
-    vestingCommencement: '',
-    typeOfTriggerAcceleration: 'Single Trigger Acceleration...',
-    typeOfPrice: 'Exersice',
-    acceptionOption: 'An Option',
-    numberOfYears: '',
-  },
+  advisorAgreementData: {} as any,
   ciiaAgreementData: {
     customTitle: '',
     partyName: '',
@@ -67,38 +42,7 @@ const initialState: SmartAgreementsState = {
     typeOfComapny: '',
     listCompAgreements: '',
   },
-  consultingAgreementData: {
-    customTitle: '',
-    partyName: '',
-    partyEmail: '',
-    partyAddress: '',
-    partyWallet: '',
-    date: '',
-    counterPartyName: '',
-    counterPartyEmail: '',
-    counterPartyAddress: '',
-    counterPartyWallet: '',
-    state: '',
-    typeOfCompany: '',
-    descriptionConsulting: '',
-    serviceRenderChecked: false,
-    serviceRender: '',
-    serviceRate: 0,
-    servicePayable: '',
-    serviceAmountLimit: 0,
-    consultantChecked: false,
-    consultanShall: '',
-    consultantExecutionAmount: 0,
-    consultantCompletionAmount: 0,
-    companyWillChecked: false,
-    companyWillRecommend: '',
-    companyShares: '',
-    companyFollows: '',
-    otherChecked: false,
-    other: '',
-    companiesExcluded: '',
-    listCompanies: '',
-  },
+  consultingAgreementData: {} as any,
   referralAgreementData: {
     customTitle: '',
     partyName: '',
@@ -185,11 +129,26 @@ const smartAgreementsReducer = (
     }
     case SmartAgreementsTypes.SET_CONSULTING_AGREEMENT_DATA: {
       const newConsultingData = payload;
+
+      let additionalData = {};
+      if (newConsultingData.compensationRadio === 'Hourly rate') {
+        additionalData = {
+          consultantExecutionAmount: undefined,
+          consultantCompletionAmount: undefined,
+        };
+      } else if (newConsultingData.compensationRadio === 'Fixed compensation') {
+        additionalData = {
+          serviceRate: undefined,
+          servicePayable: undefined,
+          serviceAmountLimit: undefined,
+        };
+      }
       return {
         ...state,
         consultingAgreementData: {
           ...state.consultingAgreementData,
           ...newConsultingData,
+          ...additionalData,
         },
       };
     }

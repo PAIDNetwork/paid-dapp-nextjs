@@ -14,7 +14,9 @@ import { agreementStatus } from '../utils/agreement';
 const AgreementDetails: React.FC = () => {
   const router = useRouter();
   const {
+    contract,
     contractSigner,
+    tokenSignerContract,
   } = useContract();
   const { data } = router.query;
   const { account } = useWallet();
@@ -44,7 +46,17 @@ const AgreementDetails: React.FC = () => {
 
   const onSign = async () => {
     try {
-      await contractSigner.signAgreement(currentAgreement?.event.cid, true);
+      const fee = await contract.fee();
+      const escrowAddress = await contract.escrow();
+      await tokenSignerContract.increaseAllowance(escrowAddress, fee.toString());
+      await contractSigner.signAgreement(
+        currentAgreement?.event.cid,
+        true,
+        {
+          gasLimit: 3000000,
+          gasPrice: (1000000000 * 30),
+        },
+      );
       setOpenConfirmSignModal(false);
       setOpenSignSuccessModal(true);
     } catch (error) {
@@ -54,7 +66,17 @@ const AgreementDetails: React.FC = () => {
 
   const onDecline = async () => {
     try {
-      await contractSigner.signAgreement(currentAgreement?.event.cid, false);
+      const fee = await contract.fee();
+      const escrowAddress = await contract.escrow();
+      await tokenSignerContract.increaseAllowance(escrowAddress, fee.toString());
+      await contractSigner.signAgreement(
+        currentAgreement?.event.cid,
+        false,
+        {
+          gasLimit: 3000000,
+          gasPrice: (1000000000 * 30),
+        },
+      );
       setOpenConfirmDeclineModal(false);
       setOpenDeclinedSuccessModal(true);
     } catch (error) {
