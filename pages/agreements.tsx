@@ -6,6 +6,7 @@ import { IPLDManager } from 'xdv-universal-wallet-core';
 import { Card, Button } from 'reactstrap';
 import { useWallet } from 'react-binance-wallet';
 import useContract from 'hooks/useContract';
+import axios from 'axios';
 import AgreementPreviewModal from '@/components/agreements/AgreementPreviewModal';
 import { ethers } from 'ethers';
 import { forkJoin } from 'rxjs';
@@ -60,7 +61,7 @@ const Agreements: React.FC = () => {
         const documents = myEvents.map((myEvent) => contract.anchors(myEvent.args.documentId));
         const forkedDocuments = forkJoin(documents).pipe(debounce((x) => x as any)).toPromise();
         const myDocuments = (await forkedDocuments) || [];
-        const ipfsItems = myDocuments.map((myDocument: any) => ipfs.getObject(myDocument.fileHash));
+        const ipfsItems = myDocuments.map((myDocument: any) => axios.get(`https://ipfs.io/ipfs/${myDocument.fileHash}`));
         const forkedIpfsItems = forkJoin(ipfsItems).pipe(debounce((x) => x as any)).toPromise();
         const myIpfsItems = (await forkedIpfsItems) || [];
         let index = 0;
@@ -179,7 +180,7 @@ const Agreements: React.FC = () => {
         <link rel="icon" href="/assets/icon/.ico" />
       </Head>
 
-      <div className="agreements p-0 px-4 container-fluid" style={agreements.length === 0 ? {height:'97%'} : {}}>
+      <div className="agreements p-0 px-4 container-fluid" style={agreements.length === 0 ? { height: '97%' } : {}}>
         <div className="row p-0 h-100">
           {agreements.length > 0
             && (
@@ -264,7 +265,7 @@ const Agreements: React.FC = () => {
               </>
             )}
           <div className="col-12">
-            <Card className="border-0 content" style={agreements.length > 0 ? {marginTop:10} : {marginTop:10,height:'100%'}}>
+            <Card className="border-0 content" style={agreements.length > 0 ? { marginTop: 10 } : { marginTop: 10, height: '100%' }}>
               <Table
                 columns={columns}
                 data={agreements.filter(

@@ -17,6 +17,7 @@
     "@connext/vector-modal": "^1.0.5-beta.0",
     "@hookform/error-message": "0.0.5",
     "@master-ventures/paid-dapp-contracts": "^1.0.0",
+    "@pinata/sdk": "^1.1.23",
     "@rjsf/core": "^2.4.2",
     "babel-plugin-transform-define": "^2.0.0",
     "bootstrap": "^4.6.0",

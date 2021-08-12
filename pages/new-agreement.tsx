@@ -12,6 +12,7 @@ import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import classNames from 'classnames';
 import { Button, Card, Tooltip } from 'reactstrap';
+import pinataSDK from '@pinata/sdk';
 import { format } from 'date-fns';
 import ProfileStateModel from '@/models/profileStateModel';
 import PreviewDocument from '@/components/new-agreement/PreviewDocument';
@@ -21,7 +22,6 @@ import templateAgreements from 'data/templateAgreements';
 import { createAgreement } from 'redux/actions/agreement';
 import useContract from 'hooks/useContract';
 import { useWallet } from 'react-binance-wallet';
-import { IPLDManager } from 'xdv-universal-wallet-core';
 import { ethers } from 'ethers';
 import ConfirmAgreementModal from '@/components/new-agreement/ConfirmAgreementModal';
 import ModalAlert from '@/components/reusable/modalAlert/ModalAlert';
@@ -124,7 +124,7 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
   } = useContract();
 
   useEffect(() => {
-    const templateData = getContractTemplate(templateTypeCode,isEditing,agreementReviewed);
+    const templateData = getContractTemplate(templateTypeCode, isEditing, agreementReviewed);
     setDataName(templateData.dataName);
     setTitle(templateData.title);
     setAgreementDocument(templateData.template);
@@ -199,16 +199,14 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
   };
 
   const toIpfs = async ():Promise<CID> => {
-    const ipfsManager = new IPLDManager(did);
-    await ipfsManager.start(process.env.NEXT_PUBLIC_IPFS_URL);
-    const fil = Buffer.from(renderToString(agreementTemplate()));
+    const pinata = pinataSDK(process.env.NEXT_PUBLIC_PINATA_KEY, process.env.NEXT_PUBLIC_PINATA_SECRET);
     try {
-      return ipfsManager.addSignedObject(fil,
-        {
-          name: agreementTitle,
-          contentType: 'text/html',
-          lastModified: new Date(),
-        });
+      return pinata.pinJSONToIPFS({
+        content: btoa(renderToString(agreementTemplate())),
+        name: agreementTitle,
+        contentType: 'text/html',
+        lastModified: new Date(),
+      });
     } catch (err) {
       return null;
     }
@@ -250,7 +248,7 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
       const proposerDID = did.id;
       const recipientAddresses = [agreementData.counterPartyWallet];
       const recipientDIDs = [agreementData.counterPartyDid];
-      const filehash = cid.toString();
+      const filehash = cid.IpfsHash;
       const requiredQuorum = '1';
       const templateId = templateTypeCode;
       const validUntil = Math.floor(Date.now() / 1000) + 31557600;
