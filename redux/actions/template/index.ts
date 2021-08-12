@@ -438,7 +438,7 @@ const getContractTemplate = (
               type: 'string',
             },
             titleParty: {
-              title: 'Title Party',
+              title: 'Title',
               type: 'string',
             },
             ...sharedProperties.party,
