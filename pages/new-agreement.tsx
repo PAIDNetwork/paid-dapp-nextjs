@@ -237,8 +237,6 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
       while (!cid) {
         cid = await toIpfs();
       }
-      console.log("ON SEND FORM")
-      console.log(jsonSchemas)
 
       const types = [];
       const values = [];

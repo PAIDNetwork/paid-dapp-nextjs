@@ -164,13 +164,6 @@ const smartAgreementsReducer = (
     }
     case SmartAgreementsTypes.SET_SAFT_AGEEMENT_DATA: {
       const newSaftData = payload
-      // console.log(newSaftData)
-      // if (!newSaftData.ethereum) {
-      //   newSaftData.ethereum = ' '
-      // }
-      // if (!newSaftData.bitcoin) {
-      //   newSaftData.bitcoin = ' '
-      // }
       return {
         ...state,
         saftAgreementData: {
