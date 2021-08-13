@@ -28,6 +28,7 @@ const getContractTemplate = (
   contractName: String,
   isEditing?: Boolean,
   agreementReviewed?: Boolean,
+  isHiddenEmpty?: Boolean,
 ): contractTemplate => {
   let contractTemplate
   let title
