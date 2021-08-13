@@ -185,15 +185,29 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
       }),
     );
   };
+
+  const cleanFormOptionalsFields = (finalReview?: boolean) => {
+    const showField = (finalReview) ? ' ' : '';
+    const data = Object.keys(smartAgreementsState[dataName]).reduce((x: any, xs: string) => {
+      if (!x[xs]) x[xs] = showField
+      return x
+    }, smartAgreementsState[dataName]);
+    setAgreementData(data);
+  }
+
   const onReview = () => {
     const activePageLength = (activePageIndex + 1);
     if (activePageLength === jsonSchemas.length) {
+      cleanFormOptionalsFields(true);
       dispatch(setIsEditing(false));
       setReview(true);
       dispatch(setAgreementReviewed(true));
-    } else {
-      setActivePageIndex((index) => index + 1);
+      return
+    } else if (activePageLength === jsonSchemas.length - 1) {
+      cleanFormOptionalsFields(false);
     }
+
+    setActivePageIndex((index) => index + 1);
   };
 
   const onSubmitTitle = (values) => {
@@ -223,6 +237,8 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
       while (!cid) {
         cid = await toIpfs();
       }
+      console.log("ON SEND FORM")
+      console.log(jsonSchemas)
 
       const types = [];
       const values = [];

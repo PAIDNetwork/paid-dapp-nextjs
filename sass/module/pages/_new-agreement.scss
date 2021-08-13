@@ -99,4 +99,17 @@
   p {
     color: black !important;
   }
+
+  .party-signs-right {
+    padding-left: 52%;
+  }
+
+  .underline-contract-line  {
+    display: inline-block;
+    border-radius: 12px;
+    padding-left: 7px;
+    padding-right: 7px;
+    background: linear-gradient(90deg, rgba(218,30,94,0.7) 22%, rgba(246,147,34,0.8) 83%);
+  }
+
 }
