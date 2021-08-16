@@ -1079,10 +1079,6 @@ const getContractTemplate = (
               type: 'string',
               format: 'date',
             },
-            titleParty: {
-              title: 'Title Company',
-              type: 'string',
-            },
             companyName: {
               title: 'Company Name',
               type: 'string',
@@ -1095,6 +1091,10 @@ const getContractTemplate = (
               title: 'Company NON-U.S. Jurisdiction',
               type: 'string',
             },
+            titleParty: {
+              title: 'Title',
+              type: 'string',
+            },
             ...sharedProperties.party,
           },
           required: ['typeOfCompany', ...sharedProperties.required],
@@ -1104,7 +1104,7 @@ const getContractTemplate = (
           title: 'Advisor information ("the Purchaser")',
           properties: {
             titleCounterParty: {
-              title: 'Title Purchaser',
+              title: 'Title',
               type: 'string',
             },
             ...sharedProperties.counterparty,
@@ -1152,9 +1152,6 @@ const getContractTemplate = (
           type: 'object',
           title: 'Payment by U.S. Dollars',
           properties: {
-            paymentOption: {
-              enum: ['dollar'],
-            },
             bankName: {
               title: 'Bank Name',
               type: 'string',
@@ -1176,7 +1173,6 @@ const getContractTemplate = (
               type: 'string',
             },
           },
-          required: ['paymentOption'],
         },
         {
           type: 'object',
@@ -1210,14 +1206,51 @@ const getContractTemplate = (
         },
       ]
       uiSchema = {
+        'ui:order': [
+          'date',
+          'companyName',
+          'typeOfCompany',
+          'nonUsJurisdiction',
+          'partyName',
+          'titleParty',
+          'partyAddress',
+          'partyEmail',
+          'partyWallet',
+          
+          'counterPartyName',
+          'titleCounterParty',
+          'counterPartyAddress',
+          'counterPartyEmail',
+          'counterPartyDid',
+          'counterPartyWallet',
+
+          'purchaseAmount',
+          'tokenAmount',
+
+          'discountRate',
+
+          'website',
+
+          'bankName',
+          'address',
+          'aba',
+          'payeeAccount',
+          'payeeAccountName',
+          
+          'ethereum',
+
+          'bitcoin',
+          'state',
+          'jurisdiction',
+        ],
         companyName: {
           'ui:placeholder': 'Company Name',
         },
         titleCounterParty: {
-          'ui:placeholder': 'Title Purchaser',
+          'ui:placeholder': 'Title',
         },
         titleParty: {
-          'ui:placeholder': 'Title Company',
+          'ui:placeholder': 'Title',
         },
         typeOfCompany: {
           'ui:placeholder': 'Type of Company',
