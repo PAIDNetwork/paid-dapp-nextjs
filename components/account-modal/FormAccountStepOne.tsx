@@ -14,9 +14,7 @@ const FormAccountStepOne: FC<FormAccountStepOneProps> = ({
   setStpe,
   setProfile,
 }: FormAccountStepOneProps) => {
-  const {
-    register, errors, handleSubmit,
-  } = useForm();
+  const { register, errors, handleSubmit } = useForm();
   const onSubmit = (values: ProfileModel) => {
     setProfile(values);
     setStpe(1);
@@ -34,7 +32,7 @@ const FormAccountStepOne: FC<FormAccountStepOneProps> = ({
           required: 'Email is required',
           pattern: {
             value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-            message: 'invalid email',
+            message: 'Invalid email',
           },
         })}
         errorComponent={(
@@ -44,7 +42,7 @@ const FormAccountStepOne: FC<FormAccountStepOneProps> = ({
             as="div"
             errors={errors}
           />
-                )}
+        )}
       />
       <StackedInput
         label="First name:"
@@ -62,7 +60,7 @@ const FormAccountStepOne: FC<FormAccountStepOneProps> = ({
             as="div"
             errors={errors}
           />
-                )}
+        )}
       />
       <StackedInput
         label="Last name:"
@@ -80,7 +78,7 @@ const FormAccountStepOne: FC<FormAccountStepOneProps> = ({
             as="div"
             errors={errors}
           />
-                )}
+        )}
       />
       <div className="pt-3 text-center">
         <button className="btn btn-primary btn-form-save w-75" type="submit">
