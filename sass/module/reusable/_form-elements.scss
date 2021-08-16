@@ -1,8 +1,16 @@
 @mixin placeholder {
-  &::-webkit-input-placeholder {@content}
-  &:-moz-placeholder           {@content}
-  &::-moz-placeholder          {@content}
-  &:-ms-input-placeholder      {@content}
+  &::-webkit-input-placeholder {
+    @content;
+  }
+  &:-moz-placeholder {
+    @content;
+  }
+  &::-moz-placeholder {
+    @content;
+  }
+  &:-ms-input-placeholder {
+    @content;
+  }
 }
 
 .stacked-group {
@@ -11,8 +19,9 @@
     font-weight: 500;
     color: $form-label-color;
   }
+
   .stacked-control {
-    font-family: Circular Std;
+    font-family: Roboto;
     font-weight: 450;
     background-color: $form-input-background-color;
     border: none;
@@ -28,14 +37,14 @@
   }
 }
 
-.paid-component-password{
+.paid-component-password {
   position: relative;
-  .paid-component-password__input{
+  .paid-component-password__input {
     position: relative;
     width: 100%;
     height: 100%;
     display: block;
-    i.eye{
+    i.eye {
       position: absolute;
       right: 11px;
       cursor: pointer;

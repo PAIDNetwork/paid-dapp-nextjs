@@ -42,7 +42,7 @@ const Index: React.FC = () => {
           rel="stylesheet"
         />
         <link
-          href="https://fonts.googleapis.com/css?family=Circular Std"
+          href="https://fonts.googleapis.com/css?family=Roboto"
           rel="stylesheet"
         />
         <noscript>
