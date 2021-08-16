@@ -88,7 +88,19 @@ const Table: FC<TableProps> = ({
                 <>
                   {row.cells.map((cell, index) => (
                     <td {...cell.getCellProps()} id={`${rowIndex}-${index}`}>
-                      {cell.value ? cell.render('Cell') : ' - '}
+                      {
+                        cell.column.showDetail
+                          ? (
+                            <button
+                              type="button"
+                              className="btn-transparent"
+                              style={{ color: 'inherit' }}
+                              onClick={() => onDetailClick(row.original.event.cid)}
+                            >
+                              {cell.value ? cell.render('Cell') : ' - '}
+                            </button>
+                          ) : (cell.value ? cell.render('Cell') : ' - ')
+                      }
                     </td>
                   ))}
                   <td key={`btn-${rowIndex}`} className="text-right pr-5">
@@ -119,7 +131,7 @@ const Table: FC<TableProps> = ({
                           className="btn-transparent popover-btn-custom"
                         >
                           <img src="/assets/icon/agreementDetails.svg" alt="" />
-                          <span className="popover-text-custom">Sing</span>
+                          <span className="popover-text-custom">Details</span>
                         </Button>
                       </PopoverBody>
                     </UncontrolledPopover>
@@ -133,7 +145,7 @@ const Table: FC<TableProps> = ({
       )}
       <br />
       {data.length < 1 && (
-        <div className="empty-result row justify-content-center align-items-center" style={{height:'100%'}}>
+        <div className="empty-result row justify-content-center align-items-center" style={{ height: '100%' }}>
           <p className="text-center">
             You don&apos;t have any agreements yet. Click bellow to create your first SMART agreement!
             {' '}
