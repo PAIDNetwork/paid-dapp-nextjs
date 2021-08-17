@@ -1,12 +1,12 @@
 /* eslint-disable import/no-unresolved */
-import ActionModel from '@/models/actionModel'
-import AdvisorAgreementData from '@/models/advisorAgreementData'
-import CiiaAgreementData from '@/models/ciiaAgreementData'
-import ConsultingAgreementData from '@/models/consultingAgreementData'
-import NdaAgreementData from '@/models/ndaAgreementData'
-import ReferralAgreementData from '@/models/referralAgreementData'
-import SaftAgreementData from '@/models/saftAgreementData'
-import SmartAgreementsTypes from '../actionTypes/smartAgreements'
+import ActionModel from '@/models/actionModel';
+import AdvisorAgreementData from '@/models/advisorAgreementData';
+import CiiaAgreementData from '@/models/ciiaAgreementData';
+import ConsultingAgreementData from '@/models/consultingAgreementData';
+import NdaAgreementData from '@/models/ndaAgreementData';
+import ReferralAgreementData from '@/models/referralAgreementData';
+import SaftAgreementData from '@/models/saftAgreementData';
+import SmartAgreementsTypes from '../actionTypes/smartAgreements';
 
 interface SmartAgreementsState {
   ndaAgreementData: any | NdaAgreementData
@@ -88,60 +88,80 @@ const initialState: SmartAgreementsState = {
     ethereum: '',
     bitcoin: '',
   },
-}
+};
 
 const smartAgreementsReducer = (
   state: SmartAgreementsState = initialState,
   action: ActionModel,
 ) => {
-  const { type, payload } = action
+  const { type, payload } = action;
 
   switch (type) {
     case SmartAgreementsTypes.SET_NDA_AGREEMENT_DATA: {
-      const newNdaData = payload
+      const newNdaData = payload;
       return {
         ...state,
         ndaAgreementData: {
           ...state.ndaAgreementData,
           ...newNdaData,
         },
-      }
+      };
     }
     case SmartAgreementsTypes.SET_ADVISOR_AGREEMENT_DATA: {
-      const newAdvisorData = payload
+      const newAdvisorData = payload;
+
+      let additionalData = {};
+      if (newAdvisorData.advisorOption === 'nonstatutory') {
+        additionalData = {
+          nonstatutory: true,
+          right: undefined,
+        };
+      } else if (newAdvisorData.advisorOption === 'right') {
+        additionalData = {
+          nonstatutory: undefined,
+          right: true,
+        };
+      } else {
+        additionalData = {
+          nonstatutory: undefined,
+          right: undefined,
+        };
+      }
+
       return {
         ...state,
         advisorAgreementData: {
           ...state.advisorAgreementData,
           ...newAdvisorData,
+          ...additionalData,
         },
-      }
+      };
     }
     case SmartAgreementsTypes.SET_CIIA_AGREEMENT_DATA: {
-      const newCiiaData = payload
+      const newCiiaData = payload;
       return {
         ...state,
         ciiaAgreementData: {
           ...state.ciiaAgreementData,
           ...newCiiaData,
         },
-      }
+      };
     }
     case SmartAgreementsTypes.SET_CONSULTING_AGREEMENT_DATA: {
-      const newConsultingData = payload
+      const newConsultingData = payload;
 
-      let additionalData = {}
+      let additionalData = {};
       if (newConsultingData.compensationRadio === 'Hourly rate') {
         additionalData = {
           consultantExecutionAmount: undefined,
           consultantCompletionAmount: undefined,
-        }
+        };
       } else if (newConsultingData.compensationRadio === 'Fixed compensation') {
         additionalData = {
           serviceRate: undefined,
           servicePayable: undefined,
           serviceAmountLimit: undefined,
-        }
+        };
       }
       return {
         ...state,
@@ -150,34 +170,34 @@ const smartAgreementsReducer = (
           ...newConsultingData,
           ...additionalData,
         },
-      }
+      };
     }
     case SmartAgreementsTypes.SET_REFERRAL_AGEEMENT_DATA: {
-      const newReferralData = payload
+      const newReferralData = payload;
       return {
         ...state,
         referralAgreementData: {
           ...state.referralAgreementData,
           ...newReferralData,
         },
-      }
+      };
     }
     case SmartAgreementsTypes.SET_SAFT_AGEEMENT_DATA: {
-      const newSaftData = payload
+      const newSaftData = payload;
       return {
         ...state,
         saftAgreementData: {
           ...state.saftAgreementData,
           ...newSaftData,
         },
-      }
+      };
     }
     case SmartAgreementsTypes.RESET_AGREEMENT_TEMPLATE: {
-      return initialState
+      return initialState;
     }
     default:
-      return { ...state }
+      return { ...state };
   }
-}
+};
 
-export default smartAgreementsReducer
+export default smartAgreementsReducer;
