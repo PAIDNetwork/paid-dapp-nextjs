@@ -1,39 +1,50 @@
 @mixin placeholder {
-  &::-webkit-input-placeholder {@content}
-  &:-moz-placeholder           {@content}
-  &::-moz-placeholder          {@content}
-  &:-ms-input-placeholder      {@content}
+  &::-webkit-input-placeholder {
+    @content;
+  }
+  &:-moz-placeholder {
+    @content;
+  }
+  &::-moz-placeholder {
+    @content;
+  }
+  &:-ms-input-placeholder {
+    @content;
+  }
 }
 
 .stacked-group {
   .stacked-label {
-    font-size: 0.625rem;
+    font-size: 14px;
     font-weight: 500;
     color: $form-label-color;
   }
+
   .stacked-control {
+    font-family: Roboto;
+    font-weight: 450;
     background-color: $form-input-background-color;
     border: none;
     border-radius: $form-input-border-radius;
-    font-size: 0.75rem;
+    font-size: 18px;
     color: $form-label-color;
     resize: none;
 
     @include placeholder {
-      font-size: 0.75rem;
+      font-size: 18px;
       color: $blue-400;
     }
   }
 }
 
-.paid-component-password{
+.paid-component-password {
   position: relative;
-  .paid-component-password__input{
+  .paid-component-password__input {
     position: relative;
     width: 100%;
     height: 100%;
     display: block;
-    i.eye{
+    i.eye {
       position: absolute;
       right: 11px;
       cursor: pointer;

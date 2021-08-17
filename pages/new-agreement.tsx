@@ -12,20 +12,16 @@ import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import classNames from 'classnames';
 import { Button, Card, Tooltip } from 'reactstrap';
-import pinataSDK from '@pinata/sdk';
-import { format } from 'date-fns';
+import pinataSDK, { PinataPinResponse } from '@pinata/sdk';
 import ProfileStateModel from '@/models/profileStateModel';
 import PreviewDocument from '@/components/new-agreement/PreviewDocument';
 import { setAgreementReviewed, setIsEditing } from 'redux/actions';
-import AgreementModel from '@/models/agreementModel';
 import templateAgreements from 'data/templateAgreements';
-import { createAgreement } from 'redux/actions/agreement';
 import useContract from 'hooks/useContract';
 import { useWallet } from 'react-binance-wallet';
 import { ethers } from 'ethers';
 import ConfirmAgreementModal from '@/components/new-agreement/ConfirmAgreementModal';
 import ModalAlert from '@/components/reusable/modalAlert/ModalAlert';
-import CID from 'cids';
 import PdScrollbar from '../components/reusable/pdScrollbar/PdScrollbar';
 import SmartAgreementFormPanel from '../components/new-agreement/SmartAgreementFormPanel';
 import getContractTemplate from '../redux/actions/template/index';
@@ -35,9 +31,6 @@ import {
   resetTemplateAgreement,
 } from '../redux/actions/smartAgreement';
 import {
-  agreementStatus,
-  AGREEMENT_TITLE_FIELD,
-  AGREEMENT_CREATE_DATE_FIELD,
   PARTY_ADDRESS_FIELD,
   PARTY_EMAIL_FIELD,
   PARTY_NAME_FIELD,
@@ -119,7 +112,6 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
   const {
     contract,
     contractSigner,
-    tokenContract,
     tokenSignerContract,
   } = useContract();
 
@@ -135,18 +127,20 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
   useEffect(() => {
     const data = smartAgreementsState[dataName];
     if (data) {
-      if (data[PARTY_NAME_FIELD] === undefined || data[PARTY_NAME_FIELD] === null || data[PARTY_NAME_FIELD] === '') {
-        data[PARTY_NAME_FIELD] = isEditing ? `${name}` : '';
-        data[PARTY_EMAIL_FIELD] = isEditing ? email : '';
-        data[PARTY_ADDRESS_FIELD] = '';
-        data[PARTY_WALLET_FIELD] = isEditing ? currentWallet : '';
-        data[COUNTER_PARTY_NAME_FIELD] = '';
-        data[COUNTER_PARTY_EMAIL_FIELD] = '';
-        data[COUNTER_PARTY_ADDRESS_FIELD] = '';
-        data[COUNTER_PARTY_WALLET_FIELD] = '';
-        data[COUNTER_PARTY_WALLET_FIELD] = '';
-      }
+      data[PARTY_NAME_FIELD] = name;
+      data[PARTY_EMAIL_FIELD] = email;
+      data[PARTY_ADDRESS_FIELD] = '';
+      data[PARTY_WALLET_FIELD] = currentWallet;
+      data[COUNTER_PARTY_NAME_FIELD] = '';
+      data[COUNTER_PARTY_EMAIL_FIELD] = '';
+      data[COUNTER_PARTY_ADDRESS_FIELD] = '';
+      data[COUNTER_PARTY_WALLET_FIELD] = '';
+      setAgreementData(data);
     }
+  }, [dataName]);
+
+  useEffect(() => {
+    const data = smartAgreementsState[dataName];
     setAgreementData(data);
   }, [smartAgreementsState, dataName, agreementTitle]);
 
@@ -182,15 +176,29 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
       }),
     );
   };
+
+  const cleanFormOptionalsFields = (finalReview?: boolean) => {
+    const showField = (finalReview) ? ' ' : '';
+    const data = Object.keys(smartAgreementsState[dataName]).reduce((x: any, xs: string) => {
+      if (!x[xs]) x[xs] = showField;
+      return x;
+    }, smartAgreementsState[dataName]);
+    setAgreementData(data);
+  };
+
   const onReview = () => {
     const activePageLength = (activePageIndex + 1);
     if (activePageLength === jsonSchemas.length) {
+      cleanFormOptionalsFields(true);
       dispatch(setIsEditing(false));
       setReview(true);
       dispatch(setAgreementReviewed(true));
-    } else {
-      setActivePageIndex((index) => index + 1);
+      return;
+    } if (activePageLength === jsonSchemas.length - 1) {
+      cleanFormOptionalsFields(false);
     }
+
+    setActivePageIndex((index) => index + 1);
   };
 
   const onSubmitTitle = (values) => {
@@ -198,8 +206,11 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
     setEditTitle(false);
   };
 
-  const toIpfs = async ():Promise<CID> => {
-    const pinata = pinataSDK(process.env.NEXT_PUBLIC_PINATA_KEY, process.env.NEXT_PUBLIC_PINATA_SECRET);
+  const toIpfs = async ():Promise<PinataPinResponse> => {
+    const pinata = pinataSDK(
+      process.env.NEXT_PUBLIC_PINATA_KEY,
+      process.env.NEXT_PUBLIC_PINATA_SECRET,
+    );
     try {
       return pinata.pinJSONToIPFS({
         content: btoa(renderToString(agreementTemplate())),
@@ -224,17 +235,12 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
       jsonSchemas.forEach((jsonSchema) => {
         const { properties } = jsonSchema;
         Object.keys(properties).forEach((objKey) => {
+          let type = 'string';
           if (properties[objKey].type === 'number') {
-            types.push('uint');
-            values.push(currentFormData[objKey]);
+            type = 'uint';
           }
-          if (properties[objKey].type === 'string') {
-            types.push('string');
-            values.push(currentFormData[objKey]);
-          } else {
-            types.push('string');
-            values.push(currentFormData[objKey]);
-          }
+          types.push(type);
+          values.push(currentFormData[objKey]);
         });
       });
       const metadata = ethers.utils.defaultAbiCoder.encode(
@@ -273,7 +279,6 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
       setAgreementError(error.error);
       setOpenAlertModal(true);
     }
-    // dispatch(createAgreement(newAgreement));
   };
 
   const confirmDocument = () => {
@@ -289,10 +294,10 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
       <div className="new-agreement m-0 p-0 px-4 container-fluid">
         <div className="row m-0 p-0 h-100">
           <div className="col-12 py-4 d-flex align-items-center">
-            { !editTitle
+            {!editTitle
               ? (
                 <>
-                  { !isEditing
+                  {!isEditing
                     ? (
                       <h3 className="d-flex mr-auto">{agreementTitle || 'Untitled Agreement'}</h3>
                     )

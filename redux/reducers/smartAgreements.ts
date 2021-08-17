@@ -9,12 +9,12 @@ import SaftAgreementData from '@/models/saftAgreementData';
 import SmartAgreementsTypes from '../actionTypes/smartAgreements';
 
 interface SmartAgreementsState {
-  ndaAgreementData: any;
-  advisorAgreementData: AdvisorAgreementData;
-  ciiaAgreementData: CiiaAgreementData;
-  consultingAgreementData: ConsultingAgreementData;
-  referralAgreementData: ReferralAgreementData;
-  saftAgreementData: SaftAgreementData;
+  ndaAgreementData: any | NdaAgreementData
+  advisorAgreementData: AdvisorAgreementData
+  ciiaAgreementData: CiiaAgreementData
+  consultingAgreementData: ConsultingAgreementData
+  referralAgreementData: ReferralAgreementData
+  saftAgreementData: SaftAgreementData
 }
 
 const initialState: SmartAgreementsState = {
@@ -109,11 +109,31 @@ const smartAgreementsReducer = (
     }
     case SmartAgreementsTypes.SET_ADVISOR_AGREEMENT_DATA: {
       const newAdvisorData = payload;
+
+      let additionalData = {};
+      if (newAdvisorData.advisorOption === 'nonstatutory') {
+        additionalData = {
+          nonstatutory: true,
+          right: undefined,
+        };
+      } else if (newAdvisorData.advisorOption === 'right') {
+        additionalData = {
+          nonstatutory: undefined,
+          right: true,
+        };
+      } else {
+        additionalData = {
+          nonstatutory: undefined,
+          right: undefined,
+        };
+      }
+
       return {
         ...state,
         advisorAgreementData: {
           ...state.advisorAgreementData,
           ...newAdvisorData,
+          ...additionalData,
         },
       };
     }

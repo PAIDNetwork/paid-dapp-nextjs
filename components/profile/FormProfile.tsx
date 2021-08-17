@@ -1,8 +1,8 @@
 import React, {
     FC, useEffect, useRef, useState,
 } from 'react';
-import {useForm} from 'react-hook-form';
-import {ErrorMessage} from '@hookform/error-message';
+import { useForm } from 'react-hook-form';
+import { ErrorMessage } from '@hookform/error-message';
 import classNames from 'classnames';
 import StackedInput from '../reusable/StackedInput';
 import ProfileModel from '../../models/profileModel';
@@ -16,17 +16,17 @@ interface FormProfileProps {
 }
 
 const FormProfile: FC<FormProfileProps> = ({
-                                               profile,
-                                               emptyProfile,
-                                               onSubmit,
-                                           }: FormProfileProps) => {
+    profile,
+    emptyProfile,
+    onSubmit,
+}: FormProfileProps) => {
     const [openExportModal, setOpenExportModal] = useState(false);
 
     const onOpenExportModal = () => {
         setOpenExportModal(true);
     };
 
-    const onCopy = () => {
+    const onCopy = (): void => {
     };
 
     const {
@@ -60,7 +60,7 @@ const FormProfile: FC<FormProfileProps> = ({
                         type="text"
                         groupClassNames={classNames('col-sm-12 col-md-6')}
                         placeholder="Enter your first name"
-                        inputClassNames={classNames({'is-invalid': errors.name})}
+                        inputClassNames={classNames({ 'is-invalid': errors.name })}
                         innerRef={register({
                             required: 'First name is required',
                         })}
@@ -79,7 +79,7 @@ const FormProfile: FC<FormProfileProps> = ({
                         type="text"
                         groupClassNames={classNames('col-sm-12 col-md-6')}
                         placeholder="Enter last name"
-                        inputClassNames={classNames({'is-invalid': errors.lastName})}
+                        inputClassNames={classNames({ 'is-invalid': errors.lastName })}
                         innerRef={register({
                             required: 'Last name is required',
                         })}
@@ -100,7 +100,7 @@ const FormProfile: FC<FormProfileProps> = ({
                         type="text"
                         groupClassNames={classNames('col-sm-12 col-md-6')}
                         placeholder="Enter your Email"
-                        inputClassNames={classNames({'is-invalid': errors.email})}
+                        inputClassNames={classNames({ 'is-invalid': errors.email })}
                         innerRef={register({
                             required: 'Email is required',
                         })}
@@ -119,7 +119,7 @@ const FormProfile: FC<FormProfileProps> = ({
                         type="text"
                         groupClassNames={classNames('col-sm-12 col-md-6')}
                         placeholder="Enter your address"
-                        inputClassNames={classNames({'is-invalid': errors.address})}
+                        inputClassNames={classNames({ 'is-invalid': errors.address })}
                         innerRef={register({
                             required: 'Address is required',
                         })}
@@ -138,7 +138,7 @@ const FormProfile: FC<FormProfileProps> = ({
                     name="passphrase"
                     type="password"
                     placeholder="Enter your Passphrase"
-                    inputClassNames={classNames({'is-invalid': errors.passphrase})}
+                    inputClassNames={classNames({ 'is-invalid': errors.passphrase })}
                     innerRef={register({
                         minLength: {
                             value: 12,

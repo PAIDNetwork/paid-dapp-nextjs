@@ -1,121 +1,135 @@
+.btn {
+  height: 44px;
+}
+
 .btn-white {
-    background: white;
-    border-radius: 15px;
-    color: $blue-400;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 16px;
-    border-color: white;
-    height: 46px;
+  background: white;
+  border-radius: 15px;
+  color: $blue-400;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  border-color: white;
+  height: 46px;
 }
 
 .btn-transparent {
-    background: transparent;
-    color: $blue-400;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 16px;
-    border-color: transparent;
+  background: transparent;
+  color: $blue-400;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  border-color: transparent;
 }
 
 .btn-transparent-title {
-    background: transparent;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 16px;
-    border-color: transparent;
-    &:focus, &:hover, &:active {
-        background: transparent !important;
-        border-color: transparent !important;
-        box-shadow: none !important;
-    }
+  background: transparent;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  border-color: transparent;
+  &:focus,
+  &:hover,
+  &:active {
+    background: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+  }
 }
 
 .btn-action {
-    background: $orange;
-    color: $white;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 13px;
-    border-color: transparent;
+  background: $orange;
+  color: $white;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  border-color: transparent;
 }
 
 .btn-form {
-    border: none;
-    border-radius: 0.5rem;
-    color: $white;
-    font-size: $btn-font-size;
-    font-weight: 700;
-    height: $btn-form-height-size;
-    width: $btn-form-width-size;
+  border: none;
+  border-radius: 0.5rem;
+  color: $white;
+  font-size: $btn-font-size;
+  font-weight: 700;
+  height: $btn-form-height-size;
+  width: $btn-form-width-size;
 }
 
 .btn-form-img-text-primary {
-    @extend .btn-form;
-    background: $primary;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  @extend .btn-form;
+  background: $primary;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    img {
-        width: 1.25rem;
-        height: 1.25rem;
-    }
+  img {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
 }
 
 .btn-form-save {
-    @extend .btn-form;
-    background: $primary;
-    &:focus, &:hover, &:active {
-        background-color: $pink !important;
-    }
+  @extend .btn-form;
+  background: $primary;
+  &:focus,
+  &:hover,
+  &:active {
+    background-color: $pink !important;
+  }
 }
 
 .btn-link-form-cancel {
-    @extend .btn-form;
-    color: $danger;
-    border: 1px solid $danger;
-    font-size: $btn-font-size;
-    &:focus, &:hover, &:active {
-        text-decoration: none;
-        color: $white;
-        background-color: $pink !important;
-    }
+  @extend .btn-form;
+  color: $danger;
+  border: 1px solid $danger;
+  font-size: $btn-font-size;
+  &:focus,
+  &:hover,
+  &:active {
+    text-decoration: none;
+    color: $white;
+    background-color: $pink !important;
+  }
 }
 
 .btn-close-modal {
-    border: none;
-    padding: 0;
-    img {
-        width: 1.5rem;
-        height: 1.5rem;
-    }
+  border: none;
+  padding: 0;
+  img {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
 }
 
 .btn-green {
-    @extend .btn-form;
+  @extend .btn-form;
+  background: $green;
+  &:focus,
+  &:hover,
+  &:active {
+    background-color: $green-100 !important;
+  }
+  &:disabled {
     background: $green;
-    &:focus, &:hover, &:active {
-        background-color: $green-100 !important;
-    }
-    &:disabled {
-        background: $green;
-        opacity: 0.5;
-    }
+    opacity: 0.5;
+  }
 }
 
 .btn-grey-small {
-    background: $background-color;
-    border: none;
-    border-radius: 0.31rem;
-    color: $blue-400;
-    font-size: 0.625rem;
-    font-weight: bold;
-    line-height: 0.75rem;
-    width: 3.06rem;
-    height: 1.37rem;
-    &:focus, &:hover, &:active {
-        background-color: $grey-100 !important;
-        color: $blue-400 !important;
-    }
+  background: $background-color;
+  border: none;
+  border-radius: 0.31rem;
+  color: $blue-400;
+  font-size: 0.625rem;
+  font-weight: bold;
+  line-height: 0.75rem;
+  width: 3.06rem;
+  height: 1.37rem;
+  &:focus,
+  &:hover,
+  &:active {
+    background-color: $grey-100 !important;
+    color: $blue-400 !important;
+  }
 }
