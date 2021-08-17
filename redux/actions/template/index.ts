@@ -17,7 +17,6 @@ enum contractsTemplates {
 
 interface contractTemplate {
   title: string
-  // interpolationFields: Object;
   template: string
   dataName: string
   jsonSchemas: any
@@ -25,9 +24,9 @@ interface contractTemplate {
 }
 
 const getContractTemplate = (
-  contractName: String,
-  isEditing?: Boolean,
-  agreementReviewed?: Boolean,
+  contractName: string,
+  isEditing?: boolean,
+  agreementReviewed?: boolean,
 ): contractTemplate => {
   let contractTemplate
   let title
@@ -406,7 +405,7 @@ const getContractTemplate = (
 
     case contractsTemplates.TemplateCiia:
       title = 'CONFIDENTIAL INFORMATION AND INVENTION ASSIGNMENT AGREEMENT'
-      contractTemplate = isEditing ? Ciia : agreementReviewed ? Ciia : PlanCiia
+      contractTemplate = isEditing || agreementReviewed ? Ciia : PlanCiia
       dataName = 'ciiaAgreementData'
       jsonSchemas = [
         {
@@ -1216,7 +1215,7 @@ const getContractTemplate = (
           'partyAddress',
           'partyEmail',
           'partyWallet',
-          
+
           'counterPartyName',
           'titleCounterParty',
           'counterPartyAddress',
@@ -1236,7 +1235,7 @@ const getContractTemplate = (
           'aba',
           'payeeAccount',
           'payeeAccountName',
-          
+
           'ethereum',
 
           'bitcoin',
@@ -1303,7 +1302,6 @@ const getContractTemplate = (
   }
   return {
     title,
-    // interpolationFields: findElementsInterpolation(contractTemplate),
     template: contractTemplate,
     dataName,
     jsonSchemas,

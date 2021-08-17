@@ -8,7 +8,6 @@ import AgreementPreviewModal from '@/components/agreements/AgreementPreviewModal
 import AgreementConfirmSignModal from '@/components/agreements/AgreementConfirmSignModal';
 import AgreementAcceptedSuccessModal from '@/components/agreements/AgreementAcceptedSuccessModal';
 import useContract from '../hooks/useContract';
-import AgreementModel from '../models/agreementModel';
 import { agreementStatus } from '../utils/agreement';
 
 const AgreementDetails: React.FC = () => {
@@ -179,24 +178,24 @@ const AgreementDetails: React.FC = () => {
                   </Button>
                   <Button className="btn btn-action mr-2" onClick={onOpenFile}>Open PDF</Button>
                   {(currentAgreement?.data.toSigner === account
-                  && currentAgreement?.event.status === agreementStatus.PENDING_SIGNATURE) && (
-                    <>
-                      <Button
-                        onClick={() => setOpenConfirmDeclineModal(true)}
-                        className="mr-1"
-                        color="danger"
-                      >
-                        Declined
-                      </Button>
-                      <Button
-                        onClick={() => setOpenConfirmSignModal(true)}
-                        className="mr-1"
-                        color="success"
-                      >
-                        Sign Agreement
-                      </Button>
-                    </>
-                  )}
+                    && currentAgreement?.event.status === agreementStatus.PENDING_SIGNATURE) && (
+                      <>
+                        <Button
+                          onClick={() => setOpenConfirmDeclineModal(true)}
+                          className="mr-1"
+                          color="danger"
+                        >
+                          Declined
+                        </Button>
+                        <Button
+                          onClick={() => setOpenConfirmSignModal(true)}
+                          className="mr-1"
+                          color="success"
+                        >
+                          Sign Agreement
+                        </Button>
+                      </>
+                    )}
                 </div>
               </div>
             </Card>

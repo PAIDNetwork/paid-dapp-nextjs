@@ -26,21 +26,17 @@ function useContract() {
   const [networkName, setNetworkName] = useState(null)
   const metamask = (window as any).ethereum
   const binanceWallet = (window as any).BinanceChain
-  let provider
-  let anchorinngAddress
-  let escrowAddress
-  let paidTokenAddress
+  let provider = new ethers.providers.Web3Provider(binanceWallet)
+  let anchorinngAddress = process.env.NEXT_PUBLIC_CONTRACT_ANCHORINNG_ADDRESS
+  let escrowAddress = process.env.NEXT_PUBLIC_CONTRACT_ESCROW_ADDRESS
+  let paidTokenAddress = process.env.NEXT_PUBLIC_CONTRACT_PAID_TOKEN_ADDRESS
   if (connector !== 'bsc') {
     provider = new ethers.providers.Web3Provider(metamask, 'any')
     anchorinngAddress = process.env.NEXT_PUBLIC_CONTRACT_ETH_ADDRESS
     escrowAddress = process.env.NEXT_PUBLIC_CONTRACT_ETH_ESCROW_ADDRESS
     paidTokenAddress = process.env.NEXT_PUBLIC_CONTRACT_ETH_PAID_TOKEN_ADDRESS
-  } else {
-    provider = new ethers.providers.Web3Provider(binanceWallet)
-    anchorinngAddress = process.env.NEXT_PUBLIC_CONTRACT_ANCHORINNG_ADDRESS
-    escrowAddress = process.env.NEXT_PUBLIC_CONTRACT_ESCROW_ADDRESS
-    paidTokenAddress = process.env.NEXT_PUBLIC_CONTRACT_PAID_TOKEN_ADDRESS
   }
+
   useEffect(() => {
     const handleNewWorkName = async () => {
       const network = await ethers.providers.getNetwork(chainId)

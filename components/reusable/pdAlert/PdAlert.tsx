@@ -16,7 +16,6 @@ const PdAlert: React.FC<AlertProps> = ({ className, message, ...props }) => {
       customColorClass = styles.pdBadgeSuccess;
       break;
     default:
-      customColorClass = '';
       break;
   }
   return (
