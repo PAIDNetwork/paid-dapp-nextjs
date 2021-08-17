@@ -63,7 +63,7 @@ const Agreements: React.FC = () => {
         const myDocuments = (await forkedDocuments) || [];
         const ipfsItems = myDocuments.map((myDocument: any) => axios.get(`https://ipfs.io/ipfs/${myDocument.fileHash}`));
         const forkedIpfsItems = forkJoin(ipfsItems).pipe(debounce((x) => x as any)).toPromise();
-        const myIpfsItems = (await forkedIpfsItems) || [];
+        const myIpfsItems = (await forkedIpfsItems).map((item) => item.data) || [];
         let index = 0;
         myDocuments.map((myDocument: any) => {
           const { templateId, metadata } = myDocument;
@@ -94,9 +94,9 @@ const Agreements: React.FC = () => {
             newAgreement.event = {} as EventAgreementModel;
             newAgreement.transactionHash = myEvents[index].transactionHash;
             newAgreement.data.counterpartyName = values[counterPartyNameIndex];
-            newAgreement.data.documentName = myIpfsItems[index]?.value.name;
+            newAgreement.data.documentName = myIpfsItems[index]?.name;
             newAgreement.data.toSigner = myEvents[index].args.recipient;
-            newAgreement.data.fileString = atob(myIpfsItems[index]?.value.content);
+            newAgreement.data.fileString = atob(myIpfsItems[index]?.content);
             newAgreement.event.updatedAt = helper.newFormatDate(new Date());
             newAgreement.event.createdAt = helper.newFormatDate(new Date());
             newAgreement.event.cid = myDocument.fileHash;
