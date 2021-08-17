@@ -136,7 +136,6 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
       data[COUNTER_PARTY_EMAIL_FIELD] = '';
       data[COUNTER_PARTY_ADDRESS_FIELD] = '';
       data[COUNTER_PARTY_WALLET_FIELD] = '';
-      data[COUNTER_PARTY_WALLET_FIELD] = '';
       setAgreementData(data);
     }
   }, [dataName])
