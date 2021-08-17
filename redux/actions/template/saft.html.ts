@@ -1,6 +1,6 @@
 /* eslint-disable no-tabs */
-const Saft = `<div class="contract" style="width: 100%; background-color:white; color: black;"><div style="display: flex; justify-content: center;"><span align="center" class="underline-contract-line" id="customTitle">{{#companyName}}{{companyName}}{{/companyName}}{{^companyName}}[COMPANY NAME]{{/companyName}}</span><p align="center"><strong><div style="display: flex; justify-content: center; background-color:#f79632"><span id="companyName" style="display: none">{{#companyName}}{{companyName}}{{/companyName}}{{^companyName}}[COMPANY NAME]{{/companyName}}</span></div></strong></p></div>
-<p class="western" align="center">
+const Saft = `<div class="contract" style="width: 100%; background-color:white; color: black;"><div style="display: flex; justify-content: center;"><span class="title-center" class="underline-contract-line" id="customTitle">{{#companyName}}{{companyName}}{{/companyName}}{{^companyName}}[COMPANY NAME]{{/companyName}}</span><p class="title-center"><strong><div style="display: flex; justify-content: center; background-color:#f79632"><span id="companyName" style="display: none">{{#companyName}}{{companyName}}{{/companyName}}{{^companyName}}[COMPANY NAME]{{/companyName}}</span></div></strong></p></div>
+<p class="western" class="title-center">
 <div style="text-align: center;">
 <span id="customTitle" style="display: none">{{#customTitle}}{{customTitle}}{{/customTitle}}{{^customTitle}}[CUSTOM TITLE]{{/customTitle}}</span>
 <h1 id="title">SAFT</h1>	
@@ -22,7 +22,7 @@ const Saft = `<div class="contract" style="width: 100%; background-color:white; 
 <p class="western" align="justify">&nbsp;</p>
 <p class="western" align="justify">&ldquo;<em><strong>Discount Price</strong></em>&rdquo; means the product of (i) the Token Price multiplied by (ii) the difference between (a) 100% less (b) the Discount Rate.</p>
 <p class="western" align="justify">&nbsp;</p>
-<p class="western" align="justify">&ldquo;<em><strong>Discount Rate</strong></em>&rdquo; is <div class="underline-contract-line">{{#discountRate}}{{discountRate}}{{/discountRate}}{{^discountRate}}[DISCOUNT RATE]{{/discountRate}}</div>%.</p>
+<p class="western" align="justify">&ldquo;<em><strong>Discount Rate</strong></em>&rdquo; is <span class="underline-contract-line">{{#discountRate}}{{discountRate}}{{/discountRate}}{{^discountRate}}[DISCOUNT RATE]{{/discountRate}}</span>%.</p>
 <p class="western" align="justify">&nbsp;</p>
 <p class="western" align="justify">&ldquo;<em><strong>Dissolution Event</strong></em>&rdquo; means (i) a voluntary termination of operations of the Company, (ii) a general assignment for the benefit of the Company&rsquo;s creditors or (iii) any other liquidation, dissolution or winding up of the Company, whether voluntary or involuntary.</p>
 <p class="western" align="justify">&nbsp;</p>
@@ -32,7 +32,7 @@ const Saft = `<div class="contract" style="width: 100%; background-color:white; 
 <p class="western" align="justify">&nbsp;</p>
 <p class="western" align="justify">&ldquo;<em><strong>Token Price</strong></em>&rdquo; means the highest price per Token sold by the Company to the public during the Network Launch.</p>
 <p class="western" align="justify">3. <em><strong>Company Representations</strong></em></p>
-<p class="western" align="justify">(a) The Company is a <div class="underline-contract-line">{{#typeOfCompany}}{{typeOfCompany}}{{/typeOfCompany}}{{^typeOfCompany}}[TYPE OF COMPANY]{{/typeOfCompany}}</div> duly organized, validly existing and in good standing under the laws of <div class="underline-contract-line">{{#nonUsJurisdiction}}{{nonUsJurisdiction}}{{/nonUsJurisdiction}}{{^nonUsJurisdiction}}[NON-US JURISDICTION]{{/nonUsJurisdiction}}</div>, and has the power and authority to own, lease and operate its properties and carry on its business as now conducted.</p>
+<p class="western" align="justify">(a) The Company is a <span class="underline-contract-line">{{#typeOfCompany}}{{typeOfCompany}}{{/typeOfCompany}}{{^typeOfCompany}}[TYPE OF COMPANY]{{/typeOfCompany}}</span> duly organized, validly existing and in good standing under the laws of <div class="underline-contract-line">{{#nonUsJurisdiction}}{{nonUsJurisdiction}}{{/nonUsJurisdiction}}{{^nonUsJurisdiction}}[NON-US JURISDICTION]{{/nonUsJurisdiction}}</div>, and has the power and authority to own, lease and operate its properties and carry on its business as now conducted.</p>
 <p class="western" align="justify">(b) The execution, delivery and performance by the Company of this instrument is within the power of the Company and, other than with respect to the actions to be taken when Tokens are to be issued to the Purchaser, has been duly authorized by all necessary actions on the part of the Company. This instrument constitutes a legal, valid and binding obligation of the Company, enforceable against the Company in accordance with its terms, except as limited by bankruptcy, insolvency or other laws of general application relating to or affecting the enforcement of creditors&rsquo; rights generally and general principles of equity. To the knowledge of the Company, it is not in violation of (i) its current operating agreement, or (ii) any material indenture or contract to which the Company is a party or by which it is bound, where, in each case, such violation or default, individually, or together with all such violations or defaults, could reasonably be expected to have a material adverse effect on the Company.</p>
 <p class="western" align="justify">(c) To the knowledge of the Company, the performance and consummation of the transactions contemplated by this instrument do not and will not: (i) violate any material judgment, statute, rule or regulation applicable to the Company; (ii) result in the acceleration of any material indenture or contract to which the Company is a party or by which it is bound; or (iii) result in the creation or imposition of any lien upon any property, asset or revenue of the Company or the suspension, forfeiture, or nonrenewal of any material permit, license or authorization applicable to the Company, its business or operations.</p>
 <p class="western" align="justify">(d) No consents or approvals are required in connection with the performance of this instrument, other than: (i) the Company&rsquo;s corporate approvals; and (ii) any qualifications or filings under applicable securities laws.</p>
@@ -58,9 +58,9 @@ const Saft = `<div class="contract" style="width: 100%; background-color:white; 
 <p class="western" align="justify">&nbsp;</p>
 <p class="western" align="justify">(e) In the event any one or more of the provisions of this instrument is for any reason held to be invalid, illegal or unenforceable, in whole or in part or in any respect, or in the event that any one or more of the provisions of this instrument operate or would prospectively operate to invalidate this instrument, then and in any such event, such provision(s) only will be deemed null and void and will not affect any other provision of this instrument and the remaining provisions of this instrument will remain operative and in full force and effect and will not be affected, prejudiced, or disturbed thereby.</p>
 <p class="western" align="justify">&nbsp;</p>
-<p class="western" align="justify">(f) All rights and obligations hereunder will be governed by the laws of <div class="underline-contract-line">{{#jurisdiction}}{{jurisdiction}}{{/jurisdiction}}{{^jurisdiction}}[JURISDICTION]{{/jurisdiction}}</div>, without regard to the conflicts of law provisions of such jurisdiction.</p>
+<p class="western" align="justify">(f) All rights and obligations hereunder will be governed by the laws of <span class="underline-contract-line">{{#jurisdiction}}{{jurisdiction}}{{/jurisdiction}}{{^jurisdiction}}[JURISDICTION]{{/jurisdiction}}</span>, without regard to the conflicts of law provisions of such jurisdiction.</p>
 <p class="western">&nbsp;</p>
-<p class="western" align="center">(<em>Signature page follows</em>)</p>
+<p class="western" class="title-center">(<em>Signature page follows</em>)</p>
 <p class="western"><strong>IN WITNESS WHEREOF</strong>, the undersigned have caused this instrument to be duly executed and delivered.</p>
 <p class="western">&nbsp;</p>
 <div class="party-signs-right">
@@ -83,11 +83,11 @@ const Saft = `<div class="contract" style="width: 100%; background-color:white; 
 <p class="western">&nbsp;</p>
 <p class="western">&nbsp;</p>
 </div>
-<p class="western" align="center">&nbsp;</p>
-<p class="western" align="center"><u><strong>EXHIBIT A</strong></u></p>
-<p class="western" align="center">&nbsp;</p>
-<p class="western" align="center"><span style="font-size: large;"><strong>Payment Instructions</strong></span></p>
-<p class="western" align="center">&nbsp;</p>
+<p class="western" class="title-center">&nbsp;</p>
+<p class="western" class="title-center"><u><strong>EXHIBIT A</strong></u></p>
+<p class="western" class="title-center">&nbsp;</p>
+<p class="western" class="title-center"><span style="font-size: large;"><strong>Payment Instructions</strong></span></p>
+<p class="western" class="title-center">&nbsp;</p>
 <p class="western"><strong>For payments by U.S. Dollars, please remit payment using the following wire information: </strong></p>
 <p class="western">&nbsp;</p>
 <p class="western">Bank Name: <div class="underline-contract-line">{{#bankName}}{{bankName}}{{/bankName}}{{^bankName}}[BANK NAME]{{/bankName}}</div></p>
