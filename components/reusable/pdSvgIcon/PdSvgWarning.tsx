@@ -1,14 +1,9 @@
 import React from 'react';
 
 const PdSvgWarning = ({ className, color }) => {
-  let customColor = '';
-  switch (color) {
-    case 'danger':
-      customColor = '#da1e5e';
-      break;
-    default:
-      customColor = color;
-      break;
+  let customColor = color;
+  if (color === 'danger') {
+    customColor = '#da1e5e';
   }
 
   return (

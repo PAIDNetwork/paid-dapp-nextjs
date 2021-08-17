@@ -75,7 +75,7 @@ const AccountModal: FC<AccountModalProps> = ({
   }, [profile]);
 
   return (
-    <PdModal isOpen={open}>
+    <PdModal isOpen={open} id="account-modal-content">
       <PdModalBody className="account-pd-modal">
         <h1>Create your PAID account</h1>
         <p>Create your DID account to start using PAID Smart Agreements</p>

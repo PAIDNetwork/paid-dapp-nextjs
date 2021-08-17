@@ -37,6 +37,14 @@ const Index: React.FC = () => {
       <Head>
         <title>Paid-Dapp</title>
         <link rel="icon" href="/assets/icon/.ico" />
+        <link
+          href="https://fontlibrary.org//face/open-sauce-one"
+          rel="stylesheet"
+        />
+        <link
+          href="https://fonts.googleapis.com/css?family=Roboto"
+          rel="stylesheet"
+        />
         <noscript>
           <iframe
             title="googletagmanager"

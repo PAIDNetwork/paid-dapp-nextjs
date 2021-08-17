@@ -13,7 +13,6 @@ import { debounce } from 'rxjs/operators';
 import ProfileStateModel from '@/models/profileStateModel';
 import dataAgreementModel from '@/models/dataAgreementModel';
 import EventAgreementModel from '@/models/eventAgreementModel';
-import { any } from 'prop-types';
 import classNames from 'classnames';
 import getContractTemplate from '../redux/actions/template';
 import Table from '../components/agreements/Table';

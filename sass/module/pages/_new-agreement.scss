@@ -52,7 +52,7 @@
     line-height: 30px;
     color: $blue-800;
   }
-  
+
   .modal-agreement-sub-title {
     font-family: Circular Std !important;
     font-style: normal !important;
@@ -72,7 +72,7 @@
   }
 
   span {
-    color: #DA1E5E !important;
+    color: #da1e5e !important;
   }
 
   .btn-confirm-modal {
@@ -84,9 +84,32 @@
     background: transparent;
     border: none;
   }
-
 }
 
 .review-agree-modal {
   max-width: 750px;
+}
+
+.contract {
+  width: 100%;
+  background-color: white;
+  color: black !important;
+  padding: 4%;
+
+  p {
+    color: black !important;
+  }
+
+  .party-signs-right {
+    padding-left: 52%;
+  }
+
+  .underline-contract-line  {
+    display: inline-block;
+    border-radius: 12px;
+    padding-left: 7px;
+    padding-right: 7px;
+    background: linear-gradient(90deg, rgba(218,30,94,0.7) 22%, rgba(246,147,34,0.8) 83%);
+  }
+
 }
