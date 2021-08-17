@@ -12,13 +12,10 @@ import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import classNames from 'classnames';
 import { Button, Card, Tooltip } from 'reactstrap';
-import { format } from 'date-fns';
 import ProfileStateModel from '@/models/profileStateModel';
 import PreviewDocument from '@/components/new-agreement/PreviewDocument';
 import { setAgreementReviewed, setIsEditing } from 'redux/actions';
-import AgreementModel from '@/models/agreementModel';
 import templateAgreements from 'data/templateAgreements';
-import { createAgreement } from 'redux/actions/agreement';
 import useContract from 'hooks/useContract';
 import { useWallet } from 'react-binance-wallet';
 import { IPLDManager } from 'xdv-universal-wallet-core';
@@ -35,9 +32,6 @@ import {
   resetTemplateAgreement,
 } from '../redux/actions/smartAgreement';
 import {
-  agreementStatus,
-  AGREEMENT_TITLE_FIELD,
-  AGREEMENT_CREATE_DATE_FIELD,
   PARTY_ADDRESS_FIELD,
   PARTY_EMAIL_FIELD,
   PARTY_NAME_FIELD,
@@ -292,7 +286,6 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
       setAgreementError(error.error);
       setOpenAlertModal(true);
     }
-    // dispatch(createAgreement(newAgreement));
   };
 
   const confirmDocument = () => {
