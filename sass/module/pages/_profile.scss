@@ -8,3 +8,23 @@
     }
   }
 }
+.display-none-passphrase {
+  display: none;
+}
+
+.profileImage {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #512DA8;
+  font-size: 16px;
+  color: #fff;
+  text-align: center;
+  line-height: 50px;
+  margin-left: 5px;
+  text-transform: uppercase;
+}
+
+.padding-card{
+  padding-top:5px;
+}

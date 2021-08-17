@@ -1,43 +1,67 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
-import { NextRouter, useRouter } from 'next/router';
-
 import { Button } from 'reactstrap';
-import { useDispatch } from 'react-redux';
-import ConnectSelectorModal from '@/components/connect/ConnectSelectorModal';
+import TagManager from 'react-gtm-module';
+import { useDispatch, useSelector } from 'react-redux';
+import WalletSelectorModal from '@/components/connect/WalletSelectorModal';
 import doConnectToWallet from '../redux/actions/wallet';
 
 const Index: React.FC = () => {
-  const router: NextRouter = useRouter();
   const dispatch = useDispatch();
-
   const [openConnectSelector, setOpenConnectSelector] = useState(false);
 
-  const onConnect = (optionSelected) => {
-    dispatch(doConnectToWallet({ router, scenarioCode: optionSelected }));
-    setOpenConnectSelector(false);
+  const onConnect = async (provider) => {
+    dispatch(doConnectToWallet(provider));
   };
 
   const onOpenConnectSelector = () => {
     setOpenConnectSelector(true);
   };
 
-  const onCloseConnectSelector = () => {
-    setOpenConnectSelector(false);
-  };
+  const currentWallet = useSelector(
+    (state: { walletReducer: any }) => state?.walletReducer.currentWallet,
+  );
+
+  useEffect(() => {
+    TagManager.initialize({ gtmId: 'GTM-5KG4364' });
+  }, []);
+
+  useEffect(() => {
+    if (currentWallet) {
+      setOpenConnectSelector(false);
+    }
+  }, [currentWallet]);
 
   return (
     <>
       <Head>
         <title>Paid-Dapp</title>
         <link rel="icon" href="/assets/icon/.ico" />
+        <link
+          href="https://fontlibrary.org//face/open-sauce-one"
+          rel="stylesheet"
+        />
+        <link
+          href="https://fonts.googleapis.com/css?family=Roboto"
+          rel="stylesheet"
+        />
+        <noscript>
+          <iframe
+            title="googletagmanager"
+            src="https://www.googletagmanager.com/ns.html?id=GTM-5KG4364"
+            height="0"
+            width="0"
+            style={{ display: 'none', visibility: 'hidden' }}
+          />
+        </noscript>
       </Head>
+
       <div className="index m-0 p-0 container-fluid">
         <div className="row h-100  justify-content-center align-items-center">
           <div className="col-12 text-center">
             <img
               className="logo d-block mx-auto pb-4"
-              src="/assets/images/logo.png"
+              src="/assets/images/logo.svg"
               alt=""
             />
             <Button color="danger" onClick={() => onOpenConnectSelector()}>
@@ -55,9 +79,8 @@ const Index: React.FC = () => {
             </p>
           </div>
         </div>
-        <ConnectSelectorModal
+        <WalletSelectorModal
           open={openConnectSelector}
-          onClose={onCloseConnectSelector}
           onConnect={onConnect}
         />
       </div>

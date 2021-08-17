@@ -4,13 +4,12 @@ kind: Service
 metadata:
   name: paid-dapp-nextjs
   labels:
-    app: dapp-nextjs
-  namespace: paid-nextjs
+    app: dapp
 spec:
   ports:
     - protocol: TCP
       port: 80
       targetPort: 3000
   selector:
-    app: dapp-nextjs
+    app: dapp
   type: LoadBalancer

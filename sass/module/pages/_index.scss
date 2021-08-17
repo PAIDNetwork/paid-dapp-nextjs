@@ -48,3 +48,20 @@
     }
   }
 }
+#account-modal-content {
+  .modal-content {
+    border-radius: 20px;
+  }
+  .account-pd-modal {
+    padding: 40px 60px;
+    border-radius: 20px;
+    p {
+      margin-top: 15px;
+      font-family: "OpenSauceOneRegular";
+      font-size: 18px !important;
+      line-height: 23px;
+      text-align: initial !important;
+    }
+  }
+}
+

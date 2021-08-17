@@ -1,8 +1,16 @@
 import AgreementModel from '@/models/agreementModel';
-import agreementsData from '../../data/agreements';
 import AgreementActionTypes from '../actionTypes/agreement';
 
-const loadAgreements = () => (dispatch: any) => {
+const getAgreementInfoByIpfs = (ipfsContent: string) => {
+  const doc = new global.DOMParser().parseFromString(ipfsContent, 'text/html');
+  const documentName = doc.querySelector('#customTitle')?.textContent ?? '';
+  const partyAName = doc.querySelector('#partyName')?.textContent ?? '';
+  const partyBName = doc.querySelector('#counterPartyName')?.textContent ?? '';
+
+  return { documentName, partyAName, partyBName };
+};
+
+const loadAgreements = (agreementsData: Array<any>) => (dispatch: any) => {
   dispatch({
     type: AgreementActionTypes.LOAD_AGREEMENTS,
     payload: { agreements: agreementsData },
@@ -28,9 +36,13 @@ export const setAgreementReviewed = (agreementReviewed: boolean) => (
 export const createAgreement = (newAgreement: AgreementModel) => (
   dispatch: any,
 ) => {
+  const agreementInfo = getAgreementInfoByIpfs(newAgreement.data.fileString);
+  const newAgreementData = newAgreement;
+  newAgreementData.data.documentName = agreementInfo.documentName;
+  newAgreementData.data.counterpartyName = agreementInfo.partyBName;
   dispatch({
     type: AgreementActionTypes.CREATE_AGREEMENT,
-    payload: { newAgreement },
+    payload: { newAgreement: newAgreementData },
   });
 };
 

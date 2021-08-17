@@ -1,0 +1,94 @@
+/*Connext widget CSS Customization*/
+/* Modal */
+section #modalContent {
+  border: 0px !important;
+  background-color: #fff !important;
+}
+
+/*Modal title */
+#modalContent > header p{
+  color: #110252 !important;
+  text-transform: none !important;
+  font-size: 30px !important;
+}
+
+
+div[spacing="1"] p {
+  color: #110252 !important;
+  font-size: 15px !important;
+  font-weight: bold !important;
+  text-align: left !important;
+}
+
+#modalContent input{
+  background-color: #F4F5F7 !important;
+  color: #9D9CB2 !important;
+  margin-right: 5px;
+}
+
+
+#modalContent header button{
+  background-color: #fff !important;
+  color: #110252 !important;
+}
+
+hr{
+  color: #E6E6EB;
+}
+
+
+div[spacing="4"] > div > div > p {
+  color: #110252 !important;
+  font-size: 15px !important;
+  font-weight: bold !important;
+  text-align: left !important;
+}
+
+
+p{
+  color: #9D9CB2;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  text-align: justify !important;
+}
+
+
+section#modalContent > div:nth-child(3){
+  display: none !important;
+}
+
+a{
+  text-decoration: none !important;
+}
+
+a > p{
+  
+  color: #110252 !important;
+}
+
+#modalContent img{
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+
+.div:before {
+  display:none !important;
+  content: "Powered by Connext"
+}
+
+button[aria-label='Clipboard']{
+  background-color: #FFF !important;
+  color: #000 !important;
+  border: 1px solid #000 !important;
+}
+
+div:has(input){
+  background-color: #E6E6EB !important;
+}
+
+
+
+div[spacing="1"] > div:nth-child(2) {
+  background-color:#F4F5F7 !important;
+}

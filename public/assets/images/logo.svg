@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 25.2.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 732.06 300" style="enable-background:new 0 0 732.06 300;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:url(#SVGID_1_);}
+	.st1{fill:url(#SVGID_2_);}
+	.st2{fill:#E3007D;}
+	.st3{fill:#FFFFFF;}
+</style>
+<g>
+	<g>
+		
+			<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="628.7112" y1="-1940.1371" x2="628.7112" y2="-2240.137" gradientTransform="matrix(-1 0 0 -1 1228.0641 -1940.1371)">
+			<stop  offset="0" style="stop-color:#E6A13C"/>
+			<stop  offset="1" style="stop-color:#C73C6B"/>
+		</linearGradient>
+		<polygon class="st0" points="592.85,0 605.85,0 605.85,300 592.85,300 		"/>
+	</g>
+	<g>
+		
+			<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="668.5511" y1="-1940.1371" x2="668.5511" y2="-2240.137" gradientTransform="matrix(-1 0 0 -1 1228.0641 -1940.1371)">
+			<stop  offset="0" style="stop-color:#E6A13C"/>
+			<stop  offset="1" style="stop-color:#C73C6B"/>
+		</linearGradient>
+		<polygon class="st1" points="553.01,0 566.01,0 566.01,300 553.01,300 		"/>
+	</g>
+	<circle class="st2" cx="709.78" cy="245.65" r="22.28"/>
+	<g>
+		<rect x="409.08" y="32.07" class="st3" width="19.22" height="235.86"/>
+		<path class="st3" d="M81.78,32.07H19.22H9.61H0v235.86h19.22v-90.75h62.56c40.01,0,72.55-32.55,72.55-72.55
+			C154.34,64.62,121.79,32.07,81.78,32.07z M81.78,157.96H19.22V51.29h62.56c29.41,0,53.33,23.92,53.33,53.33
+			C135.12,134.03,111.19,157.96,81.78,157.96z"/>
+		<path class="st3" d="M575.89,32.07h-69.97h-9.61h-9.61v235.86h9.61h9.61h69.97c65.02,0,117.93-52.9,117.93-117.93
+			C693.82,84.97,640.92,32.07,575.89,32.07z M575.89,248.71h-69.97V51.29h69.97c54.42,0,98.7,44.28,98.7,98.71
+			S630.32,248.71,575.89,248.71z"/>
+		<path class="st3" d="M342.56,177.67l-65.1-139.45l-2.87-6.15h-15.47l-2.87,6.15l-65.1,139.45l-8.98,19.22l-33.17,71.04h21.22
+			l33.17-71.04h126.96l33.17,71.04h21.21l-33.17-71.04L342.56,177.67z M212.35,177.67l54.5-116.73l54.51,116.73H212.35z"/>
+	</g>
+</g>
+</svg>

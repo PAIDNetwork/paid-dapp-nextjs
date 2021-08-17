@@ -1,9 +1,17 @@
-interface ProfileModel {
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  address?: string;
-  phone?: string;
+interface ProfileModel extends WalletExtend {
+  name?: string
+  lastName?: string
+  passphrase?: string
+  did?: any
+  created?: string
+  confirmPassphrase?: string
+  email?: string
+  address?: string
 }
 
-export default ProfileModel;
+interface WalletExtend {
+  profileName?: string
+  walletId?: string
+}
+
+export default ProfileModel

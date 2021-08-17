@@ -4,12 +4,9 @@
   }
   .hambunguer {
     margin-left: 5px;
+    margin-top: -10px;
     cursor: pointer;
-    display: block;
-
-    @media screen and (min-width: 1024px) {
-      display: none !important;
-    }
+    display: block;    
   }
 
   .content {
@@ -33,7 +30,50 @@
       height: 646px;
       background: #f4f5f7;
       border-radius: 15px;
+      margin-top: -20px;
     }
+  }
+  .contract-status-no-filter {
+    justify-content: center;
+    align-items: center;
+    padding: 10px 30px;
+    width: 273.5px;
+    height: 38px;
+    background: #EEEDF2;
+    border: none;
+  }
+  .contract-status-filter {
+    justify-content: center;
+    align-items: center;
+    padding: 10px 30px;
+    width: 273.5px;
+    height: 38px;
+    background: #FFFFFF;
+    border: none;
+  }
+  .search-input {
+    width: 321px;
+  }
+  .circle-contract-status {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%
+  }
+  .contract-status-value {
+    font-family: Circular Std;
+    font-style: normal;
+    font-weight: 450;
+    font-size: 14px;
+    color: #9D9CB2;
+  }
+  .circle-contract-status-declined {
+    background: #DA1E5E;
+  }
+  .circle-contract-status-peding {
+    background: #017EFA;
+  }
+  .circle-contract-status-signed {
+    background: #48BC33;
   }
 }
 
@@ -57,6 +97,62 @@
     @include modal-content;
     min-height: 523px;
     width: 616px;
+    top: 15vh;
+  }
+  .modal-header {
+    @include modal-header;
+    .info {
+      font-size: 14px;
+      line-height: 18px;
+      font-weight: normal;
+      color: $blue-600;
+      opacity: 0.5;
+    }
+  }
+
+  .modal-body {
+    .status {
+      .title {
+        font-weight: 500;
+        font-size: 14px;
+        color: $primary;
+      }
+    }
+    .details {
+      .info {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 20px;
+        color: $primary;
+      }
+      .title {
+        color: $blue-600;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 18px;
+      }
+      .value {
+        font-weight: 500;
+        font-size: 14px;
+        color: $primary;
+        word-wrap: break-word;
+      }
+    }
+    .buttons {
+      button {
+        width: 172px;
+      }
+    }
+  }
+}
+
+
+.confirm-sign-agreement-modal {
+  .modal-content {
+    @include modal-content;
+    height: 270px;
+    width: 416px;
     top: 15vh;
   }
   .modal-header {

@@ -15,7 +15,8 @@
           "map" : [
             ["@/components", "./components/"],
             ["@/pages/*", "./sass/module/pages/"],
-            ["@/pdComponents","./components/reusable/"]
+            ["@/pdComponents","./components/reusable/"],
+            ["@/models","./models/"]
           ],
           "extensions": [".js", ".jsx", ".ts", ".tsx"]
         }
@@ -43,6 +44,7 @@
       "@typescript-eslint/no-shadow": ["error"],
       "@typescript-eslint/no-unused-vars": "error",
       "react/prop-types": "off",
+      "react/require-default-props": "off",
       "react/jsx-props-no-spreading": "off"
     },
     "globals": {

@@ -1,4 +1,5 @@
 interface NdaAgreementData {
+  customTitle: string;
   partyName: string;
   partyEmail: string;
   partyAddress: string;

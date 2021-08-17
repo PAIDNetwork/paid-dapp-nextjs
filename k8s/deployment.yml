@@ -2,24 +2,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: paid-dapp
+  name: paid-dapp-nextjs
   labels:
-    app: dapp-nextjs
-  namespace: paid-nextjs
+    app: dapp
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: dapp-nextjs
+      app: dapp
   strategy:
     type: RollingUpdate
   template:
     metadata:
       labels:
-        app: dapp-nextjs
+        app: dapp
     spec:
       containers:
-        - image: gcr.io/vivid-plateau-278712/paid-dapp:paid-main-nextjs-app-latest
+        - image: gcr.io/paid-network-202104/paid-dapp-nextjs:develop-latest
+          imagePullPolicy: Always
           name: dapp
           ports:
             - containerPort: 3000

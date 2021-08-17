@@ -10,4 +10,106 @@
       }
     }
   }
+  .title-agreement {
+    cursor: pointer;
+  }
+  .title-input {
+    width: 59%;
+    height: 45px;
+  }
+  .input-new-agreement {
+    background: white;
+    border-radius: 15px;
+    color: black;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    border: none;
+    height: 46px;
+    outline: white;
+  }
+  .accept-title-btn {
+    height: 2.75rem;
+    width: 10.75rem;
+  }
+  .btn-new-agreement {
+    display: flex;
+    height: 34px;
+    align-items: center;
+    background: white;
+  }
+}
+
+.confirm-agreement-modal {
+  .confirm-agreement-modal-body {
+    padding: 30px;
+  }
+  .modal-agreement-title {
+    font-family: Circular Std;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 30px;
+    color: $blue-800;
+  }
+
+  .modal-agreement-sub-title {
+    font-family: Circular Std !important;
+    font-style: normal !important;
+    font-weight: bold !important;
+    font-size: 18px !important;
+    line-height: 23px !important;
+    color: $blue-800 !important;
+  }
+
+  .modal-agreement-text {
+    font-family: Circular Std !important;
+    font-style: normal !important;
+    font-weight: 450 !important;
+    font-size: 14px !important;
+    line-height: 18px !important;
+    color: $blue-800 !important;
+  }
+
+  span {
+    color: #da1e5e !important;
+  }
+
+  .btn-confirm-modal {
+    width: 357px;
+    height: 48px;
+  }
+
+  .btn-review-pdf {
+    background: transparent;
+    border: none;
+  }
+}
+
+.review-agree-modal {
+  max-width: 750px;
+}
+
+.contract {
+  width: 100%;
+  background-color: white;
+  color: black !important;
+  padding: 4%;
+
+  p {
+    color: black !important;
+  }
+
+  .party-signs-right {
+    padding-left: 52%;
+  }
+
+  .underline-contract-line  {
+    display: inline-block;
+    border-radius: 12px;
+    padding-left: 7px;
+    padding-right: 7px;
+    background: linear-gradient(90deg, rgba(218,30,94,0.7) 22%, rgba(246,147,34,0.8) 83%);
+  }
+
 }

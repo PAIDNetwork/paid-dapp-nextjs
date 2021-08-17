@@ -6,7 +6,7 @@ orbs:
   slack: circleci/slack@3.4.2
 jobs:
 
-  build:
+  build-dev:
     machine:
       image: ubuntu-1604:202007-01
       docker_layer_caching: true
@@ -20,11 +20,56 @@ jobs:
       - gcp-gcr/build-image:
           image: $CIRCLE_PROJECT_REPONAME
           extra_build_args: "--target build
-            --build-arg REACT_APP_WEB3_WSS=$REACT_APP_WEB3_WSS
-            --build-arg REACT_APP_RECIPIENT_ERC20_TOKEN=$REACT_APP_RECIPIENT_ERC20_TOKEN
-            --build-arg REACT_APP_PAYMENTS_PAID_TOKEN=$REACT_APP_PAYMENTS_PAID_TOKEN
-            --build-arg REACT_APP_WAKU_SERVER=$REACT_APP_WAKU_SERVER
-            --build-arg REACT_APP_IPFS_PAID_HOST=$REACT_APP_IPFS_PAID_HOST"
+            --build-arg NEXT_PUBLIC_WITHDRAWALADDRESS=$NEXT_PUBLIC_WITHDRAWALADDRESS_DEV
+            --build-arg NEXT_PUBLIC_ROUTERPUBLICIDENTIFIER=$NEXT_PUBLIC_ROUTERPUBLICIDENTIFIER_DEV
+            --build-arg NEXT_PUBLIC_DEPOSITASSETID=$NEXT_PUBLIC_DEPOSITASSETID_DEV
+            --build-arg NEXT_PUBLIC_DEPOSITCHAINPROVIDER=$NEXT_PUBLIC_DEPOSITCHAINPROVIDER_DEV
+            --build-arg NEXT_PUBLIC_WITHDRAWASSETID=$NEXT_PUBLIC_WITHDRAWASSETID_DEV
+            --build-arg NEXT_PUBLIC_WITHDRAWCHAINPROVIDER=$NEXT_PUBLIC_WITHDRAWCHAINPROVIDER_DEV
+            --build-arg=NEXT_PUBLIC_RPC_URL=${NEXT_PUBLIC_RPC_URL_DEV}
+            --build-arg=NEXT_PUBLIC_CONTRACT_ANCHORINNG_ADDRESS=${NEXT_PUBLIC_CONTRACT_ANCHORINNG_ADDRESS_DEV}
+            --build-arg=NEXT_PUBLIC_CONTRACT_ESCROW_ADDRESS=${NEXT_PUBLIC_CONTRACT_ESCROW_ADDRESS_DEV}
+            --build-arg=NEXT_PUBLIC_CONTRACT_PAID_TOKEN_ADDRESS=${NEXT_PUBLIC_CONTRACT_PAID_TOKEN_ADDRESS_DEV}
+            --build-arg=NEXT_PUBLIC_CONTRACT_ANCHORINNG_BLOCK=${NEXT_PUBLIC_CONTRACT_ANCHORINNG_BLOCK_DEV}
+            --build-arg=NEXT_PUBLIC_CHAIN_ID=${NEXT_PUBLIC_CHAIN_ID_DEV}
+            --build-arg=NEXT_PUBLIC_CONTRACT_ETH_ADDRESS=${NEXT_PUBLIC_CONTRACT_ETH_ADDRESS_DEV}
+            --build-arg=NEXT_PUBLIC_CONTRACT_ETH_ESCROW_ADDRESS=${NEXT_PUBLIC_CONTRACT_ETH_ESCROW_ADDRESS_DEV}
+            --build-arg=NEXT_PUBLIC_CONTRACT_ETH_PAID_TOKEN_ADDRESS=${NEXT_PUBLIC_CONTRACT_ETH_PAID_TOKEN_ADDRESS_DEV}
+            --build-arg=NEXT_PUBLIC_IPFS_URL=${NEXT_PUBLIC_IPFS_URL_DEV}"
+          tag: "$CIRCLE_BRANCH-$CIRCLE_SHA1"
+      - slack/status:
+          fail_only: true
+
+  build-prod:
+    machine:
+      image: ubuntu-1604:202007-01
+      docker_layer_caching: true
+    steps:
+      - checkout
+      - run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - run:
+          name: Replace the backslash for a hyphen if the CIRCLE_BRANCH is a feature, release or hotfix branch.
+          command: |
+            echo "export CIRCLE_BRANCH=$( echo ${CIRCLE_BRANCH} | sed 's_/_-_' )" >> $BASH_ENV
+      - gcp-gcr/build-image:
+          image: $CIRCLE_PROJECT_REPONAME
+          extra_build_args: "--target build
+            --build-arg NEXT_PUBLIC_WITHDRAWALADDRESS=$NEXT_PUBLIC_WITHDRAWALADDRESS_PROD
+            --build-arg NEXT_PUBLIC_ROUTERPUBLICIDENTIFIER=$NEXT_PUBLIC_ROUTERPUBLICIDENTIFIER_PROD
+            --build-arg NEXT_PUBLIC_DEPOSITASSETID=$NEXT_PUBLIC_DEPOSITASSETID_PROD
+            --build-arg NEXT_PUBLIC_DEPOSITCHAINPROVIDER=$NEXT_PUBLIC_DEPOSITCHAINPROVIDER_PROD
+            --build-arg NEXT_PUBLIC_WITHDRAWASSETID=$NEXT_PUBLIC_WITHDRAWASSETID_PROD
+            --build-arg NEXT_PUBLIC_WITHDRAWCHAINPROVIDER=$NEXT_PUBLIC_WITHDRAWCHAINPROVIDER_PROD
+            --build-arg=NEXT_PUBLIC_RPC_URL=${NEXT_PUBLIC_RPC_URL_PROD}
+            --build-arg=NEXT_PUBLIC_CONTRACT_ANCHORINNG_ADDRESS=${NEXT_PUBLIC_CONTRACT_ANCHORINNG_ADDRESS_PROD}
+            --build-arg=NEXT_PUBLIC_CONTRACT_ESCROW_ADDRESS=${NEXT_PUBLIC_CONTRACT_ESCROW_ADDRESS_PROD}
+            --build-arg=NEXT_PUBLIC_CONTRACT_PAID_TOKEN_ADDRESS=${NEXT_PUBLIC_CONTRACT_PAID_TOKEN_ADDRESS_PROD}
+            --build-arg=NEXT_PUBLIC_CONTRACT_ANCHORINNG_BLOCK=${NEXT_PUBLIC_CONTRACT_ANCHORINNG_BLOCK_PROD}
+            --build-arg=NEXT_PUBLIC_CHAIN_ID=${NEXT_PUBLIC_CHAIN_ID_PROD}
+            --build-arg=NEXT_PUBLIC_CONTRACT_ETH_ADDRESS=${NEXT_PUBLIC_CONTRACT_ETH_ADDRESS_PROD}
+            --build-arg=NEXT_PUBLIC_CONTRACT_ETH_ESCROW_ADDRESS=${NEXT_PUBLIC_CONTRACT_ETH_ESCROW_ADDRESS_PROD}
+            --build-arg=NEXT_PUBLIC_CONTRACT_ETH_PAID_TOKEN_ADDRESS=${NEXT_PUBLIC_CONTRACT_ETH_PAID_TOKEN_ADDRESS_PROD}
+            --build-arg=NEXT_PUBLIC_IPFS_URL=${NEXT_PUBLIC_IPFS_URL_PROD}"
           tag: "$CIRCLE_BRANCH-$CIRCLE_SHA1"
       - slack/status:
           fail_only: true
@@ -39,7 +84,7 @@ jobs:
       - checkout
       - sonarcloud/scan
 
-  publish:
+  publish-dev:
     machine:
       image: ubuntu-1604:202007-01
       docker_layer_caching: true
@@ -53,11 +98,22 @@ jobs:
       - gcp-gcr/build-image:
           image: "$CIRCLE_PROJECT_REPONAME"
           extra_build_args: "--target production
-            --build-arg REACT_APP_WEB3_WSS=$REACT_APP_WEB3_WSS
-            --build-arg REACT_APP_RECIPIENT_ERC20_TOKEN=$REACT_APP_RECIPIENT_ERC20_TOKEN
-            --build-arg REACT_APP_PAYMENTS_PAID_TOKEN=$REACT_APP_PAYMENTS_PAID_TOKEN
-            --build-arg REACT_APP_WAKU_SERVER=$REACT_APP_WAKU_SERVER
-            --build-arg REACT_APP_IPFS_PAID_HOST=$REACT_APP_IPFS_PAID_HOST"
+            --build-arg NEXT_PUBLIC_WITHDRAWALADDRESS=$NEXT_PUBLIC_WITHDRAWALADDRESS_DEV
+            --build-arg NEXT_PUBLIC_ROUTERPUBLICIDENTIFIER=$NEXT_PUBLIC_ROUTERPUBLICIDENTIFIER_DEV
+            --build-arg NEXT_PUBLIC_DEPOSITASSETID=$NEXT_PUBLIC_DEPOSITASSETID_DEV
+            --build-arg NEXT_PUBLIC_DEPOSITCHAINPROVIDER=$NEXT_PUBLIC_DEPOSITCHAINPROVIDER_DEV
+            --build-arg NEXT_PUBLIC_WITHDRAWASSETID=$NEXT_PUBLIC_WITHDRAWASSETID_DEV
+            --build-arg NEXT_PUBLIC_WITHDRAWCHAINPROVIDER=$NEXT_PUBLIC_WITHDRAWCHAINPROVIDER_DEV
+            --build-arg=NEXT_PUBLIC_RPC_URL=${NEXT_PUBLIC_RPC_URL_DEV}
+            --build-arg=NEXT_PUBLIC_CONTRACT_ANCHORINNG_ADDRESS=${NEXT_PUBLIC_CONTRACT_ANCHORINNG_ADDRESS_DEV}
+            --build-arg=NEXT_PUBLIC_CONTRACT_ESCROW_ADDRESS=${NEXT_PUBLIC_CONTRACT_ESCROW_ADDRESS_DEV}
+            --build-arg=NEXT_PUBLIC_CONTRACT_PAID_TOKEN_ADDRESS=${NEXT_PUBLIC_CONTRACT_PAID_TOKEN_ADDRESS_DEV}
+            --build-arg=NEXT_PUBLIC_CONTRACT_ANCHORINNG_BLOCK=${NEXT_PUBLIC_CONTRACT_ANCHORINNG_BLOCK_DEV}
+            --build-arg=NEXT_PUBLIC_CHAIN_ID=${NEXT_PUBLIC_CHAIN_ID_DEV}
+            --build-arg=NEXT_PUBLIC_CONTRACT_ETH_ADDRESS=${NEXT_PUBLIC_CONTRACT_ETH_ADDRESS_DEV}
+            --build-arg=NEXT_PUBLIC_CONTRACT_ETH_ESCROW_ADDRESS=${NEXT_PUBLIC_CONTRACT_ETH_ESCROW_ADDRESS_DEV}
+            --build-arg=NEXT_PUBLIC_CONTRACT_ETH_PAID_TOKEN_ADDRESS=${NEXT_PUBLIC_CONTRACT_ETH_PAID_TOKEN_ADDRESS_DEV}
+            --build-arg=NEXT_PUBLIC_IPFS_URL=${NEXT_PUBLIC_IPFS_URL_DEV}"
           tag: "$CIRCLE_BRANCH-$CIRCLE_SHA1"
       - gcp-gcr/gcr-auth
       - gcp-gcr/push-image:
@@ -70,7 +126,49 @@ jobs:
       - slack/status:
           fail_only: true
 
-  deploy-dev-nextjs:
+  publish-prod:
+    machine:
+      image: ubuntu-1604:202007-01
+      docker_layer_caching: true
+    steps:
+      - checkout
+      - run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - run:
+          name: Replace the backslash for a hyphen if the CIRCLE_BRANCH is a feature, release or hotfix branch.
+          command: |
+            echo "export CIRCLE_BRANCH=$( echo ${CIRCLE_BRANCH} | sed 's_/_-_' )" >> $BASH_ENV
+      - gcp-gcr/build-image:
+          image: "$CIRCLE_PROJECT_REPONAME"
+          extra_build_args: "--target production
+            --build-arg NEXT_PUBLIC_WITHDRAWALADDRESS=$NEXT_PUBLIC_WITHDRAWALADDRESS_PROD
+            --build-arg NEXT_PUBLIC_ROUTERPUBLICIDENTIFIER=$NEXT_PUBLIC_ROUTERPUBLICIDENTIFIER_PROD
+            --build-arg NEXT_PUBLIC_DEPOSITASSETID=$NEXT_PUBLIC_DEPOSITASSETID_PROD
+            --build-arg NEXT_PUBLIC_DEPOSITCHAINPROVIDER=$NEXT_PUBLIC_DEPOSITCHAINPROVIDER_PROD
+            --build-arg NEXT_PUBLIC_WITHDRAWASSETID=$NEXT_PUBLIC_WITHDRAWASSETID_PROD
+            --build-arg NEXT_PUBLIC_WITHDRAWCHAINPROVIDER=$NEXT_PUBLIC_WITHDRAWCHAINPROVIDER_PROD
+            --build-arg=NEXT_PUBLIC_RPC_URL=${NEXT_PUBLIC_RPC_URL_PROD}
+            --build-arg=NEXT_PUBLIC_CONTRACT_ANCHORINNG_ADDRESS=${NEXT_PUBLIC_CONTRACT_ANCHORINNG_ADDRESS_PROD}
+            --build-arg=NEXT_PUBLIC_CONTRACT_ESCROW_ADDRESS=${NEXT_PUBLIC_CONTRACT_ESCROW_ADDRESS_PROD}
+            --build-arg=NEXT_PUBLIC_CONTRACT_PAID_TOKEN_ADDRESS=${NEXT_PUBLIC_CONTRACT_PAID_TOKEN_ADDRESS_PROD}
+            --build-arg=NEXT_PUBLIC_CONTRACT_ANCHORINNG_BLOCK=${NEXT_PUBLIC_CONTRACT_ANCHORINNG_BLOCK_PROD}
+            --build-arg=NEXT_PUBLIC_CHAIN_ID=${NEXT_PUBLIC_CHAIN_ID_PROD}
+            --build-arg=NEXT_PUBLIC_CONTRACT_ETH_ADDRESS=${NEXT_PUBLIC_CONTRACT_ETH_ADDRESS_PROD}
+            --build-arg=NEXT_PUBLIC_CONTRACT_ETH_ESCROW_ADDRESS=${NEXT_PUBLIC_CONTRACT_ETH_ESCROW_ADDRESS_PROD}
+            --build-arg=NEXT_PUBLIC_CONTRACT_ETH_PAID_TOKEN_ADDRESS=${NEXT_PUBLIC_CONTRACT_ETH_PAID_TOKEN_ADDRESS_PROD}
+            --build-arg=NEXT_PUBLIC_IPFS_URL=${NEXT_PUBLIC_IPFS_URL_PROD}"
+          tag: "$CIRCLE_BRANCH-$CIRCLE_SHA1"
+      - gcp-gcr/gcr-auth
+      - gcp-gcr/push-image:
+          image: $CIRCLE_PROJECT_REPONAME
+          tag: $CIRCLE_BRANCH-$CIRCLE_SHA1
+      - gcp-gcr/tag-image:
+          image: $CIRCLE_PROJECT_REPONAME
+          source-tag: $CIRCLE_BRANCH-$CIRCLE_SHA1
+          target-tag: $CIRCLE_BRANCH-latest
+      - slack/status:
+          fail_only: true
+
+  deploy-dev:
     machine:
       image: ubuntu-1604:202007-01
       docker_layer_caching: true
@@ -85,14 +183,13 @@ jobs:
           perform-login: true
       - gcp-gke/rollout-image:
           cluster: $GKE_CLUSTER
-          namespace: paid-nextjs
           deployment: $CIRCLE_PROJECT_REPONAME
           container: dapp
           image: gcr.io/$GOOGLE_PROJECT_ID/$CIRCLE_PROJECT_REPONAME
           tag: "$CIRCLE_BRANCH-$CIRCLE_SHA1"
       - slack/status
 
-  deploy-prod-nextjs:
+  deploy-prod:
     machine:
       image: ubuntu-1604:202007-01
       docker_layer_caching: true
@@ -103,7 +200,6 @@ jobs:
           perform-login: true
       - gcp-gke/rollout-image:
           cluster: $GKE_CLUSTER
-          namespace: paid-nextjs
           deployment: $CIRCLE_PROJECT_REPONAME
           container: dapp
           image: gcr.io/$GOOGLE_PROJECT_ID/$CIRCLE_PROJECT_REPONAME
@@ -114,17 +210,22 @@ workflows:
   version: 2
   build-test-and-approval-deploy:
     jobs:
-      - build:
+      - build-dev:
           filters:
             branches:
               only:
-                - master
                 - develop
                 - /^feature.*/
                 - /^release.*/
                 - /^hotfix.*/
-                - paid-main-nextjs-app
-                - paid-develop-nextjs-app
+          context:
+            - paid-gcp
+            - docker-hub-creds
+      - build-prod:
+          filters:
+            branches:
+              only:
+                - main
           context:
             - paid-gcp
             - docker-hub-creds
@@ -132,24 +233,31 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - main
                 - develop
           context:
             - paid-sonarcloud
             - docker-hub-creds
-      - publish:
+      - publish-dev:
           requires:
-            - build
+            - build-dev
           filters:
             branches:
               only:
-                - master
                 - develop
                 - /^feature.*/
                 - /^release.*/
                 - /^hotfix.*/
-                - paid-main-nextjs-app
-                - paid-develop-nextjs-app
+          context:
+            - paid-gcp
+            - docker-hub-creds
+      - publish-prod:
+          requires:
+            - build-prod
+          filters:
+            branches:
+              only:
+                - main
           context:
             - paid-gcp
             - docker-hub-creds
@@ -157,30 +265,28 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - main
                 - develop
                 - /^feature.*/
                 - /^release.*/
                 - /^hotfix.*/
-                - paid-main-nextjs-app
-                - paid-develop-nextjs-app
           requires:
-            - publish
+            - publish-dev
+            - publish-prod
       - hold-deploy:
           type: approval
           filters:
             branches:
               only:
-                - master
+                - main
                 - develop
                 - /^feature.*/
                 - /^release.*/
                 - /^hotfix.*/
-                - paid-main-nextjs-app
-                - paid-develop-nextjs-app
           requires:
-            - publish
-      - deploy-dev-nextjs:
+            - publish-dev
+            - publish-prod
+      - deploy-dev:
           requires:
             - hold-deploy
           filters:
@@ -190,18 +296,16 @@ workflows:
                 - /^feature.*/
                 - /^release.*/
                 - /^hotfix.*/
-                - paid-develop-nextjs-app
           context:
             - paid-gcp
             - paid-gcp-dev
-      - deploy-prod-nextjs:
+      - deploy-prod:
           requires:
             - hold-deploy
           filters:
             branches:
               only:
-                - master
-                - paid-main-nextjs-app
+                - main
           context:
             - paid-gcp
             - paid-gcp-prod

@@ -7,6 +7,7 @@ import { Spinner } from 'reactstrap';
 import SideBar from './SideBar';
 
 import useWindowSize from '../../hooks/useWindowsSize';
+import { useWakuSetup } from './useWakuSetup';
 
 type PrivateLayoutProps = {
   /** Page component */
@@ -29,6 +30,9 @@ const PrivateLayout: FC<PrivateLayoutProps> = ({ children, routerName }) => {
     }
   }, []);
 
+  // Waku v2 messaging hook
+  useWakuSetup();
+
   if (!currentWallet) {
     return (
       <div className="layout d-flex justify-content-center align-items-center pt-5">
@@ -39,11 +43,10 @@ const PrivateLayout: FC<PrivateLayoutProps> = ({ children, routerName }) => {
 
   return (
     <div className="layout d-flex">
-      {(isOpen || size.width > 1024) && (
-        <div className="sidebar d-inline-block">
-          <SideBar routerName={routerName} />
-        </div>
-      )}
+      
+      <div className={isOpen ? "sidebar d-inline-block" : "collapse_sidebar d-inline-block"}>
+        <SideBar routerName={routerName} />
+      </div>
       <div className="main-content container-fluid d-inline-block m-0 p-0">
         {children}
       </div>

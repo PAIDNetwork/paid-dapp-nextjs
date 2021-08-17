@@ -1,4 +1,5 @@
 interface CiiaAgreementData {
+  customTitle: string;
   partyName: string; // Company name
   partyEmail: string; // company data
   partyAddress: string; // company data

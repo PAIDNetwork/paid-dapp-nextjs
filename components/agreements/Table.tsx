@@ -45,6 +45,7 @@ const Table: FC<TableProps> = ({
   const firstPageRows = rows.slice(0, 20);
   return (
     <>
+      {data.length > 0 && (
       <table {...getTableProps()} className="custom-table">
         <thead>
           {headerGroups.map((headerGroup) => (
@@ -54,23 +55,11 @@ const Table: FC<TableProps> = ({
                   {column.render('Header')}
                   {/* Add a sort direction indicator */}
                   <span>
-                    {column.isSorted ? (
-                      column.isSortedDesc ? (
-                        <img
-                          className="arrow"
-                          src="/assets/icon/arrowDown.svg"
-                          alt=""
-                        />
-                      ) : (
-                        <img
-                          className="arrow"
-                          src="/assets/icon/arrowUp.svg"
-                          alt=""
-                        />
-                      )
-                    ) : (
-                      ''
-                    )}
+                    <img
+                      className="arrow"
+                      src="/assets/icon/sorting.svg"
+                      alt=""
+                    />
                   </span>
                 </th>
               ))}
@@ -85,11 +74,11 @@ const Table: FC<TableProps> = ({
             });
             const statusButtonClass = classNames('btn-status mr-3', {
               'btn-danger': row.original.event.status === agreementStatus.DECLINED,
-              'btn-success': row.original.event.status === agreementStatus.SIGNED,
-              'btn-info': row.original.event.status === agreementStatus.PENDING,
+              'btn-success': row.original.event.status === agreementStatus.ACCEPTED,
+              'btn-info': row.original.event.status === agreementStatus.PENDING_SIGNATURE,
             });
 
-            const titleStatus = { 1: 'Pending', 2: 'Declined', 3: 'Signed' };
+            const titleStatus = { [agreementStatus.PENDING_SIGNATURE]: 'Pending', [agreementStatus.DECLINED]: 'Declined', [agreementStatus.ACCEPTED]: 'Signed' };
             return (
               <tr
                 key={`${rowIndex}-row`}
@@ -99,7 +88,19 @@ const Table: FC<TableProps> = ({
                 <>
                   {row.cells.map((cell, index) => (
                     <td {...cell.getCellProps()} id={`${rowIndex}-${index}`}>
-                      {cell.value ? cell.render('Cell') : ' - '}
+                      {
+                        cell.column.showDetail
+                          ? (
+                            <button
+                              type="button"
+                              className="btn-transparent"
+                              style={{ color: 'inherit' }}
+                              onClick={() => onDetailClick(row.original.event.cid)}
+                            >
+                              {cell.value ? cell.render('Cell') : ' - '}
+                            </button>
+                          ) : (cell.value ? cell.render('Cell') : ' - ')
+                      }
                     </td>
                   ))}
                   <td key={`btn-${rowIndex}`} className="text-right pr-5">
@@ -116,17 +117,21 @@ const Table: FC<TableProps> = ({
                     <UncontrolledPopover
                       trigger="legacy"
                       placement="bottom"
+                      className="un-controlled-popover-custom"
                       target={`detail-button-${row.original.event.cid}`}
                     >
-                      <PopoverBody>
-                        <Button onClick={() => onOpenFile(row.original.event.cid)} className="btn-transparent">
+                      <PopoverBody className="popover-body-custom">
+                        <Button onClick={() => onOpenFile(row.original.event.cid)} className="btn-transparent popover-btn-custom">
                           <img src="/assets/icon/openPdf.svg" alt="" />
+                          <span className="popover-text-custom">Download PDF</span>
                         </Button>
+                        <div className="popover-div" />
                         <Button
                           onClick={() => onDetailClick(row.original.event.cid)}
-                          className="btn-transparent"
+                          className="btn-transparent popover-btn-custom"
                         >
                           <img src="/assets/icon/agreementDetails.svg" alt="" />
+                          <span className="popover-text-custom">Details</span>
                         </Button>
                       </PopoverBody>
                     </UncontrolledPopover>
@@ -137,12 +142,12 @@ const Table: FC<TableProps> = ({
           })}
         </tbody>
       </table>
+      )}
       <br />
       {data.length < 1 && (
-        <div className="empty-result row justify-content-center align-items-center">
+        <div className="empty-result row justify-content-center align-items-center" style={{ height: '100%' }}>
           <p className="text-center">
-            You don&apos;t have any agreements yet. Click bellow to create your first
-            smart agreement!
+            You don&apos;t have any agreements yet. Click bellow to create your first SMART agreement!
             {' '}
             <br />
             <Button

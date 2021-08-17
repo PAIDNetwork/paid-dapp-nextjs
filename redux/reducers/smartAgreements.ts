@@ -9,51 +9,19 @@ import SaftAgreementData from '@/models/saftAgreementData';
 import SmartAgreementsTypes from '../actionTypes/smartAgreements';
 
 interface SmartAgreementsState {
-  ndaAgreementData: NdaAgreementData;
-  advisorAgreementData: AdvisorAgreementData;
-  ciiaAgreementData: CiiaAgreementData;
-  consultingAgreementData: ConsultingAgreementData;
-  referralAgreementData: ReferralAgreementData;
-  saftAgreementData: SaftAgreementData;
+  ndaAgreementData: any | NdaAgreementData
+  advisorAgreementData: AdvisorAgreementData
+  ciiaAgreementData: CiiaAgreementData
+  consultingAgreementData: ConsultingAgreementData
+  referralAgreementData: ReferralAgreementData
+  saftAgreementData: SaftAgreementData
 }
 
 const initialState: SmartAgreementsState = {
-  ndaAgreementData: {
-    partyName: '',
-    partyEmail: '',
-    partyAddress: '',
-    partyWallet: '',
-    counterPartyName: '',
-    counterPartyEmail: '',
-    counterPartyAddress: '',
-    counterPartyWallet: '',
-  },
-  advisorAgreementData: {
-    partyName: '',
-    partyEmail: '',
-    partyAddress: '',
-    partyWallet: '',
-    date: '',
-    counterPartyName: '',
-    counterPartyEmail: '',
-    counterPartyAddress: '',
-    counterPartyWallet: '',
-    state: '',
-    typeOfCompany: '',
-    stockPlanName: '',
-    percentageVest: '',
-    purchaseOption: 'A Right',
-    numberOfShares: '1',
-    stockPlanNameValue: 'Stock option',
-    termsConditions: 'Options',
-    anniversaryMonth: '',
-    vestingCommencement: '',
-    typeOfTriggerAcceleration: 'Single Trigger Acceleration...',
-    typeOfPrice: 'Exersice',
-    acceptionOption: 'An Option',
-    numberOfYears: '',
-  },
+  ndaAgreementData: {} as any,
+  advisorAgreementData: {} as any,
   ciiaAgreementData: {
+    customTitle: '',
     partyName: '',
     partyEmail: '',
     partyAddress: '',
@@ -74,38 +42,9 @@ const initialState: SmartAgreementsState = {
     typeOfComapny: '',
     listCompAgreements: '',
   },
-  consultingAgreementData: {
-    partyName: '',
-    partyEmail: '',
-    partyAddress: '',
-    partyWallet: '',
-    date: '',
-    counterPartyName: '',
-    counterPartyEmail: '',
-    counterPartyAddress: '',
-    counterPartyWallet: '',
-    state: '',
-    typeOfCompany: '',
-    descriptionConsulting: '',
-    serviceRenderChecked: false,
-    serviceRender: '',
-    serviceRate: 0,
-    servicePayable: '',
-    serviceAmountLimit: 0,
-    consultantChecked: false,
-    consultanShall: '',
-    consultantExecutionAmount: 0,
-    consultantCompletionAmount: 0,
-    companyWillChecked: false,
-    companyWillRecommend: '',
-    companyShares: '',
-    companyFollows: '',
-    otherChecked: false,
-    other: '',
-    companiesExcluded: '',
-    listCompanies: '',
-  },
+  consultingAgreementData: {} as any,
   referralAgreementData: {
+    customTitle: '',
     partyName: '',
     partyEmail: '',
     partyAddress: '',
@@ -124,6 +63,7 @@ const initialState: SmartAgreementsState = {
     commisionDate: undefined,
   },
   saftAgreementData: {
+    customTitle: '',
     partyName: '',
     partyEmail: '',
     partyAddress: '',
@@ -169,11 +109,31 @@ const smartAgreementsReducer = (
     }
     case SmartAgreementsTypes.SET_ADVISOR_AGREEMENT_DATA: {
       const newAdvisorData = payload;
+
+      let additionalData = {};
+      if (newAdvisorData.advisorOption === 'nonstatutory') {
+        additionalData = {
+          nonstatutory: true,
+          right: undefined,
+        };
+      } else if (newAdvisorData.advisorOption === 'right') {
+        additionalData = {
+          nonstatutory: undefined,
+          right: true,
+        };
+      } else {
+        additionalData = {
+          nonstatutory: undefined,
+          right: undefined,
+        };
+      }
+
       return {
         ...state,
         advisorAgreementData: {
           ...state.advisorAgreementData,
           ...newAdvisorData,
+          ...additionalData,
         },
       };
     }
@@ -189,11 +149,26 @@ const smartAgreementsReducer = (
     }
     case SmartAgreementsTypes.SET_CONSULTING_AGREEMENT_DATA: {
       const newConsultingData = payload;
+
+      let additionalData = {};
+      if (newConsultingData.compensationRadio === 'Hourly rate') {
+        additionalData = {
+          consultantExecutionAmount: undefined,
+          consultantCompletionAmount: undefined,
+        };
+      } else if (newConsultingData.compensationRadio === 'Fixed compensation') {
+        additionalData = {
+          serviceRate: undefined,
+          servicePayable: undefined,
+          serviceAmountLimit: undefined,
+        };
+      }
       return {
         ...state,
         consultingAgreementData: {
           ...state.consultingAgreementData,
           ...newConsultingData,
+          ...additionalData,
         },
       };
     }

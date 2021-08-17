@@ -1,4 +1,5 @@
 interface AdvisorAgreementData {
+  customTitle: string;
   partyName: string;
   partyEmail: string;
   partyAddress: string;

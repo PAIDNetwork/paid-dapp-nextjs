@@ -22,6 +22,7 @@ const agreementReducer = (
         ...state,
         isEditing: false,
         agreementReviewed: false,
+        agreements: payload.agreements,
       };
     }
     case AgreementActionTypes.SET_IS_EDITING: {

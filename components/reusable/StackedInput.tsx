@@ -5,10 +5,12 @@ import classNames from 'classnames';
 interface StackedInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   innerRef?: any;
+  readOnly?: boolean;
   groupClassNames?: string;
   labelClassNames?: string;
   inputClassNames?: string;
   errorComponent?: any;
+  value?: string;
 }
 
 const StackedInput: FC<StackedInputProps> = ({
@@ -17,10 +19,12 @@ const StackedInput: FC<StackedInputProps> = ({
   type,
   placeholder,
   innerRef,
+  readOnly,
   groupClassNames,
   labelClassNames,
   inputClassNames,
   errorComponent,
+  value,
 }: StackedInputProps) => (
   <div className={classNames('form-group stacked-group', groupClassNames)}>
     <label
@@ -29,16 +33,27 @@ const StackedInput: FC<StackedInputProps> = ({
     >
       {label}
     </label>
-    <input
-      name={name}
-      type={type}
-      placeholder={placeholder}
-      className={classNames('form-control stacked-control', inputClassNames)}
-      ref={innerRef}
-    />
-    {
-      errorComponent
-    }
+    {readOnly && value ? (
+      <input
+        name={name}
+        type={type}
+        placeholder={placeholder}
+        className={classNames('form-control stacked-control', inputClassNames)}
+        ref={innerRef}
+        readOnly={readOnly}
+        value={value}
+      />
+    ) : (
+      <input
+        name={name}
+        type={type}
+        placeholder={placeholder}
+        className={classNames('form-control stacked-control', inputClassNames)}
+        ref={innerRef}
+        readOnly={readOnly}
+      />
+    )}
+    {errorComponent}
   </div>
 );
 
@@ -48,6 +63,8 @@ StackedInput.defaultProps = {
   labelClassNames: '',
   inputClassNames: '',
   errorComponent: null,
+  readOnly: false,
+  value: '',
 };
 
 export default StackedInput;

@@ -28,3 +28,23 @@
     }
   }
 }
+
+.collapse-profile-component {
+  background: $blue-800;
+  border-radius: 10px;
+  height: 65px;
+  position: relative;
+  width: 60px !important;
+  
+
+  img {
+    width: 35px;
+    border-radius: 50%;
+    margin-top: 15px;
+    margin-left: 15px;
+  }
+
+  .info {
+    display: none !important;
+  }
+}

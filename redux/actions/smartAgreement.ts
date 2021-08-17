@@ -72,12 +72,12 @@ export const resetTemplateAgreement = () => (
 export const doSetSmartAgreementData = (payload: any) => (dispatch: any) => {
   const { type, formData } = payload;
   const mapTypeToComponent = new Map([
-    ['nda', SmartAgreementsTypes.SET_NDA_AGREEMENT_DATA],
-    ['advisor', SmartAgreementsTypes.SET_ADVISOR_AGREEMENT_DATA],
-    ['ciia', SmartAgreementsTypes.SET_CIIA_AGREEMENT_DATA],
-    ['consulting', SmartAgreementsTypes.SET_CONSULTING_AGREEMENT_DATA],
-    ['referral', SmartAgreementsTypes.SET_REFERRAL_AGEEMENT_DATA],
-    ['saft', SmartAgreementsTypes.SET_SAFT_AGEEMENT_DATA],
+    ['001', SmartAgreementsTypes.SET_NDA_AGREEMENT_DATA],
+    ['002', SmartAgreementsTypes.SET_CIIA_AGREEMENT_DATA],
+    ['003', SmartAgreementsTypes.SET_CONSULTING_AGREEMENT_DATA],
+    ['004', SmartAgreementsTypes.SET_REFERRAL_AGEEMENT_DATA],
+    ['005', SmartAgreementsTypes.SET_SAFT_AGEEMENT_DATA],
+    ['006', SmartAgreementsTypes.SET_ADVISOR_AGREEMENT_DATA],
   ]);
 
   dispatch({

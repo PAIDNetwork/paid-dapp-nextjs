@@ -15,7 +15,12 @@ const PdBadge: React.FC<BadgeProps> = ({ className, ...props }) => {
       customColorClass = '';
       break;
   }
-  return <Badge className={`${styles.pdBadge} ${customColorClass} ${className}`} {...props} />;
+  return (
+    <Badge
+      className={`${styles.pdBadge} ${customColorClass} ${className}`}
+      {...props}
+    />
+  );
 };
 
 export default PdBadge;

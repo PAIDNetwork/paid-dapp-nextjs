@@ -3,36 +3,45 @@ import { Card, Button } from 'reactstrap';
 import SmartAgreementForm from './SmartAgreementForm';
 
 interface SmartAgreementsFormPanelProps {
-  jsonSchema: Object;
+  jsonSchemas: Array<Object>;
   uiSchema: Object;
   dataName: string;
+  title: string;
   type: string;
   onChangeFields: any;
+  activePageIndex: number,
+  setActivePageIndex: any,
   onReview: any;
 }
 
 const SmartAgreementsFormPanel: FC<SmartAgreementsFormPanelProps> = ({
   type,
   dataName,
-  jsonSchema,
+  title,
+  jsonSchemas,
   uiSchema,
   onChangeFields,
+  activePageIndex,
+  setActivePageIndex,
   onReview,
 }: SmartAgreementsFormPanelProps) => (
   <Card className="card-fields border-0 p-3">
-    <div className="title d-flex">
+    {/* <div className="title d-flex">
       <span className="mr-auto p-2 mb-4"> Fields</span>
       <Button className="btn-transparent" color="primary">
         <img src="/assets/icon/3dot.svg" alt="" />
       </Button>
-    </div>
+    </div> */}
     <SmartAgreementForm
       type={type}
       dataName={dataName}
-      jsonSchema={jsonSchema}
+      title={title}
+      jsonSchemas={jsonSchemas}
       uiSchema={uiSchema}
       onChangeFields={onChangeFields}
       onReview={onReview}
+      activePageIndex={activePageIndex}
+      setActivePageIndex={setActivePageIndex}
     />
   </Card>
 );

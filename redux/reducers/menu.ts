@@ -3,7 +3,7 @@ import MenuStateModel from '../../models/menuStateModel';
 import MenuActionTypes from '../actionTypes/menu';
 
 const initialState: MenuStateModel = {
-  isOpen: false,
+  isOpen: true,
 };
 
 const menuReducer = (state: MenuStateModel = initialState, action: ActionModel) => {

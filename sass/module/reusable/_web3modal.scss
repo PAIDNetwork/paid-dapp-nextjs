@@ -1,0 +1,41 @@
+.web3modal-modal-card {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  width: 903px !important;
+  max-width: 903px !important;
+  min-height: 306px !important;
+  border-radius: 15px!important;
+
+  .web3modal-provider-wrapper {
+    max-width: 50%;
+    padding: 30px;
+    border: none;
+    .web3modal-provider-container {
+      height: 100%;
+
+      &:hover {
+        background: #c3c0d4;
+        border-radius: 15px;
+      }
+
+      .web3modal-provider-name {
+        font-family: Circular Std;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 30px;
+        line-height: 38px;
+        color: #1a1e3c;
+      }
+      .web3modal-provider-description {
+        font-family: Circular Std;
+        font-style: normal;
+        font-weight: 450;
+        font-size: 20px;
+        line-height: 25px;
+        align-items: center;
+        text-align: center;
+        color: #878a9a;
+      }
+    }
+  }
+}

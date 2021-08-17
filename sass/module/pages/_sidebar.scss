@@ -1,56 +1,219 @@
 .sidebar {
-  height: 100vh;
-  width: 260px;
-  color: $white;
+    height: 100vh;
+    width: 260px;
+    color: $white;
 
-  &.navbar {
-    display: block;
-  }
-
-  .logos {
-    margin: auto;
-
-    img {
-      width: 101px;
+    &.navbar {
+      display: block;
+      padding: 5px !important;
     }
-  }
-  hr {
-    background: $blue-800;
-  }
-  .menu {
-    li,
-    a {
-      font-weight: normal;
-      font-size: 15px;
-      color: $blue-500;
-      line-height: 24px;
-      list-style-type: none;
-      align-items: center;
-      display: flex;
-      cursor: pointer;
-      text-decoration: none;
 
-      &.no-cursor {
-        cursor: unset;
+    .logos {
+      margin: auto;
+
+      img {
+        width: 100px;
+      }
+    }
+    hr {
+      background: $blue-800;
+    }
+    .menu {
+      li,
+      a {
+        font-weight: normal;
+        font-size: 15px;
+        color: $blue-500;
+        line-height: 24px;
+        list-style-type: none;
+        align-items: center;
+        display: flex;
+        cursor: pointer;
+        text-decoration: none;
+        
+      
+
+        &.no-cursor {
+          cursor: unset;
+          &:hover {
+            color: $blue-500;
+            font-weight: normal;
+          }
+        }
+
+        img {
+          width: 24px;
+          
+        }
+
         &:hover {
-          color: $blue-500;
-          font-weight: normal;
+          color: $white;
+          font-weight: bold;
+        }
+
+        &.selected {
+          color: $white;
+          font-weight: bold;
+        }
+      }
+    }
+    .menu-bottom{
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      li,
+      a {
+        font-weight: normal;
+        font-size: 15px;
+        color: $blue-500;
+        line-height: 24px;
+        list-style-type: none;
+        align-items: center;
+        display: flex;
+        cursor: pointer;
+        text-decoration: none;
+
+        &.no-cursor {
+          cursor: unset;
+          &:hover {
+            color: $blue-500;
+            font-weight: normal;
+          }
+        }
+
+        img {
+          width: 24px;
+        }
+
+        &:hover {
+          color: $white;
+          font-weight: bold;
+        }
+
+        &.selected {
+          color: $white;
+          font-weight: bold;
+        }
+      }
+    }
+}
+
+.active{
+  border-right: 2px solid #fff !important;
+}
+
+.logo:hover{
+  cursor: pointer; 
+}
+
+.hide-button-collapse{
+  display: none;
+}
+
+.button-collapse{
+  position: absolute;
+  left: 200px;
+  top: 30px;
+}
+
+.button-collapse:hover{
+  cursor: pointer;
+}
+
+.left{
+  margin-left: 15px !important;
+  transition: margin-left 3s steps(1000, start) !important;
+}
+
+/*@media (min-width: 768px) and (max-width: 1024px) {*/
+.collapse_sidebar{
+    height: 100vh;
+    width: 80px;
+    color: $white;
+
+    &.navbar {
+      display: block;
+      padding: 5px !important;
+    }
+
+    .logos {
+      margin: auto;
+
+      img {
+        width: 100px;
+        .left{
+          margin-left: 15px;
         }
       }
 
-      img {
-        width: 24px;
-      }
+      
+    }
+    hr {
+      background: $blue-800;
+    }
+    .menu {
+      li,
+      a {
+        line-height: 0; 
+        font-size: 0;
+        color: transparent; 
+        
+        &.no-cursor {
+          cursor: unset;
+          &:hover {
+            color: $blue-500;
+            font-weight: normal;
+          }
+        }
 
-      &:hover {
-        color: $white;
-        font-weight: bold;
-      }
+        img {
+          width: 24px;
+          margin-left: -5px !important;
+        }
 
-      &.selected {
-        color: $white;
-        font-weight: bold;
+        &:hover {
+          color: $white;
+          font-weight: bold;
+        }
+
+        &.selected {
+          color: $white;
+          font-weight: bold;
+        }
+      }
+    }
+    .menu-bottom{
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      li,
+      a {
+        line-height: 0; 
+        font-size: 0;
+        color: transparent; 
+
+        &.no-cursor {
+          cursor: unset;
+          &:hover {
+            color: $blue-500;
+            font-weight: normal;
+          }
+        }
+
+        img {
+          width: 24px;
+          margin-left: 10px !important;
+        }
+
+        &:hover {
+          color: $white;
+          font-weight: bold;
+        }
+
+        &.selected {
+          color: $white;
+          font-weight: bold;
+        }
       }
     }
   }
-}

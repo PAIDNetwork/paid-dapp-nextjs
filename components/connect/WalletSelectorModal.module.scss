@@ -1,0 +1,49 @@
+.modalConnect {
+  width: 903px;
+  max-width: 903px;
+
+  .modalHeader {
+    position: absolute;
+    right: 0;
+    top: -5px;
+  }
+  .modalBody {
+    padding: 0;
+    display: flex;
+    .modalBodyCard {
+      width: 45%;
+      margin: auto;
+      text-align: center;
+      cursor: pointer;
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+
+      &:hover {
+        background: #c3c0d4;
+        border-radius: 15px;
+      }
+      .modalBodyTitle {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 30px;
+        line-height: 38px;
+        color: #1a1e3c;
+        margin-bottom: 2rem;
+      }
+
+      .modalBodyDescription {
+        font-style: normal;
+        font-weight: 450;
+        font-size: 20px;
+        line-height: 25px;
+        align-items: center;
+        margin: auto;
+        color: #878a9a;
+        width: 318px;
+        margin-top: 1rem;
+      }
+    }
+  }
+}

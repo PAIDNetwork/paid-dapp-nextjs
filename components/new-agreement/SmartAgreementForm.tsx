@@ -2,20 +2,26 @@ import React, { FC } from 'react';
 import PdJsonSchemaForm from '../reusable/pdJsonSchemaForm/pdJsonSchemaForm';
 
 interface SmartAgreementsFormProps {
-  jsonSchema: Object;
+  jsonSchemas: Array<Object>;
   uiSchema: Object;
   dataName: string;
+  title: string;
   type: string;
   onChangeFields: any;
+  activePageIndex: number,
+  setActivePageIndex: any,
   onReview: any;
 }
 
 const SmartAgreementsForm: FC<SmartAgreementsFormProps> = ({
   type,
   dataName,
-  jsonSchema,
+  title,
+  jsonSchemas,
   uiSchema,
   onChangeFields,
+  activePageIndex,
+  setActivePageIndex,
   onReview,
 }) => {
   const mapTypeToComponent = new Map([
@@ -23,10 +29,13 @@ const SmartAgreementsForm: FC<SmartAgreementsFormProps> = ({
       'nda',
       <PdJsonSchemaForm
         dataName={dataName}
-        jsonSchema={jsonSchema}
+        title={title}
+        jsonSchemas={jsonSchemas}
         uiSchema={uiSchema}
         type={type}
         onChange={onChangeFields}
+        activePageIndex={activePageIndex}
+        setActivePageIndex={setActivePageIndex}
         onSubmit={onReview}
       />,
     ],
@@ -34,10 +43,13 @@ const SmartAgreementsForm: FC<SmartAgreementsFormProps> = ({
       'advisor',
       <PdJsonSchemaForm
         dataName={dataName}
-        jsonSchema={jsonSchema}
+        title={title}
+        jsonSchemas={jsonSchemas}
         uiSchema={uiSchema}
         type={type}
         onChange={onChangeFields}
+        activePageIndex={activePageIndex}
+        setActivePageIndex={setActivePageIndex}
         onSubmit={onReview}
       />,
     ],
@@ -45,9 +57,12 @@ const SmartAgreementsForm: FC<SmartAgreementsFormProps> = ({
       'ciia',
       <PdJsonSchemaForm
         dataName={dataName}
-        jsonSchema={jsonSchema}
+        title={title}
+        jsonSchemas={jsonSchemas}
         type={type}
         onChange={onChangeFields}
+        activePageIndex={activePageIndex}
+        setActivePageIndex={setActivePageIndex}
         onSubmit={onReview}
       />,
     ],
@@ -55,10 +70,13 @@ const SmartAgreementsForm: FC<SmartAgreementsFormProps> = ({
       'consulting',
       <PdJsonSchemaForm
         dataName={dataName}
-        jsonSchema={jsonSchema}
+        title={title}
+        jsonSchemas={jsonSchemas}
         uiSchema={uiSchema}
         type={type}
         onChange={onChangeFields}
+        activePageIndex={activePageIndex}
+        setActivePageIndex={setActivePageIndex}
         onSubmit={onReview}
       />,
     ],
@@ -66,10 +84,13 @@ const SmartAgreementsForm: FC<SmartAgreementsFormProps> = ({
       'referral',
       <PdJsonSchemaForm
         dataName={dataName}
-        jsonSchema={jsonSchema}
+        title={title}
+        jsonSchemas={jsonSchemas}
         uiSchema={uiSchema}
         type={type}
         onChange={onChangeFields}
+        activePageIndex={activePageIndex}
+        setActivePageIndex={setActivePageIndex}
         onSubmit={onReview}
       />,
     ],
@@ -77,16 +98,32 @@ const SmartAgreementsForm: FC<SmartAgreementsFormProps> = ({
       'saft',
       <PdJsonSchemaForm
         dataName={dataName}
-        jsonSchema={jsonSchema}
+        title={title}
+        jsonSchemas={jsonSchemas}
+        uiSchema={uiSchema}
         type={type}
         onChange={onChangeFields}
+        activePageIndex={activePageIndex}
+        setActivePageIndex={setActivePageIndex}
         onSubmit={onReview}
       />,
     ],
   ]);
   return (
     <>
-      {mapTypeToComponent.get(type) ?? (
+      {dataName && jsonSchemas ? (
+        <PdJsonSchemaForm
+          dataName={dataName}
+          title={title}
+          jsonSchemas={jsonSchemas}
+          uiSchema={uiSchema}
+          type={type}
+          onChange={onChangeFields}
+          activePageIndex={activePageIndex}
+          setActivePageIndex={setActivePageIndex}
+          onSubmit={onReview}
+        />
+      ) : (
         <span>Not found Smart Agreement form</span>
       )}
     </>
