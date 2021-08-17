@@ -44,8 +44,6 @@ const SideBar: FC<SideBarProps> = ({ routerName }) => {
   const collapseOut = '/assets/icon/collapse_out.png'
   const [smallLogo, setSmallLogo] = useState(paidSmallLogo)
 
-  const emptyProfile = !(name && did)
-
   return (
     <Navbar
       className={isOpen ? 'sidebar' : 'collapse_sidebar'}
