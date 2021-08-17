@@ -240,26 +240,6 @@ const getContractTemplate = (
                     advisorOption: {
                       enum: ['nonstatutory'],
                     },
-                    // option: {
-                    //   title: 'Option',
-                    //   type: 'string',
-                    // },
-                    // options: {
-                    //   title: 'Options',
-                    //   type: 'string',
-                    // },
-                    // stockOptions: {
-                    //   title: 'Stock Options',
-                    //   type: 'string',
-                    // },
-                    // anOption: {
-                    //   title: 'An option',
-                    //   type: 'string',
-                    // },
-                    // exercise: {
-                    //   title: 'Exercise',
-                    //   type: 'string',
-                    // },
                   },
                 },
                 {
@@ -267,26 +247,6 @@ const getContractTemplate = (
                     advisorOption: {
                       enum: ['right'],
                     },
-                    // purchaseRight: {
-                    //   title: 'purchase right',
-                    //   type: 'string',
-                    // },
-                    // restrictedStockPurchaseAwards: {
-                    //   title: 'restricted stock purchase awards',
-                    //   type: 'string',
-                    // },
-                    // restrictedStockPurchase: {
-                    //   title: 'restricted stock purchase',
-                    //   type: 'string',
-                    // },
-                    // aRight: {
-                    //   title: 'A right',
-                    //   type: 'string',
-                    // },
-                    // purchase: {
-                    //   title: 'Purchase',
-                    //   type: 'string',
-                    // },
                   },
                 },
               ],
