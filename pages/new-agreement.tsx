@@ -113,7 +113,6 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
   const {
     contract,
     contractSigner,
-    tokenContract,
     tokenSignerContract,
   } = useContract();
 
@@ -237,17 +236,12 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
       jsonSchemas.forEach((jsonSchema) => {
         const { properties } = jsonSchema;
         Object.keys(properties).forEach((objKey) => {
+          let type = 'string';
           if (properties[objKey].type === 'number') {
-            types.push('uint');
-            values.push(currentFormData[objKey]);
+            type = 'uint';
           }
-          if (properties[objKey].type === 'string') {
-            types.push('string');
-            values.push(currentFormData[objKey]);
-          } else {
-            types.push('string');
-            values.push(currentFormData[objKey]);
-          }
+          types.push(type);
+          values.push(currentFormData[objKey]);
         });
       });
       const metadata = ethers.utils.defaultAbiCoder.encode(
