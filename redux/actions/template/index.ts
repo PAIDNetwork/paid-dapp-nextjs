@@ -445,7 +445,7 @@ const getContractTemplate = (
           properties: {
             listCompaniesAgreements: {
               title:
-                'List of companies and/or agreements excluded under section 10(b)',
+                'Companies and/or agreements excluded',
               type: 'string',
               format: 'textarea',
             },
