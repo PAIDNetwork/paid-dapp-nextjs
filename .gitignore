@@ -40,5 +40,3 @@ env-config.js
 # Typechain
 types/typechain
 
-# sentry, see sentry cli docs: https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/#configure-sentry-cli
-sentry.properties
