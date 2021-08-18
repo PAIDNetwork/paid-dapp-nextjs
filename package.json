@@ -19,6 +19,7 @@
     "@master-ventures/paid-dapp-contracts": "^1.0.0",
     "@pinata/sdk": "^1.1.23",
     "@rjsf/core": "^2.4.2",
+    "@sentry/nextjs": "^6.11.0",
     "babel-plugin-transform-define": "^2.0.0",
     "bootstrap": "^4.6.0",
     "classnames": "^2.2.6",
