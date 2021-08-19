@@ -36,6 +36,7 @@ ARG SENTRY_URL
 ARG SENTRY_ORG
 ARG SENTRY_PROJECT
 ARG SENTRY_AUTH_TOKEN
+
 # Execute npm to create a production build
 RUN npm run build
 
