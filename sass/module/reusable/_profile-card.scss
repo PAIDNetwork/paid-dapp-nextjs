@@ -109,26 +109,6 @@
   }
 }
 
-// .profile-component.collapse{
-//   background: $blue-800;
-//   border-radius: 10px;
-//   height: 65px;
-//   position: relative;
-//   width: 60px !important;
-  
-
-//   img {
-//     width: 35px;
-//     border-radius: 50%;
-//     margin-top: 15px;
-//     margin-left: 15px;
-//   }
-
-//   .info {
-//     display: none !important;
-//   }
-// }
-
 .profileImage {
   background-image: url('/assets/icon/avatarBg.svg');
   background-size: contain;
@@ -138,7 +118,6 @@
   width: 35px;
   height: 35px;
   border-radius: 50%;
-  // background: #512DA8;
   font-family: "Circular Std";
   font-weight: 500;
   font-size: 16px;

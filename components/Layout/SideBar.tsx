@@ -65,7 +65,6 @@ const SideBar: FC<SideBarProps> = ({ routerName }) => {
   );
   const dispatch = useDispatch();
   const profile = useSelector((state: any) => state.profileReducer.profile);
-  const { name, did } = profile;
 
   useEffect(() => {
     const getToken = async () => {
@@ -145,7 +144,7 @@ const SideBar: FC<SideBarProps> = ({ routerName }) => {
 
           </li>
           <li className="menu-item">
-            <img src="/assets/icon/ethereum.svg" alt="" />
+            <img src={`/assets/icon/${networkName === 'bnbt' || networkName === 'bnb' ? 'binanceSmartChain.svg' : 'ethereum.svg'}`} alt="" />
             {isOpen && (
             <div className="account">
               <span>
@@ -168,15 +167,6 @@ const SideBar: FC<SideBarProps> = ({ routerName }) => {
             <ProfileCard profile={profile} selected={routerName === '/profile'} />
           </div>
         </Link>
-
-        {/* <ul className="pl-3">
-          <li className={classnames('mb-4 no-cursor')}>
-            <img className="mr-3" src="/assets/icon/networkBi.svg" alt="" />
-            Network:
-            {' '}
-            {networkName}
-          </li>
-        </ul> */}
       </div>
     </Navbar>
   );
