@@ -12,17 +12,16 @@ import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import classNames from 'classnames';
 import { Button, Card, Tooltip } from 'reactstrap';
+import pinataSDK, { PinataPinResponse } from '@pinata/sdk';
 import ProfileStateModel from '@/models/profileStateModel';
 import PreviewDocument from '@/components/new-agreement/PreviewDocument';
 import { setAgreementReviewed, setIsEditing } from 'redux/actions';
 import templateAgreements from 'data/templateAgreements';
 import useContract from 'hooks/useContract';
 import { useWallet } from 'react-binance-wallet';
-import { IPLDManager } from 'xdv-universal-wallet-core';
 import { ethers } from 'ethers';
 import ConfirmAgreementModal from '@/components/new-agreement/ConfirmAgreementModal';
 import ModalAlert from '@/components/reusable/modalAlert/ModalAlert';
-import CID from 'cids';
 import PdScrollbar from '../components/reusable/pdScrollbar/PdScrollbar';
 import SmartAgreementFormPanel from '../components/new-agreement/SmartAgreementFormPanel';
 import getContractTemplate from '../redux/actions/template/index';
@@ -138,7 +137,7 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
       data[COUNTER_PARTY_WALLET_FIELD] = '';
       setAgreementData(data);
     }
-  }, [dataName])
+  }, [dataName]);
 
   useEffect(() => {
     const data = smartAgreementsState[dataName];
@@ -181,11 +180,11 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
   const cleanFormOptionalsFields = (finalReview?: boolean) => {
     const showField = (finalReview) ? ' ' : '';
     const data = Object.keys(smartAgreementsState[dataName]).reduce((x: any, xs: string) => {
-      if (!x[xs]) x[xs] = showField
-      return x
+      if (!x[xs]) x[xs] = showField;
+      return x;
     }, smartAgreementsState[dataName]);
     setAgreementData(data);
-  }
+  };
 
   const onReview = () => {
     const activePageLength = (activePageIndex + 1);
@@ -194,8 +193,8 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
       dispatch(setIsEditing(false));
       setReview(true);
       dispatch(setAgreementReviewed(true));
-      return
-    } else if (activePageLength === jsonSchemas.length - 1) {
+      return;
+    } if (activePageLength === jsonSchemas.length - 1) {
       cleanFormOptionalsFields(false);
     }
 
@@ -207,18 +206,20 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
     setEditTitle(false);
   };
 
-  const toIpfs = async (): Promise<CID> => {
-    const ipfsManager = new IPLDManager(did);
-    await ipfsManager.start(process.env.NEXT_PUBLIC_IPFS_URL);
-    const fil = Buffer.from(renderToString(agreementTemplate()));
+  const toIpfs = async ():Promise<PinataPinResponse> => {
+    const pinata = pinataSDK(
+      process.env.NEXT_PUBLIC_PINATA_KEY,
+      process.env.NEXT_PUBLIC_PINATA_SECRET,
+    );
     try {
-      return ipfsManager.addSignedObject(fil,
-        {
-          name: agreementTitle,
-          contentType: 'text/html',
-          lastModified: new Date(),
-        });
+      return pinata.pinJSONToIPFS({
+        content: btoa(renderToString(agreementTemplate())),
+        name: agreementTitle,
+        contentType: 'text/html',
+        lastModified: new Date(),
+      });
     } catch (err) {
+      console.log(err)
       return null;
     }
   };
@@ -254,7 +255,7 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
       const proposerDID = did.id;
       const recipientAddresses = [agreementData.counterPartyWallet];
       const recipientDIDs = [agreementData.counterPartyDid];
-      const filehash = cid.toString();
+      const filehash = cid.IpfsHash;
       const requiredQuorum = '1';
       const templateId = templateTypeCode;
       const validUntil = Math.floor(Date.now() / 1000) + 31557600;

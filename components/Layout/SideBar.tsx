@@ -169,11 +169,11 @@ const SideBar: FC<SideBarProps> = ({ routerName }) => {
         </Link>
       </div>
     </Navbar>
-  );
-};
+  )
+}
 
 SideBar.propTypes = {
   routerName: PropTypes.string.isRequired,
-};
+}
 
-export default SideBar;
+export default SideBar

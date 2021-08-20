@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: paid-dapp-nextjs
+data:
+  sentry-dns: "https://46bd757e8d9c4e128f525015dffd8e97@o910595.ingest.sentry.io/5900878"
+  sentry-url: "https://sentry.io/"
+  sentry-org: "masterventures"
+  sentry-project: "paid-dapp-nextjs"
+  sentry-token: "7c6826b98c67411ea909b5de67be1b141ed73bd7d69f47fb827e27f8cca8731e"
+  email-sender-address: "noreply@paidnetwork.com"
