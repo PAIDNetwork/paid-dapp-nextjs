@@ -8,6 +8,7 @@ import { useWallet } from 'react-binance-wallet';
 import setOpenMenu from '@/redux/actions/menu';
 import useContract from '../../hooks/useContract';
 import ProfileCard from '../reusable/ProfileCard';
+import SocialMedia from '../reusable/SocialMedia';
 
 type SideBarProps = {
   routerName: string
@@ -105,7 +106,10 @@ const SideBar: FC<SideBarProps> = ({ routerName }) => {
         </button>
       </div>
 
-      <div className="menu mt-5">
+      {
+        isOpen && <SocialMedia />
+      }
+      <div className="menu">
         {
           sideBarItems.map((item) => (
             <Link href={item.link}>
