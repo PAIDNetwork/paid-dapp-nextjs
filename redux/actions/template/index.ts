@@ -223,8 +223,8 @@ const getContractTemplate = (
               type: 'string',
               title: 'Acceleration trigger type',
               enum: [
-                'Single Trigger Acceleration...',
-                'Double Trigger Acceleration...',
+                'Single Trigger Acceleration.',
+                'Double Trigger Acceleration.',
               ],
             },
             percentageVestTrigger: {

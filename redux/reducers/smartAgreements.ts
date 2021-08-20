@@ -128,7 +128,7 @@ const smartAgreementsReducer = (
         };
       }
 
-      if (newAdvisorData.typeOfTriggerAcceleration === 'Single Trigger Acceleration...') {
+      if (newAdvisorData.typeOfTriggerAcceleration === 'Single Trigger Acceleration.') {
         additionalData = {
           ...additionalData,
           singleTriggerAcceleration: true,
@@ -136,7 +136,7 @@ const smartAgreementsReducer = (
           typeOfTriggerAccelerationDetailPrefix: 'Upon a Change of Control (as defined in the Stock Agreement or Plan), [% of unvested shares to vest on trigger]% of Advisor’s then unvested shares will immediately vest (i.e., single trigger acceleration)',
           typeOfTriggerAccelerationDetailSuffix: 'Upon a Change of Control (as defined in the Stock Agreement or Plan), [% of unvested shares to vest on trigger]% of Advisor’s then unvested shares will immediately vest (i.e., single trigger acceleration)',
         };
-      } else if (newAdvisorData.typeOfTriggerAcceleration === 'Double Trigger Acceleration...') {
+      } else if (newAdvisorData.typeOfTriggerAcceleration === 'Double Trigger Acceleration.') {
         additionalData = {
           ...additionalData,
           singleTriggerAcceleration: undefined,
