@@ -21,15 +21,17 @@ const ProfileCard: FC<ProfileCardProps> = ({ profile, selected }) => {
   };
 
   return (
-    <div className={`profile-container ${selected ? 'selected' : ''}`}>
-      <div className={isOpen ? `profile-component ${selected ? 'selected' : ''}` : 'collapse-profile-component mx-auto'}>
+    <div className={`profile-container ${selected ? 'selected' : ''} ${isOpen ? '' : 'collapsed'}`}>
+      <div className={`profile-component ${selected ? 'selected' : ''} ${isOpen ? '' : 'collapsed'}`}>
         <div className={`profileImage ${selected ? 'selected' : ''}`}>
           <span>{getProfileInitials()}</span>
         </div>
-        <div className="info ml-1">
-          <span className="name d-block">
-            {profile ? `${profile?.name} ${profile?.lastName}` : 'No data yet' }
-          </span>
+        <div className="info">
+          {isOpen && (
+            <span className="name d-block">
+              {profile ? `${profile?.name} ${profile?.lastName}` : 'No data yet' }
+            </span>
+          )}
           <button type="button" className="btn-details">
             <img src={`/assets/icon/${selected ? 'profileArrowUp_selected.svg' : 'profileArrowUp.svg'}`} alt="" />
           </button>

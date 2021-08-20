@@ -87,7 +87,7 @@ const SideBar: FC<SideBarProps> = ({ routerName }) => {
 
   return (
     <Navbar
-      className={isOpen ? 'sidebar' : 'collapse_sidebar'}
+      className={`sidebar ${isOpen ? '' : 'collapse'}`}
       color="primary"
       light
       onMouseEnter={() => {
@@ -160,9 +160,10 @@ const SideBar: FC<SideBarProps> = ({ routerName }) => {
 
       {account && (
         <div className="menu">
-          <p>Wallet</p>
+          {isOpen && <p>Wallet</p>}
           <li className="menu-item">
             <img src="/assets/icon/paid.svg" alt="" />
+            {isOpen && (
             <div>
               <span>
                 {paidToken.toFixed(4)}
@@ -175,9 +176,12 @@ const SideBar: FC<SideBarProps> = ({ routerName }) => {
                 {connector !== 'bsc' ? 'ETH' : 'BNB'}
               </span>
             </div>
+            )}
+
           </li>
           <li className="menu-item">
             <img src="/assets/icon/ethereum.svg" alt="" />
+            {isOpen && (
             <div className="account">
               <span>
                 {account.slice(0, 4)}
@@ -186,6 +190,7 @@ const SideBar: FC<SideBarProps> = ({ routerName }) => {
               </span>
               <img className="disconnect" src="/assets/icon/disconnect.svg" alt="" onClick={reset} />
             </div>
+            )}
           </li>
         </div>
       )}

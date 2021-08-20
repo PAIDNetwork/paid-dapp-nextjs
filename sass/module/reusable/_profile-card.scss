@@ -3,6 +3,11 @@
   padding-left: 20px;
 }
 
+.profile-container.collapsed {
+  margin-right: 20px;
+  padding-left: 15px;
+}
+
 .profile-container.selected {
   padding-left: 0;
   background-color: $white;
@@ -29,6 +34,7 @@
     align-items: center;
     justify-content: space-between;
     flex: 1;
+    margin-left: 10px;
 
     .name {
       font-family: "Circular Std";
@@ -38,11 +44,19 @@
     }
 
     .btn-details {
-      background: none;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
       border: 0;
       padding: 0;
       width: 24px;
       height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      img {
+        width: 10px;
+      }
     }
 
     .network {
@@ -59,27 +73,59 @@
   .name {
     color: $blue;
   }
+
+  .btn-details {
+    background-color: transparent;
+  }
 }
 
-.collapse-profile-component {
-  background: $blue-800;
-  border-radius: 10px;
-  height: 65px;
-  position: relative;
-  width: 60px !important;
-  
-
-  img {
-    width: 35px;
-    border-radius: 50%;
-    margin-top: 15px;
-    margin-left: 15px;
-  }
+.profile-component.selected.collapsed {
+  margin-left: 15px;
 
   .info {
-    display: none !important;
+    display: none;
   }
 }
+
+.profile-component.collapsed {
+  padding: 10px 10px 10px 22px;
+  border: 0;
+  background-color: transparent;
+
+  .info {
+    margin-left: 7px;
+
+    .btn-details {
+      width: 17px;
+      height: 17px;
+
+      img {
+        width: 7px;
+        margin-bottom: 2px;
+      }
+    }
+  }
+}
+
+// .profile-component.collapse{
+//   background: $blue-800;
+//   border-radius: 10px;
+//   height: 65px;
+//   position: relative;
+//   width: 60px !important;
+  
+
+//   img {
+//     width: 35px;
+//     border-radius: 50%;
+//     margin-top: 15px;
+//     margin-left: 15px;
+//   }
+
+//   .info {
+//     display: none !important;
+//   }
+// }
 
 .profileImage {
   background-image: url('/assets/icon/avatarBg.svg');
@@ -96,7 +142,6 @@
   font-size: 16px;
   color: $white;
   text-align: center;
-  margin-right: 5px;
   text-transform: uppercase;
 }
 
