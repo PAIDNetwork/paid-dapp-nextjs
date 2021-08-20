@@ -1,24 +1,48 @@
+.profile-container {
+  margin-right: 20px;
+  padding-left: 20px;
+}
+
+.profile-container.selected {
+  padding-left: 0;
+  background-color: $white;
+  border-radius: 0 10px 10px 0;
+}
+
 .profile-component {
-  background: $blue-800;
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   height: 65px;
   position: relative;
-  width: 200px;
+  width: 220px;
 
-  img {
-    width: 35px;
-    border-radius: 50%;
-    margin-top: 15px;
-    margin-left: 15px;
-  }
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-sizing: border-box;
+
   .info {
-    height: 20px;
-    position: absolute;
-    top: 13px;
-    left: 63px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+
     .name {
-      font-weight: bold;
-      font-size: 13px;
+      font-family: "Circular Std";
+      font-weight: 500;
+      font-size: 16px;
+      color: $white;
+    }
+
+    .btn-details {
+      background: none;
+      border: 0;
+      padding: 0;
+      width: 24px;
+      height: 24px;
     }
 
     .network {
@@ -26,6 +50,14 @@
       font-size: 13px;
       color: $blue-500;
     }
+  }
+}
+
+.profile-component.selected {
+  margin-left: 20px;
+
+  .name {
+    color: $blue;
   }
 }
 
@@ -47,4 +79,27 @@
   .info {
     display: none !important;
   }
+}
+
+.profileImage {
+  background-image: url('/assets/icon/avatarBg.svg');
+  background-size: contain;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  // background: #512DA8;
+  font-family: "Circular Std";
+  font-weight: 500;
+  font-size: 16px;
+  color: $white;
+  text-align: center;
+  margin-right: 5px;
+  text-transform: uppercase;
+}
+
+.profileImage.selected {
+  background-image: url('/assets/icon/avatarBg_selected.svg');
 }

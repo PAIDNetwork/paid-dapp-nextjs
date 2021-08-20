@@ -7,9 +7,10 @@ import ProfileModel from '../../models/profileModel';
 type ProfileCardProps = {
   /** profile information */
   profile: ProfileModel;
+  selected: boolean;
 };
 
-const ProfileCard: FC<ProfileCardProps> = ({ profile }) => {
+const ProfileCard: FC<ProfileCardProps> = ({ profile, selected }) => {
   const isOpen = useSelector((state: any) => state.menuReducer.isOpen);
 
   const getProfileInitials = () => {
@@ -20,12 +21,19 @@ const ProfileCard: FC<ProfileCardProps> = ({ profile }) => {
   };
 
   return (
-    <div className={isOpen ? 'profile-component mt-4 mx-auto padding-card' : 'collapse-profile-component mt-4 mx-auto padding-card'}>
-      <div className="profileImage">{getProfileInitials()}</div>
-      <div className="info d-inline-block ml-1">
-        <span className="name d-block">
-          {profile ? `${profile?.name} ${profile?.lastName}` : 'No data yet' }
-        </span>
+    <div className={`profile-container ${selected ? 'selected' : ''}`}>
+      <div className={isOpen ? `profile-component ${selected ? 'selected' : ''}` : 'collapse-profile-component mx-auto'}>
+        <div className={`profileImage ${selected ? 'selected' : ''}`}>
+          <span>{getProfileInitials()}</span>
+        </div>
+        <div className="info ml-1">
+          <span className="name d-block">
+            {profile ? `${profile?.name} ${profile?.lastName}` : 'No data yet' }
+          </span>
+          <button type="button" className="btn-details">
+            <img src={`/assets/icon/${selected ? 'profileArrowUp_selected.svg' : 'profileArrowUp.svg'}`} alt="" />
+          </button>
+        </div>
       </div>
     </div>
   );

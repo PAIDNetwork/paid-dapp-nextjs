@@ -190,23 +190,21 @@ const SideBar: FC<SideBarProps> = ({ routerName }) => {
         </div>
       )}
 
-      <div className="menu-bottom mt-5 pt-5">
+      <div className="menu-bottom">
         <Link href="/profile">
-          <a className={routerName === '/profile' ? 'selected' : ''}>
-            <div className="profile-card mt-2">
-              <ProfileCard profile={profile} />
-            </div>
-          </a>
+          <div className="profile-card">
+            <ProfileCard profile={profile} selected={routerName === '/profile'} />
+          </div>
         </Link>
 
-        <ul className="pl-3">
+        {/* <ul className="pl-3">
           <li className={classnames('mb-4 no-cursor')}>
             <img className="mr-3" src="/assets/icon/networkBi.svg" alt="" />
             Network:
             {' '}
             {networkName}
           </li>
-        </ul>
+        </ul> */}
       </div>
     </Navbar>
   );

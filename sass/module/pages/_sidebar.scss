@@ -111,10 +111,12 @@
       }
     }
   }
+
   .menu-bottom {
     position: absolute;
     left: 0;
-    bottom: 0;
+    bottom: 35px;
+    right: 0;
     li,
     a {
       font-weight: normal;
