@@ -3,7 +3,6 @@ import { Navbar } from 'reactstrap';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
-import classnames from 'classnames';
 import { useWallet } from 'react-binance-wallet';
 
 import setOpenMenu from '@/redux/actions/menu';
@@ -58,7 +57,6 @@ const SideBar: FC<SideBarProps> = ({ routerName }) => {
   const {
     balance, connector, account, reset,
   } = useWallet();
-  const [toggleVisible, setToggleVisible] = useState(false);
   const [paidToken, setPaidToken] = useState(0);
   const isOpen = useSelector((state: any) => state.menuReducer.isOpen);
   const currentWallet = useSelector(
@@ -81,68 +79,31 @@ const SideBar: FC<SideBarProps> = ({ routerName }) => {
     if (tokenContract) getToken();
   }, [tokenContract]);
 
-  const paidSmallLogo = '/assets/icon/logoSmall.svg';
-  const collapseOut = '/assets/icon/collapse_out.png';
-  const [smallLogo, setSmallLogo] = useState(paidSmallLogo);
-
   return (
     <Navbar
       className={`sidebar ${isOpen ? '' : 'collapse'}`}
       color="primary"
       light
-      onMouseEnter={() => {
-        setToggleVisible(true);
-      }}
-      onMouseLeave={() => {
-        setToggleVisible(false);
-      }}
     >
-      {isOpen ? (
-        <div className="logos mt-2">
+      <div className="logos mt-4">
+        <img
+          className="logo"
+          src={`/assets/images/${isOpen ? 'logo.svg' : 'logoSmall.svg'}`}
+          alt=""
+        />
+        <button
+          type="button"
+          className="btn-collapse"
+          onClick={() => {
+            dispatch(setOpenMenu(!isOpen));
+          }}
+        >
           <img
-            className={
-              toggleVisible
-                ? 'left logo d-block mx-auto pb-4'
-                : 'logo d-block mx-auto pb-4'
-            }
-            src="/assets/images/logo.svg"
+            src={`/assets/icon/${isOpen ? 'collapse_in.svg' : 'collapse_out.svg'}`}
             alt=""
           />
-          <div
-            className={
-              toggleVisible ? 'button-collapse' : 'hide-button-collapse'
-            }
-          >
-            <img
-              style={{
-                width: '30px',
-                height: '30px',
-                display: 'block',
-                marginLeft: 'auto',
-                marginRight: 'auto',
-              }}
-              src="/assets/icon/collapse_in.png"
-              alt=""
-              onClick={() => {
-                setSmallLogo(paidSmallLogo);
-                dispatch(setOpenMenu(!isOpen));
-              }}
-            />
-          </div>
-        </div>
-      ) : (
-        <div className="mt-2">
-          <img
-            className="logo d-block mx-auto pb-4"
-            src={smallLogo}
-            alt=""
-            width={40}
-            onMouseEnter={() => setSmallLogo(collapseOut)}
-            onMouseLeave={() => setSmallLogo(paidSmallLogo)}
-            onClick={() => dispatch(setOpenMenu(!isOpen))}
-          />
-        </div>
-      )}
+        </button>
+      </div>
 
       <div className="menu mt-5">
         {
@@ -188,7 +149,9 @@ const SideBar: FC<SideBarProps> = ({ routerName }) => {
                 ...
                 {account.slice(38, 42)}
               </span>
-              <img className="disconnect" src="/assets/icon/disconnect.svg" alt="" onClick={reset} />
+              <button type="button" className="disconnect" onClick={reset}>
+                <img src="/assets/icon/disconnect.svg" alt="" />
+              </button>
             </div>
             )}
           </li>
