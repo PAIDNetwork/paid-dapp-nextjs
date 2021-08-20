@@ -18,31 +18,37 @@ const sideBarItems = [
   {
     link: '/agreements',
     icon: 'standardAgreements.svg',
+    iconSelected: 'standardAgreements_selected.svg',
     title: 'Standard Agreements',
   },
   {
     link: '/smart_agreements',
     icon: 'smartAgreement.svg',
+    iconSelected: 'smartAgreement_selected.svg',
     title: 'Smart Agreements',
   },
   {
     link: '/binance_chain',
     icon: 'binanceSmartChain.svg',
+    iconSelected: 'binanceSmartChain_selected.svg',
     title: 'BSC Bridge',
   },
   {
     link: '/buy-paid',
     icon: 'buyPaid.svg',
+    iconSelected: 'buyPaid_selected.svg',
     title: 'Buy PAID',
   },
   {
     link: '/launchpads',
     icon: 'launchpads.svg',
+    iconSelected: 'launchpads_selected.svg',
     title: 'Launchpads',
   },
   {
     link: '/staking',
     icon: 'staking.svg',
+    iconSelected: 'staking_selected.svg',
     title: 'Staking',
   },
 ];
@@ -143,7 +149,7 @@ const SideBar: FC<SideBarProps> = ({ routerName }) => {
           sideBarItems.map((item) => (
             <Link href={item.link}>
               <div className={`menu-item ${routerName === item.link ? 'active' : ''}`}>
-                <img src={`/assets/icon/${item.icon}`} alt="" />
+                <img src={`/assets/icon/${routerName === item.link ? item.iconSelected : item.icon}`} alt="" />
                 {isOpen ? item.title : ''}
               </div>
             </Link>
