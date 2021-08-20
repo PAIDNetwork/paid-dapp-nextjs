@@ -219,6 +219,7 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
         lastModified: new Date(),
       });
     } catch (err) {
+      console.log(err)
       return null;
     }
   };
