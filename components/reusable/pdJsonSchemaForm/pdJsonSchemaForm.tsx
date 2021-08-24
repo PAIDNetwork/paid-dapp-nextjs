@@ -49,6 +49,11 @@ const PdJsonSchemaForm: FC<pdJsonSchemaFormProps> = ({
       const errorForm = error;
       errorForm.message = 'Invalid email';
     }
+
+    if (error.property === '.partyWallet' || error.property === '.counterPartyWallet') {
+      const errorForm = error;
+      errorForm.message = 'Invalid Wallet Address';
+    }
     return error;
   });
 
@@ -79,6 +84,7 @@ const PdJsonSchemaForm: FC<pdJsonSchemaFormProps> = ({
       Review
     </Button>
   ));
+
   return (
     <div className={`${styles.pdForm} ${className}`}>
       <Wizard

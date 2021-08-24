@@ -239,9 +239,6 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
         values,
       );
 
-      console.log(types)
-      console.log(values)
-      console.log(cid)
       const fee = await contract.fee();
       const escrowAddress = await contract.escrow();
       await tokenSignerContract.increaseAllowance(escrowAddress, fee.toString());
@@ -266,7 +263,6 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
           gasPrice: (1000000000 * 30),
         },
       );
-      console.log(tx)
       setOpenConfirmAgreementModal(true);
       await tx.wait();
     } catch (error) {

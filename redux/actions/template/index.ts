@@ -52,6 +52,7 @@ const getContractTemplate = (
         title: 'Wallet address:',
         type: 'string',
         custom: 'address',
+        pattern: '^0x[a-fA-F0-9]{40}$',
         readOnly: true,
       },
     },
@@ -76,6 +77,7 @@ const getContractTemplate = (
       counterPartyWallet: {
         title: 'Wallet address:',
         type: 'string',
+        pattern: '^0x[a-fA-F0-9]{40}$',
         custom: 'address',
       },
     },
