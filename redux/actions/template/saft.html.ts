@@ -49,20 +49,13 @@ const Saft = `<div class="contract" style="width: 100%; background-color:white; 
 <p class="western" align="justify">(h) The current structure of this SAFT and all transactions and activities contemplated hereunder is not a scheme to evade the registration requirements of the Securities Act.</p>
 <p class="western" align="justify">5. <em><strong>Procedures for Purchase of Rights and</strong></em> <em><strong>Valuation of Purchase Amount</strong></em><em>.</em></p>
 <p class="western" align="justify">(a) The Company will accept payment for the Right purchased under this SAFT in U.S. Dollars, Bitcoin and Ethereum. Purchaser shall make the required payment to the Company in consideration for Purchaser&rsquo;s purchase of the Right pursuant to the SAFT through the procedures set forth on <em><u>Exhibit A</u></em> hereof.</p>
-<<<<<<< HEAD
-<p class="western" align="justify">(b) For purposes of this instrument, the value of the Purchase Amount shall be deemed in U.S. Dollars whether the Purchaser pays in U.S. Dollars, Bitcoin or Ethereum, valued at the Applicable Exchange Rate for U.S. Dollars. The term &ldquo;<em><strong>Applicable Exchange Rate</strong></em>&rdquo; shall mean the volume-weighted average daily price of Bitcoin or Ethereum, as applicable, as listed on <div class="underline-contract-line">{{#website}}{{website}}{{/website}}{{^website}}[WEBSITE]{{/website}}</div>, in the 24-hour period preceding the day and time that the Company has accepted Purchaser&rsquo;s offer to purchase the Right under this SAFT.</p>
-=======
 <p class="western" align="justify">(b) For purposes of this instrument, the value of the Purchase Amount shall be deemed in U.S. Dollars whether the Purchaser pays in U.S. Dollars, Bitcoin or Ethereum, valued at the Applicable Exchange Rate for U.S. Dollars. The term &ldquo;<em><strong>Applicable Exchange Rate</strong></em>&rdquo; shall mean the volume-weighted average daily price of Bitcoin or Ethereum, as applicable, as listed on <span class="underline-contract-line">{{#website}}{{website}}{{/website}}{{^website}}[WEBSITE]{{/website}}</span>, in the 24-hour period preceding the day and time that the Company has accepted Purchaser&rsquo;s offer to purchase the Right under this SAFT.</p>
 <p class="western" align="justify">(b) Any notice required or permitted by this instrument will be deemed sufficient when sent by email to the relevant address listed on the signature page, as subsequently modified by written notice received by the appropriate party.</p>
 <p class="western" align="justify">(d) Neither this instrument nor the rights contained herein may be assigned, by operation of law or otherwise, by either party without the prior written consent of the other; <em>provided, however</em>, that this instrument and/or the rights contained herein may be assigned without the Company&rsquo;s consent by the Purchaser to any other entity who directly or indirectly, controls, is controlled by or is under common control with the Purchaser, including, without limitation, any general partner, managing member, officer or director of the Purchaser, or any venture capital fund now or hereafter existing which is controlled by one or more general partners or managing members of, or shares the same management company with, the Purchaser; and <em>provided, further</em>, that the Company may assign this instrument in whole, without the consent of the Purchaser, in connection with a reincorporation to change the Company&rsquo;s domicile.</p>
 <p class="western" align="justify">&nbsp;</p>
 <p class="western" align="justify">(e) In the event any one or more of the provisions of this instrument is for any reason held to be invalid, illegal or unenforceable, in whole or in part or in any respect, or in the event that any one or more of the provisions of this instrument operate or would prospectively operate to invalidate this instrument, then and in any such event, such provision(s) only will be deemed null and void and will not affect any other provision of this instrument and the remaining provisions of this instrument will remain operative and in full force and effect and will not be affected, prejudiced, or disturbed thereby.</p>
 <p class="western" align="justify">&nbsp;</p>
-<<<<<<< HEAD
-<p class="western" align="justify">(f) All rights and obligations hereunder will be governed by the laws of <div class="underline-contract-line">{{#jurisdiction}}{{jurisdiction}}{{/jurisdiction}}{{^jurisdiction}}[JURISDICTION]{{/jurisdiction}}</div>, without regard to the conflicts of law provisions of such jurisdiction.</p>
-=======
 <p class="western" align="justify">(f) All rights and obligations hereunder will be governed by the laws of <span class="underline-contract-line">{{#jurisdiction}}{{jurisdiction}}{{/jurisdiction}}{{^jurisdiction}}[JURISDICTION]{{/jurisdiction}}</span>, without regard to the conflicts of law provisions of such jurisdiction.</p>
->>>>>>> main
 <p class="western">&nbsp;</p>
 <p class="western" class="title-center">(<em>Signature page follows</em>)</p>
 <p class="western"><strong>IN WITNESS WHEREOF</strong>, the undersigned have caused this instrument to be duly executed and delivered.</p>
@@ -87,19 +80,11 @@ const Saft = `<div class="contract" style="width: 100%; background-color:white; 
 <p class="western">&nbsp;</p>
 <p class="western">&nbsp;</p>
 </div>
-<<<<<<< HEAD
-<p class="western" align="center">&nbsp;</p>
-<p class="western" align="center"><u><strong>EXHIBIT A</strong></u></p>
-<p class="western" align="center">&nbsp;</p>
-<p class="western" align="center"><span style="font-size: large;"><strong>Payment Instructions</strong></span></p>
-<p class="western" align="center">&nbsp;</p>
-=======
 <p class="western" class="title-center">&nbsp;</p>
 <p class="western" class="title-center"><u><strong>EXHIBIT A</strong></u></p>
 <p class="western" class="title-center">&nbsp;</p>
 <p class="western" class="title-center"><span style="font-size: large;"><strong>Payment Instructions</strong></span></p>
 <p class="western" class="title-center">&nbsp;</p>
->>>>>>> main
 <p class="western"><strong>For payments by U.S. Dollars, please remit payment using the following wire information: </strong></p>
 <p class="western">&nbsp;</p>
 <p class="western">Bank Name: <div class="underline-contract-line">{{#bankName}}{{bankName}}{{/bankName}}{{^bankName}}[BANK NAME]{{/bankName}}</div></p>
