@@ -92,6 +92,9 @@ const getContractTemplate = (
       partyName: {
         'ui:placeholder': 'Your Name',
       },
+      title: {
+        'ui:placeholder': 'Title',
+      },
       partyEmail: {
         'ui:placeholder': 'Your Email',
       },
@@ -169,6 +172,10 @@ const getContractTemplate = (
             },
             companyName: {
               title: 'Company Name:',
+              type: 'string',
+            },
+            title: {
+              title: 'Title:',
               type: 'string',
             },
             stateOfAdvisor: {
@@ -330,6 +337,7 @@ const getContractTemplate = (
         'ui:order': [
           'date',
           'companyName',
+          'title',
           'stateOfAdvisor',
           'typeCompany',
           'partyName',

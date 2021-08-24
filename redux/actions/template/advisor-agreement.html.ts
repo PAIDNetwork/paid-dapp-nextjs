@@ -111,6 +111,7 @@ const AdvisorAgreemt = `
 <p style="color: black;">(Signature)</p>
 <p style="color: black;">________________________________________ </p>
 <p style="color: black;">Name: <span id="partyName"><div style="display: inline-block; background-color:#f79632">{{partyName}}</div></span></p>
+<p style="color: black;">Title: <span id="title"><div style="display: inline-block; background-color:#f79632">{{#title}}{{title}}{{/title}}{{^title}}[TITLE]{{/title}}</div></span></p>
 <p style="color: black;">Email: <span id="partyEmail"><div style="display: inline-block; background-color:#f79632">{{partyEmail}}</div></span></p>
 <p style="color: black;">Address: <div style="display: inline-block; background-color:#f79632"><span id="partyAddress">{{partyAddress}}</span></div></p>
 <p style="color: black;">Wallet: <div style="display: inline-block; background-color:#f79632"><span id="partyWallet">{{partyWallet}}</span></div></p>
