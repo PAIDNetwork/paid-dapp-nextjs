@@ -4,11 +4,19 @@ import React, {
 } from 'react';
 import { useSelector } from 'react-redux';
 import Form from '@rjsf/core';
+import { AjvError } from '@rjsf/core';
 import {
   Button,
 } from 'reactstrap';
 import Wizard from '@/components/wizard/wizard';
 import styles from './PdJsonSchemaForm.module.scss';
+
+enum ErrorPropertyType {
+  PARTY_EMAIL = '.partyEmail',
+  COUNTER_PARTY_EMAIL = '.counterPartyEmail',
+  PARTY_WALLET = '.partyWallet',
+  COUNTER_PARTY_WALLET = '.counterPartyWallet',
+}
 
 interface pdJsonSchemaFormProps {
   type?: string;
@@ -44,16 +52,15 @@ const PdJsonSchemaForm: FC<pdJsonSchemaFormProps> = ({
     setActivePageIndex((index) => index - 1);
   };
 
-  const transformErrors = (errors) => errors.map((error) => {
-    if (error.property === '.partyEmail' || error.property === '.counterPartyEmail') {
-      const errorForm = error;
-      errorForm.message = 'Invalid email';
+  const transformErrors = (errors: AjvError[]) => errors.map((error: AjvError) => {
+    if ([ErrorPropertyType.PARTY_EMAIL, ErrorPropertyType.COUNTER_PARTY_EMAIL].some(errorProperty => errorProperty === error.property)) {
+      error.message = 'Invalid email';
     }
 
-    if (error.property === '.partyWallet' || error.property === '.counterPartyWallet') {
-      const errorForm = error;
-      errorForm.message = 'Invalid Wallet Address';
+    if ([ErrorPropertyType.PARTY_WALLET, ErrorPropertyType.COUNTER_PARTY_WALLET].some(errorProperty => errorProperty === error.property)) {
+      error.message = 'Invalid Wallet Address';
     }
+
     return error;
   });
 
