@@ -110,7 +110,7 @@
 }
 
 .profile-image {
-  background-image: url('/assets/icon/avatarBg.svg');
+  background-image: url('/assets/icon/avatarBg.png');
   background-size: contain;
   display: flex;
   align-items: center;
@@ -127,5 +127,5 @@
 }
 
 .profile-image.selected {
-  background-image: url('/assets/icon/avatarBg_selected.svg');
+  background-image: url('/assets/icon/avatarBg_selected.png');
 }

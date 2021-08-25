@@ -17,38 +17,38 @@ type SideBarProps = {
 const sideBarItems = [
   {
     link: '/agreements',
-    icon: 'standardAgreements.svg',
-    iconSelected: 'standardAgreements_selected.svg',
+    icon: 'standardAgreements.png',
+    iconSelected: 'standardAgreements_selected.png',
     title: 'Standard Agreements',
   },
   {
     link: '/smart_agreements',
-    icon: 'smartAgreement.svg',
-    iconSelected: 'smartAgreement_selected.svg',
-    title: 'Smart Agreements',
+    icon: 'smartAgreement.png',
+    iconSelected: 'smartAgreement_selected.png',
+    title: 'SMART Agreements',
   },
   {
     link: '/binance_chain',
-    icon: 'binanceSmartChain.svg',
-    iconSelected: 'binanceSmartChain_selected.svg',
+    icon: 'binanceSmartChain.png',
+    iconSelected: 'binanceSmartChain_selected.png',
     title: 'BSC Bridge',
   },
   {
     link: '/buy-paid',
-    icon: 'buyPaid.svg',
-    iconSelected: 'buyPaid_selected.svg',
+    icon: 'buyPaid.png',
+    iconSelected: 'buyPaid_selected.png',
     title: 'Buy PAID',
   },
   {
     link: '/launchpads',
-    icon: 'launchpads.svg',
-    iconSelected: 'launchpads_selected.svg',
+    icon: 'launchpads.png',
+    iconSelected: 'launchpads_selected.png',
     title: 'Launchpads',
   },
   {
     link: '/staking',
-    icon: 'staking.svg',
-    iconSelected: 'staking_selected.svg',
+    icon: 'staking.png',
+    iconSelected: 'staking_selected.png',
     title: 'Staking',
   },
 ];
@@ -126,7 +126,7 @@ const SideBar: FC<SideBarProps> = ({ routerName }) => {
         <div className="menu">
           {isOpen && <p>Wallet</p>}
           <li className="menu-item">
-            <img src="/assets/icon/paid.svg" alt="" />
+            <img src="/assets/icon/paid.png" alt="" />
             {isOpen && (
             <div>
               <span>
@@ -144,7 +144,7 @@ const SideBar: FC<SideBarProps> = ({ routerName }) => {
 
           </li>
           <li className="menu-item">
-            <img src={`/assets/icon/${networkName === 'bnbt' || networkName === 'bnb' ? 'binanceSmartChain.svg' : 'ethereum.svg'}`} alt="" />
+            <img src={`/assets/icon/${networkName === 'bnbt' || networkName === 'bnb' ? 'binanceSmartChain.png' : 'ethereum.png'}`} alt="" />
             {isOpen && (
             <div className="account">
               <span>
@@ -153,7 +153,7 @@ const SideBar: FC<SideBarProps> = ({ routerName }) => {
                 {account.slice(38, 42)}
               </span>
               <button type="button" className="disconnect" onClick={reset}>
-                <img src="/assets/icon/disconnect.svg" alt="" />
+                <img src="/assets/icon/disconnect.png" alt="" />
               </button>
             </div>
             )}
