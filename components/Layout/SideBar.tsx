@@ -99,7 +99,7 @@ const SideBar: FC<SideBarProps> = ({ routerName }) => {
           }}
         >
           <img
-            src={`/assets/icon/${isOpen ? 'collapse_in.svg' : 'collapse_out.svg'}`}
+            src={`/assets/icon/${isOpen ? 'collapse_out.svg' : 'collapse_in.svg'}`}
             alt=""
           />
         </button>
