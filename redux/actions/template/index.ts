@@ -52,6 +52,7 @@ const getContractTemplate = (
         title: 'Wallet address:',
         type: 'string',
         custom: 'address',
+        pattern: '^0x[a-fA-F0-9]{40}$',
         readOnly: true,
       },
     },
@@ -76,6 +77,7 @@ const getContractTemplate = (
       counterPartyWallet: {
         title: 'Wallet address:',
         type: 'string',
+        pattern: '^0x[a-fA-F0-9]{40}$',
         custom: 'address',
       },
     },
@@ -91,6 +93,9 @@ const getContractTemplate = (
     uiSchema: {
       partyName: {
         'ui:placeholder': 'Your Name',
+      },
+      title: {
+        'ui:placeholder': 'Title',
       },
       partyEmail: {
         'ui:placeholder': 'Your Email',
@@ -171,6 +176,10 @@ const getContractTemplate = (
               title: 'Company Name:',
               type: 'string',
             },
+            title: {
+              title: 'Title:',
+              type: 'string',
+            },
             stateOfAdvisor: {
               title: 'State',
               type: 'string',
@@ -223,8 +232,8 @@ const getContractTemplate = (
               type: 'string',
               title: 'Acceleration trigger type',
               enum: [
-                'Single Trigger Acceleration...',
-                'Double Trigger Acceleration...',
+                'Single Trigger Acceleration.',
+                'Double Trigger Acceleration.',
               ],
             },
             percentageVestTrigger: {
@@ -330,6 +339,7 @@ const getContractTemplate = (
         'ui:order': [
           'date',
           'companyName',
+          'title',
           'stateOfAdvisor',
           'typeCompany',
           'partyName',

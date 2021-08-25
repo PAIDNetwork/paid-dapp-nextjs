@@ -12,7 +12,6 @@ import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import classNames from 'classnames';
 import { Button, Card, Tooltip } from 'reactstrap';
-import pinataSDK, { PinataPinResponse } from '@pinata/sdk';
 import ProfileStateModel from '@/models/profileStateModel';
 import PreviewDocument from '@/components/new-agreement/PreviewDocument';
 import { setAgreementReviewed, setIsEditing } from 'redux/actions';
@@ -40,6 +39,8 @@ import {
   COUNTER_PARTY_NAME_FIELD,
   COUNTER_PARTY_WALLET_FIELD,
 } from '../utils/agreement';
+// import pinataSDK, { PinataPinResponse } from '@pinata/sdk';
+import { signContract } from '../utils/pinata-cloud'
 
 type NewAgreementProps = {
   templateTypeCode?: string;
@@ -206,29 +207,18 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
     setEditTitle(false);
   };
 
-  const toIpfs = async ():Promise<PinataPinResponse> => {
-    const pinata = pinataSDK(
-      process.env.NEXT_PUBLIC_PINATA_KEY,
-      process.env.NEXT_PUBLIC_PINATA_SECRET,
-    );
-    try {
-      return pinata.pinJSONToIPFS({
-        content: btoa(renderToString(agreementTemplate())),
-        name: agreementTitle,
-        contentType: 'text/html',
-        lastModified: new Date(),
-      });
-    } catch (err) {
-      console.log(err)
-      return null;
-    }
-  };
-
   const onSubmitForm = async () => {
     try {
       let cid = null;
-      while (!cid) {
-        cid = await toIpfs();
+      if (!cid) {
+        const dataIpf = {
+          content: btoa(renderToString(agreementTemplate())),
+          name: agreementTitle,
+          contentType: 'text/html',
+          lastModified: new Date(),
+        }
+
+        cid = await signContract(dataIpf);
       }
 
       const types = [];
@@ -276,7 +266,7 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
       setOpenConfirmAgreementModal(true);
       await tx.wait();
     } catch (error) {
-      console.log(error);
+      console.log("Error on send From Contract", error);
       setAgreementError(error.error);
       setOpenAlertModal(true);
     }
