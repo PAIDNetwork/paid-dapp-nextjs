@@ -94,6 +94,9 @@ const getContractTemplate = (
       partyName: {
         'ui:placeholder': 'Your Name',
       },
+      title: {
+        'ui:placeholder': 'Title',
+      },
       partyEmail: {
         'ui:placeholder': 'Your Email',
       },
@@ -173,6 +176,10 @@ const getContractTemplate = (
               title: 'Company Name:',
               type: 'string',
             },
+            title: {
+              title: 'Title:',
+              type: 'string',
+            },
             stateOfAdvisor: {
               title: 'State',
               type: 'string',
@@ -225,8 +232,8 @@ const getContractTemplate = (
               type: 'string',
               title: 'Acceleration trigger type',
               enum: [
-                'Single Trigger Acceleration...',
-                'Double Trigger Acceleration...',
+                'Single Trigger Acceleration.',
+                'Double Trigger Acceleration.',
               ],
             },
             percentageVestTrigger: {
@@ -332,6 +339,7 @@ const getContractTemplate = (
         'ui:order': [
           'date',
           'companyName',
+          'title',
           'stateOfAdvisor',
           'typeCompany',
           'partyName',
