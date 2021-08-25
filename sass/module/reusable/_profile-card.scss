@@ -109,7 +109,7 @@
   }
 }
 
-.profileImage {
+.profile-image {
   background-image: url('/assets/icon/avatarBg.svg');
   background-size: contain;
   display: flex;
@@ -120,12 +120,12 @@
   border-radius: 50%;
   font-family: "Circular Std";
   font-weight: 500;
-  font-size: 16px;
+  font-size: 15px;
   color: $white;
   text-align: center;
   text-transform: uppercase;
 }
 
-.profileImage.selected {
+.profile-image.selected {
   background-image: url('/assets/icon/avatarBg_selected.svg');
 }

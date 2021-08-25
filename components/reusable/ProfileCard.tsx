@@ -23,7 +23,7 @@ const ProfileCard: FC<ProfileCardProps> = ({ profile, selected }) => {
   return (
     <div className={`profile-container ${selected ? 'selected' : ''} ${isOpen ? '' : 'collapsed'}`}>
       <div className={`profile-component ${selected ? 'selected' : ''} ${isOpen ? '' : 'collapsed'}`}>
-        <div className={`profileImage ${selected ? 'selected' : ''}`}>
+        <div className={`profile-image ${selected ? 'selected' : ''}`}>
           <span>{getProfileInitials()}</span>
         </div>
         <div className="info">
