@@ -7,27 +7,35 @@ import ProfileModel from '../../models/profileModel';
 type ProfileCardProps = {
   /** profile information */
   profile: ProfileModel;
+  selected: boolean;
 };
 
-const ProfileCard: FC<ProfileCardProps> = ({ profile }) => {
+const ProfileCard: FC<ProfileCardProps> = ({ profile, selected }) => {
   const isOpen = useSelector((state: any) => state.menuReducer.isOpen);
 
-  const getProfileInitials = () =>{
-    let initials = "";
-    initials += profile !== null && profile.name ? profile.name.charAt(0) : "";
-    initials += profile !== null && profile.lastName ? profile.lastName.charAt(0) : "";
+  const getProfileInitials = () => {
+    let initials = '';
+    initials += profile !== null && profile.name ? profile.name.charAt(0) : '';
+    initials += profile !== null && profile.lastName ? profile.lastName.charAt(0) : '';
     return initials;
-  }
+  };
 
   return (
-    <div className={isOpen ? 'profile-component mt-4 mx-auto padding-card' : 'collapse-profile-component mt-4 mx-auto padding-card'}>
-      <div className={'profileImage'}>{getProfileInitials()}</div>
-      <div className="info d-inline-block ml-1">
-        <span className="name d-block">
-          {' '}
-          {profile ? `${profile?.name} ${profile?.lastName}` : 'No data yet' }
-        </span>
-        <p className="network">PAID Network</p>
+    <div className={`profile-container ${selected ? 'selected' : ''} ${isOpen ? '' : 'collapsed'}`}>
+      <div className={`profile-component ${selected ? 'selected' : ''} ${isOpen ? '' : 'collapsed'}`}>
+        <div className={`profileImage ${selected ? 'selected' : ''}`}>
+          <span>{getProfileInitials()}</span>
+        </div>
+        <div className="info">
+          {isOpen && (
+            <span className="name d-block">
+              {profile ? `${profile?.name} ${profile?.lastName}` : 'No data yet' }
+            </span>
+          )}
+          <button type="button" className="btn-details">
+            <img src={`/assets/icon/${selected ? 'profileArrowUp_selected.svg' : 'profileArrowUp.svg'}`} alt="" />
+          </button>
+        </div>
       </div>
     </div>
   );
