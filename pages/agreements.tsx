@@ -60,7 +60,7 @@ const Agreements: React.FC = () => {
         const documents = myEvents.map((myEvent) => contract.anchors(myEvent.args.documentId));
         const forkedDocuments = forkJoin(documents).pipe(debounce((x) => x as any)).toPromise();
         const myDocuments = (await forkedDocuments) || [];
-        const ipfsItems = myDocuments.map((myDocument: any) => axios.get(`https://ipfs.io/ipfs/${myDocument.fileHash}`));
+        const ipfsItems = myDocuments.map((myDocument: any) => axios.get(`${process.env.NEXT_PUBLIC_IPFS_FILES_URL}/${myDocument.fileHash}`));
         const forkedIpfsItems = forkJoin(ipfsItems).pipe(debounce((x) => x as any)).toPromise();
         const myIpfsItems = (await forkedIpfsItems).map((item) => item.data) || [];
         let index = 0;
