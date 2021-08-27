@@ -4,11 +4,13 @@ import { Button } from 'reactstrap';
 import TagManager from 'react-gtm-module';
 import { useDispatch, useSelector } from 'react-redux';
 import WalletSelectorModal from '@/components/connect/WalletSelectorModal';
+import LoginModal from '@/components/account-modal/LoginModal';
 import doConnectToWallet from '../redux/actions/wallet';
 
 const Index: React.FC = () => {
   const dispatch = useDispatch();
   const [openConnectSelector, setOpenConnectSelector] = useState(false);
+  const [openLoginSelector, setOpenLoginSelector] = useState(true);
 
   const onConnect = async (provider) => {
     dispatch(doConnectToWallet(provider));
@@ -79,10 +81,8 @@ const Index: React.FC = () => {
             </p>
           </div>
         </div>
-        <WalletSelectorModal
-          open={openConnectSelector}
-          onConnect={onConnect}
-        />
+        <WalletSelectorModal open={openConnectSelector} onConnect={onConnect} />
+        <LoginModal open={openLoginSelector} />
       </div>
     </>
   );
