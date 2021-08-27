@@ -257,19 +257,15 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
         requiredQuorum,
         templateId,
         metadata,
-        validUntil,
-        {
-          gasLimit: 3000000,
-          gasPrice: (1000000000 * 30),
-        },
+        validUntil
       );
 
       
       setOpenConfirmAgreementModal(true);
       await tx.wait();
     } catch (error) {
-      console.log("Error on send From Contract", error);
-      setAgreementError("Error on Sign from smart contract"+error.error);
+      console.error("Error on send From Contract", error);
+      setAgreementError("Error on Sign from smart contract "+error.error);
       setOpenAlertModal(true);
     }
   };
