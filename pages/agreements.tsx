@@ -17,7 +17,7 @@ import EventAgreementModel from '@/models/eventAgreementModel';
 import classNames from 'classnames';
 import getContractTemplate from '../redux/actions/template';
 import Table from '../components/agreements/Table';
-
+import { Header } from '@/components/agreements/Header';
 import TemplateAgreementSelectorModal from '../components/agreements/TemplateAgreementSelectorModal';
 import AgreementDetailModal from '../components/agreements/AgreementDetailModal';
 
@@ -179,8 +179,10 @@ const Agreements: React.FC = () => {
         <link rel="icon" href="/assets/icon/.ico" />
       </Head>
 
-      <div className="agreements p-0 px-4 container-fluid" style={agreements.length === 0 ? { height: '97%' } : {}}>
-        <div className="row p-0 h-100">
+      <div className="agreements container-fluid">
+        <Header />
+        
+        <div className="row">
           {agreements.length > 0
             && (
               <>
