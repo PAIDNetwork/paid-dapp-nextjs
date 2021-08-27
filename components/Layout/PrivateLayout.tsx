@@ -7,7 +7,6 @@ import { Spinner } from 'reactstrap';
 import SideBar from './SideBar';
 
 import useWindowSize from '../../hooks/useWindowsSize';
-import { useWakuSetup } from './useWakuSetup';
 
 type PrivateLayoutProps = {
   /** Page component */
@@ -29,9 +28,6 @@ const PrivateLayout: FC<PrivateLayoutProps> = ({ children, routerName }) => {
       router.push('/');
     }
   }, []);
-
-  // Waku v2 messaging hook
-  useWakuSetup();
 
   if (!currentWallet) {
     return (
