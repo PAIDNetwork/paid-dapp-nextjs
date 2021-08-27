@@ -17,7 +17,7 @@ const initPinataClient = async (): Promise<PinataClient> => {
   }
 }
 
-export const signContract = async <Object, PinataPinOptions>(
+export const pinToIpfs = async <Object, PinataPinOptions>(
   body: Object,
   options?: PinataPinOptions,
 ): Promise<PinataPinResponse> => {
@@ -27,7 +27,7 @@ export const signContract = async <Object, PinataPinOptions>(
   } catch (err) {
     console.error(err)
     setTimeout(() => {
-      signContract(body, options)
+      pinToIpfs(body, options)
     }, 60000)
   }
 }

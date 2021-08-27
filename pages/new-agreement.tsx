@@ -40,7 +40,7 @@ import {
   COUNTER_PARTY_WALLET_FIELD,
 } from '../utils/agreement';
 // import pinataSDK, { PinataPinResponse } from '@pinata/sdk';
-import { signContract } from '../utils/pinata-cloud'
+import { pinToIpfs } from '../utils/pinata-cloud'
 
 type NewAgreementProps = {
   templateTypeCode?: string;
@@ -218,7 +218,7 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
           lastModified: new Date(),
         }
 
-        cid = await signContract(dataIpf);
+        cid = await pinToIpfs(dataIpf);
       }
 
       const types = [];
@@ -263,11 +263,13 @@ const NewAgreement: NextPage<NewAgreementProps> = ({ templateTypeCode }) => {
           gasPrice: (1000000000 * 30),
         },
       );
+
+      
       setOpenConfirmAgreementModal(true);
       await tx.wait();
     } catch (error) {
       console.log("Error on send From Contract", error);
-      setAgreementError(error.error);
+      setAgreementError("Error on Sign from smart contract"+error.error);
       setOpenAlertModal(true);
     }
   };
